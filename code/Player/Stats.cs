@@ -18,5 +18,8 @@ public partial class PCPawn
 	public void TakeCoins(int subAmt)
 	{
 		PlayCoins -= subAmt;
+
+		if(PlayCoins < 0) 
+			PlayCoins = 0;
 	}
 }
