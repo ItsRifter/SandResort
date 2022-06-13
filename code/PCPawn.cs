@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 
 
-partial class PCPawn : Player
+public partial class PCPawn : Player
 {
 
 	DamageInfo lastDMGInfo;
@@ -11,6 +11,8 @@ partial class PCPawn : Player
 	//Don't allow players to spam death and respawning
 	TimeSince timeLastDied;
 	public TimeSince timeLastRespawn;
+
+	public ModelEntity playerCorpse { get; set; }
 
 	public override void Spawn()
 	{
@@ -43,11 +45,8 @@ partial class PCPawn : Player
 		EnableDrawing = true;
 
 		//Deletes the corpse if valid
-		if( Corpse.IsValid() )
-		{
-			Corpse.Delete();
-			Corpse = null;
-		}
+		DestroyCorpse();
+		
 
 		timeLastRespawn = 0;
 	}
@@ -92,7 +91,7 @@ partial class PCPawn : Player
 		CreatePlayerRagdoll( lastDMGInfo.Force, lastDMGInfo.BoneIndex );
 
 		//We should make a first person death camera in the future
-		CameraMode = new SpectateRagdollCamera();
+		CameraMode = new RagdollCamera();
 
 		timeLastDied = 0;
 	}
@@ -104,6 +103,7 @@ partial class PCPawn : Player
 	}
 
 	//Creates a player ragdoll with clothing (if any) at force with bone index
+	[ClientRpc]
 	public void CreatePlayerRagdoll( Vector3 force, int forceBone )
 	{
 		var ent = new ModelEntity();
@@ -118,8 +118,6 @@ partial class PCPawn : Player
 		ent.CopyFrom( this );
 		ent.CopyBonesFrom( this );
 		ent.SetRagdollVelocityFrom( this );
-
-		Corpse = ent;
 
 		// Copy the clothes over
 		foreach ( var child in Children )
@@ -149,5 +147,17 @@ partial class PCPawn : Player
 				ent.PhysicsGroup.AddVelocity( force );
 			}
 		}
+
+		Corpse = ent;
+	}
+
+	[ClientRpc]
+	public void DestroyCorpse()
+	{
+		if ( !Corpse.IsValid() )
+			return;
+
+		Corpse.Delete();
+		Corpse = null;
 	}
 }
