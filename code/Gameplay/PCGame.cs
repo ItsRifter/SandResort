@@ -8,9 +8,24 @@ using System.Threading.Tasks;
 
 public partial class PCGame : Game
 {
+	PCHud curHud;
+
 	public PCGame()
 	{
+		if(IsClient)
+		{
+			curHud = new PCHud();
+		}
+	}
 
+	[Event.Hotload]
+	public void UpdateHud()
+	{
+		if ( !IsClient )
+			return;
+
+		curHud?.Delete();
+		curHud = new PCHud();
 	}
 
 	public override void ClientJoined( Client client )
