@@ -12,6 +12,17 @@ public partial class PCGame : Game
 
 	public PCGame()
 	{
+		if(IsServer)
+		{
+			AdminList = new string[]
+			{
+				"ItsRifter",
+				"Pixel³",
+				"IanSource2",
+				"Baik"
+			};
+		}
+
 		if(IsClient)
 		{
 			curHud = new PCHud();
@@ -19,13 +30,44 @@ public partial class PCGame : Game
 	}
 
 	[Event.Hotload]
-	public void UpdateHud()
+	public void Hotload()
 	{
-		if ( !IsClient )
+		if ( IsServer )
+		{
+			AdminList = new string[]
+			{
+				"ItsRifter",
+				"Pixel³",
+				"IanSource2",
+				"Baik"
+			};
+		}
+
+		if ( IsClient )
+		{
+			curHud?.Delete();
+			curHud = new PCHud();
+		}
+	}
+
+	public override void DoPlayerNoclip( Client player )
+	{
+		if ( AdminList == null || !AdminList.Contains( player.Name ) )
 			return;
 
-		curHud?.Delete();
-		curHud = new PCHud();
+		if ( player.Pawn is Player basePlayer )
+		{
+			if ( basePlayer.DevController is NoclipController )
+			{
+				Log.Info( player.Name + " Noclip Mode Off" );
+				basePlayer.DevController = null;
+			}
+			else
+			{
+				Log.Info( player.Name + " Noclip Mode On" );
+				basePlayer.DevController = new NoclipController();
+			}
+		}
 	}
 
 	public override void ClientJoined( Client client )

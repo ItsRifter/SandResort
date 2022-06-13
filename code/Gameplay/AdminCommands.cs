@@ -6,9 +6,24 @@ using System.Threading.Tasks;
 using Sandbox;
 public partial class PCGame
 {
-	[ConCmd.Admin("pc_coins_give")]
+	//Hardcoded for now until we can figure out an web admin thing
+	public static string[] AdminList { get; protected set; }
+
+	[ConCmd.Server("pc_coins_give")]
 	public static void AdminGiveCoins(int amount, string target = "")
 	{
+		if(amount <= 0 || amount >= 10000000 )
+		{
+			Log.Error( "Invalid amount" );
+			return;
+		}
+
+		if ( AdminList == null || !AdminList.Contains( ConsoleSystem.Caller.Name ) )
+		{
+			Log.Error( "You do not have access to this command" );
+			return;
+		}
+
 		var player = ConsoleSystem.Caller.Pawn as PCPawn;
 
 		if ( player == null )
@@ -25,7 +40,7 @@ public partial class PCGame
 			
 			foreach ( var client in Client.All )
 			{
-				if(client.Name.Contains(target) )
+				if(client.Name.ToLower().Contains(target) )
 				{
 					if ( targetPlayer != null )
 					{
@@ -50,9 +65,21 @@ public partial class PCGame
 		}
 	}
 
-	[ConCmd.Admin( "pc_coins_take" )]
+	[ConCmd.Server( "pc_coins_take" )]
 	public static void AdminTakeCoins( int amount, string target = "" )
 	{
+		if ( amount <= 0 || amount >= 10000000 )
+		{
+			Log.Error( "Invalid amount" );
+			return;
+		}
+
+		if ( AdminList == null || !AdminList.Contains( ConsoleSystem.Caller.Name ) )
+		{
+			Log.Error( "You do not have access to this command" );
+			return;
+		}
+
 		var player = ConsoleSystem.Caller.Pawn as PCPawn;
 
 		if ( player == null )
@@ -69,7 +96,7 @@ public partial class PCGame
 
 			foreach ( var client in Client.All )
 			{
-				if ( client.Name.Contains( target ) )
+				if ( client.Name.ToLower().Contains( target ) )
 				{
 					if ( targetPlayer != null )
 					{

@@ -15,6 +15,8 @@ public partial class PCHud : RootPanel
 		AddChild<Scoreboard<ScoreboardEntry>>();
 
 		AddChild<CoinTracker>();
+
+		AddChild<ChatBox>();
 	}
 }
 

@@ -102,6 +102,11 @@ public partial class PCPawn : Player
 		base.FrameSimulate( cl );
 	}
 
+	public override void OnAnimEventFootstep( Vector3 pos, int foot, float volume )
+	{
+		base.OnAnimEventFootstep( pos, foot, volume * 10 );
+	}
+
 	//Creates a player ragdoll with clothing (if any) at force with bone index
 	[ClientRpc]
 	public void CreatePlayerRagdoll( Vector3 force, int forceBone )
