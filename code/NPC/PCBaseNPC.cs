@@ -96,7 +96,7 @@ public partial class PCBaseNPC : AnimatedEntity
 
 	public virtual void InteractWith(PCPawn player)
 	{
-		player.previewProp = new BeerBottle();
+		player.previewProp = TypeLibrary.Create<PCSuiteProps>( "ClassicRadio" );
 		player.previewProp.IsPreview = true;
 		player.previewProp.Spawn();
 	}

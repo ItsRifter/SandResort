@@ -87,7 +87,7 @@ public partial class PCPawn : Player
 				{
 					UseFail();
 					return;
-				} 
+				}
 				else if (Using is PCBaseNPC npc)
 					npc.InteractWith(this);
 

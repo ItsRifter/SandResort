@@ -1,7 +1,7 @@
 {
   "Title": "Play \u0026 Chill",
   "Type": "game",
-  "Org": "rifter",
+  "Org": "playchill",
   "Ident": "playnchill",
   "Schema": 1,
   "HasAssets": true,
@@ -14,9 +14,9 @@
     "MaxPlayers": 64,
     "MinPlayers": 1,
     "GameNetworkType": 0,
-    "MapSelect": 0,
+    "MapSelect": 3,
     "MapList": [
-      "facepunch.construct"
+      "playchill.pc_lobby"
     ],
     "RankType": 0,
     "PerMapRanking": false,
