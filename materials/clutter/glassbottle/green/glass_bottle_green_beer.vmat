@@ -1,0 +1,42 @@
+// THIS FILE IS AUTO-GENERATED
+
+Layer0
+{
+	shader "simple_liquid.vfx"
+
+	//---- Empty Bottle ----
+	F_NO_LIQUID 1
+
+	//---- Fog ----
+	g_bFogEnabled "1"
+
+	//---- Lighting ----
+	g_flDirectionalLightmapMinZ "0.050"
+	g_flDirectionalLightmapStrength "1.000"
+
+	//---- Liquid ----
+	g_flFresnelGlassThickness "0.288"
+	g_flMaskMaximum "0.982"
+	g_flMaskMinimum "0.450"
+	g_flTransmissiveStrength "0.000"
+	TextureLiquidMask "materials/clutter/glassbottle/glass_bottle_liquid_mask.png"
+
+	//---- Refraction ----
+	g_flChromaticDispersion "0.050"
+	g_flCubeRefractBrightness "1.000"
+	g_flCubeRefractTransparency "0.054"
+	g_flRefractRoughnessMultiplier "0.276"
+
+	//---- Simple Material ----
+	TextureColorA "materials/clutter/glassbottle/glass_color/green/glass_bottle_green_beer_color.png"
+	TextureMetalnessA "[0.000000 0.000000 0.000000 0.000000]"
+	TextureNormalA "materials/clutter/glassbottle/glass_bottle_normal.png"
+	TextureRoughnessA "materials/clutter/glassbottle/glass_bottle_rough.png"
+
+	//---- Texture Coordinates ----
+	g_nScaleTexCoordUByModelScaleAxis "0"
+	g_nScaleTexCoordVByModelScaleAxis "0"
+	g_vTexCoordOffset "[0.000 0.000]"
+	g_vTexCoordScale "[1.000 1.000]"
+	g_vTexCoordScrollSpeed "[0.000 0.000]"
+}
