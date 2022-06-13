@@ -5,15 +5,12 @@ using System.Linq;
 
 public partial class PCPawn : Player
 {
+	public TimeSince timeLastRespawn;
 
 	DamageInfo lastDMGInfo;
 
 	//Don't allow players to spam death and respawning
 	TimeSince timeLastDied;
-	public TimeSince timeLastRespawn;
-
-	public ModelEntity playerCorpse { get; set; }
-
 	public override void Spawn()
 	{
 		base.Spawn();
@@ -71,7 +68,57 @@ public partial class PCPawn : Player
 
 	public void SimulateActions()
 	{
+		TickPlayerUse();
 
+		SimulatePropPlacement();
+	}
+
+	protected override void TickPlayerUse()
+	{
+		if ( !Host.IsServer ) return;
+
+		using ( Prediction.Off() )
+		{
+			if ( Input.Pressed( InputButton.Use ) )
+			{
+				Using = FindUsable();
+
+				if ( Using == null )
+				{
+					UseFail();
+					return;
+				} 
+				else if (Using is PCBaseNPC npc)
+					npc.InteractWith(this);
+
+			}
+
+			if ( !Input.Down( InputButton.Use ) )
+			{
+				StopUsing();
+				return;
+			}
+
+			if ( !Using.IsValid() )
+				return;
+
+			if ( Using is IUse use && use.OnUse( this ) )
+				return;
+
+			StopUsing();
+		}
+	}
+
+	protected override Entity FindUsable()
+	{
+		var tr = Trace.Ray( EyePosition, EyePosition + EyeRotation.Forward * 85 )
+			.Ignore( this )
+			.Run();
+
+		if ( tr.Entity is PCBaseNPC npc )
+			return npc;
+
+		return base.FindUsable();
 	}
 
 	public void SimulateActionsWhilstDead()
