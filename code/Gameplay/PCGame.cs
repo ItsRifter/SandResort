@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 
 public partial class PCGame : Game
 {
-	PCHud curHud;
+	public static PCGame Instance { get; private set; } = Current as PCGame;
 
+	PCHud curHud;
 	public PCGame()
 	{
 		if(IsServer)
@@ -18,7 +19,6 @@ public partial class PCGame : Game
 			{
 				"ItsRifter",
 				"Pixel³",
-				"IanSource2",
 				"Baik"
 			};
 		}
@@ -38,7 +38,6 @@ public partial class PCGame : Game
 			{
 				"ItsRifter",
 				"Pixel³",
-				"IanSource2",
 				"Baik"
 			};
 		}

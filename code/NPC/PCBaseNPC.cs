@@ -21,8 +21,8 @@ public partial class PCBaseNPC : AnimatedEntity
 			npc.Delete();
 	}
 
-	NPCPath Path = new NPCPath();
-	public NPCSteer Steering;
+	//NPCPath Path = new NPCPath();
+	//public NPCSteer Steering;
 
 	public override void Spawn()
 	{
@@ -37,7 +37,7 @@ public partial class PCBaseNPC : AnimatedEntity
 		EnableHitboxes = true;
 		EnableLagCompensation = true;
 
-		Steering = new NPCWander();
+		//Steering = new NPCWander();
 
 		SetBodyGroup( 1, 0 );
 	}
@@ -52,7 +52,7 @@ public partial class PCBaseNPC : AnimatedEntity
 	public void Tick()
 	{
 		//using var _a = Profile.Scope( "NpcTest::Tick" );
-/*
+		/*
 		InputVelocity = 0;
 
 		if ( Steering != null )
@@ -86,19 +86,17 @@ public partial class PCBaseNPC : AnimatedEntity
 			Rotation = Rotation.Lerp( Rotation, targetRotation, turnSpeed * Time.Delta * 20.0f );
 		}*/
 
-		var animHelper = new NPCHelper( this );
+		/*var animHelper = new NPCHelper( this );
 
 		LookDir = Vector3.Lerp( LookDir, InputVelocity.WithZ( 0 ) * 1000, Time.Delta * 100.0f );
 		animHelper.WithLookAt( EyePosition + LookDir );
 		animHelper.WithVelocity( Velocity );
-		animHelper.WithWishVelocity( InputVelocity );
+		animHelper.WithWishVelocity( InputVelocity );*/
 	}
 
 	public virtual void InteractWith(PCPawn player)
 	{
-		player.previewProp = TypeLibrary.Create<PCSuiteProps>( "ClassicRadio" );
-		player.previewProp.IsPreview = true;
-		player.previewProp.Spawn();
+		//Do stuff upon interaction
 	}
 
 	protected virtual void Move( float timeDelta )

@@ -6,21 +6,21 @@ using System.Threading.Tasks;
 using Sandbox;
 public partial class PCGame
 {
-	//Hardcoded for now until we can figure out an web admin thing
+	//Hardcoded for now until we can figure out an websocket admin way
 	public static string[] AdminList { get; protected set; }
 
-	[ConCmd.Server("pc_coins_give")]
-	public static void AdminGiveCoins(int amount, string target = "")
+	[ConCmd.Server( "pc_coins_give" )]
+	public static void AdminGiveCoins( int amount, string target = "" )
 	{
-		if(amount <= 0 || amount >= 10000000 )
-		{
-			Log.Error( "Invalid amount" );
-			return;
-		}
-
 		if ( AdminList == null || !AdminList.Contains( ConsoleSystem.Caller.Name ) )
 		{
 			Log.Error( "You do not have access to this command" );
+			return;
+		}
+
+		if ( amount <= 0 || amount >= 10000000 )
+		{
+			Log.Error( "Invalid amount" );
 			return;
 		}
 
@@ -29,7 +29,7 @@ public partial class PCGame
 		if ( player == null )
 			return;
 
-		if( string.IsNullOrEmpty(target) )
+		if ( string.IsNullOrEmpty( target ) )
 		{
 			Log.Info( $"{player.Client.Name} gave themself {amount} PlayCoins" );
 			player.GiveCoins( amount );
@@ -37,16 +37,16 @@ public partial class PCGame
 		else
 		{
 			PCPawn targetPlayer = null;
-			
+
 			foreach ( var client in Client.All )
 			{
-				if(client.Name.ToLower().Contains(target) )
+				if ( client.Name.ToLower().Contains( target ) )
 				{
 					if ( targetPlayer != null )
 					{
 						Log.Error( "There are multiple targets with this name, be more specific" );
 						return;
-					} 
+					}
 					else
 					{
 						targetPlayer = client.Pawn as PCPawn;
@@ -54,11 +54,12 @@ public partial class PCGame
 				}
 			}
 
-			if( targetPlayer != null)
+			if ( targetPlayer != null )
 			{
 				Log.Info( $"{player.Client.Name} gave {targetPlayer.Client.Name} {amount} PlayCoins" );
 				targetPlayer.GiveCoins( amount );
-			} else
+			}
+			else
 			{
 				Log.Error( "No target found" );
 			}
@@ -121,5 +122,32 @@ public partial class PCGame
 			}
 		}
 	}
-}
 
+	[ConCmd.Server( "pc_spawn_npc" )]
+	public static void AdminSpawnNPC( string npcName )
+	{
+		if ( AdminList == null || !AdminList.Contains( ConsoleSystem.Caller.Name ) )
+		{
+			Log.Error( "You do not have access to this command" );
+			return;
+		}
+
+		if ( TypeLibrary.GetTypeByName<PCBaseNPC>( npcName ) == null )
+			return;
+
+		var player = ConsoleSystem.Caller.Pawn as PCPawn;
+
+		if ( player == null )
+			return;
+
+		var tr = Trace.Ray( player.EyePosition, player.EyePosition + player.EyeRotation.Forward * 125 )
+			.Ignore( player )
+			.Run();
+
+		var npc = TypeLibrary.Create<PCBaseNPC>( npcName );
+
+		npc.Rotation = player.Rotation.Inverse;
+		npc.Position = tr.EndPosition;
+		npc.Spawn();
+	}
+}
