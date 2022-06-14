@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Sandbox;
 
-public partial class PCInventorySystem : IBaseInventory
+public partial class PHInventorySystem : IBaseInventory
 {
 	public Entity Owner { get; init; }
 	public List<Entity> HoldingList = new List<Entity>();
@@ -26,7 +26,7 @@ public partial class PCInventorySystem : IBaseInventory
 		}
 	}
 
-	public PCInventorySystem( Entity owner )
+	public PHInventorySystem( Entity owner )
 	{
 		Owner = owner;
 	}

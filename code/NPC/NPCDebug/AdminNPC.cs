@@ -5,13 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Sandbox;
 
-public partial class AdminNPC : PCBaseNPC
+public partial class AdminNPC : PHBaseNPC
 {
-	public override void InteractWith( PCPawn player )
+	public override void InteractWith( PHPawn player )
 	{
 		base.InteractWith( player );
 
-		if ( !PCGame.AdminList.Contains( player.Client.Name ) )
+		if ( !PHGame.AdminList.Contains( player.Client.Name ) )
 			return;
 	}
 }

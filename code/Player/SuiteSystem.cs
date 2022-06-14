@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Sandbox;
 
-public partial class PCPawn
+public partial class PHPawn
 {
-	public PCSuiteProps previewProp;
+	public PHSuiteProps previewProp;
 
 	public void SimulatePropPlacement()
 	{
@@ -25,7 +25,7 @@ public partial class PCPawn
 		{
 			if ( tr.Normal.z != 1 ) return;
 
-			var placedProp = TypeLibrary.Create<PCSuiteProps>( previewProp.GetType().FullName );
+			var placedProp = TypeLibrary.Create<PHSuiteProps>( previewProp.GetType().FullName );
 			placedProp.Model = previewProp.Model;
 			placedProp.Position = previewProp.Position;
 			placedProp.Rotation = previewProp.Rotation;

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Sandbox;
 
-public partial class PCPawn
+public partial class PHPawn
 {
 	[Net]
 	public int PlayCoins { get; protected set; }

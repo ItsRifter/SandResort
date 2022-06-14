@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 
 
-public partial class PCPawn : Player
+public partial class PHPawn : Player
 {
 	public TimeSince timeLastRespawn;
 
@@ -12,11 +12,11 @@ public partial class PCPawn : Player
 	//Don't allow players to spam death and respawning
 	TimeSince timeLastDied;
 
-	public PCInventorySystem PCInventory;
+	public PHInventorySystem PHInventory;
 
-	public PCPawn()
+	public PHPawn()
 	{
-		PCInventory = new PCInventorySystem(this);
+		PHInventory = new PHInventorySystem(this);
 	}
 
 	public override void Spawn()
@@ -52,7 +52,7 @@ public partial class PCPawn : Player
 		//Deletes the corpse if valid
 		DestroyCorpse();
 		
-		if(PCGame.AdminList.Contains(Client.Name))
+		if(PHGame.AdminList.Contains(Client.Name))
 		{
 			var adminGlasses = new ModelEntity();
 			adminGlasses.SetModel( "models/cloth/dealwithitglass/dwi_glass.vmdl" );
@@ -104,7 +104,7 @@ public partial class PCPawn : Player
 					UseFail();
 					return;
 				}
-				else if (Using is PCBaseNPC npc)
+				else if (Using is PHBaseNPC npc)
 					npc.InteractWith(this);
 
 			}
@@ -131,7 +131,7 @@ public partial class PCPawn : Player
 			.Ignore( this )
 			.Run();
 
-		if ( tr.Entity is PCBaseNPC npc )
+		if ( tr.Entity is PHBaseNPC npc )
 			return npc;
 
 		return base.FindUsable();

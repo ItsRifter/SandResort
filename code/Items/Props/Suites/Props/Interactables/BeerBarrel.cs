@@ -4,13 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Sandbox;
-public partial class BeerBarrel : PCSuiteProps
+public partial class BeerBarrel : PHSuiteProps
 {
 	public override Model WorldModel => Model.Load( "models/clutter/barrel/wood_barrel.vmdl" );
 
+	public override int SuiteItemCost => 500;
+
 	int limitedUses = 20;
 	TimeSince timeLastDrank;
-	public override void Interact( PCPawn player )
+	public override void Interact( PHPawn player )
 	{
 		base.Interact( player );
 

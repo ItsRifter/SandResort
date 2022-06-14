@@ -7,10 +7,14 @@ using Sandbox;
 using Sandbox.UI;
 using Sandbox.UI.Construct;
 
-public partial class PCHud : RootPanel
+public partial class PHHud : RootPanel
 {
-	public PCHud()
+	public static PHHud Current;
+
+	public PHHud()
 	{
+		Current = this;
+
 		//TEMPORARY, We should create our own scoreboard
 		AddChild<Scoreboard<ScoreboardEntry>>();
 
@@ -18,6 +22,15 @@ public partial class PCHud : RootPanel
 
 		AddChild<ChatBox>();
 		AddChild<Shop>();
+	}
+
+	[Event.Hotload]
+	public void UpdateHud()
+	{
+		Current?.Delete();
+		Current = null;
+
+		new PHHud();
 	}
 }
 

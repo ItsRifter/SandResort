@@ -6,15 +6,15 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-public partial class PCGame : Game
+public partial class PHGame : Game
 {
-	public static PCGame Instance { get; private set; } = Current as PCGame;
+	public static PHGame Instance { get; private set; } = Current as PHGame;
 
-	PCHud curHud;
-	public PCGame()
+	public PHGame()
 	{
 		if(IsServer)
 		{
+		
 			AdminList = new string[]
 			{
 				"ItsRifter",
@@ -23,10 +23,8 @@ public partial class PCGame : Game
 			};
 		}
 
-		if(IsClient)
-		{
-			curHud = new PCHud();
-		}
+		if ( IsClient )
+			new PHHud();
 	}
 
 	[Event.Hotload]
@@ -84,7 +82,7 @@ public partial class PCGame : Game
 	{
 		base.ClientJoined( client );
 
-		var pawn = new PCPawn();
+		var pawn = new PHPawn();
 		pawn.Spawn();
 
 		client.Pawn = pawn;
@@ -96,7 +94,7 @@ public partial class PCGame : Game
 
 	public override void DoPlayerSuicide( Client cl )
 	{
-		if(cl.Pawn is PCPawn player)
+		if(cl.Pawn is PHPawn player)
 		{
 			if( player.timeLastRespawn >= 3.0f)
 				base.DoPlayerSuicide( cl );

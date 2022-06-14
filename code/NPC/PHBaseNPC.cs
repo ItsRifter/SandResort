@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Sandbox;
 
-public partial class PCBaseNPC : AnimatedEntity
+public partial class PHBaseNPC : AnimatedEntity
 {
 	public virtual string ModelPath => "models/citizen/citizen.vmdl"; 
 
@@ -17,7 +17,7 @@ public partial class PCBaseNPC : AnimatedEntity
 	[ConCmd.Admin( "pd_npc_clear" )]
 	public static void ClearAllNPCs()
 	{
-		foreach ( var npc in All.OfType<PCBaseNPC>().ToArray() )
+		foreach ( var npc in All.OfType<PHBaseNPC>().ToArray() )
 			npc.Delete();
 	}
 
@@ -94,7 +94,7 @@ public partial class PCBaseNPC : AnimatedEntity
 		animHelper.WithWishVelocity( InputVelocity );*/
 	}
 
-	public virtual void InteractWith(PCPawn player)
+	public virtual void InteractWith(PHPawn player)
 	{
 		//Do stuff upon interaction
 	}

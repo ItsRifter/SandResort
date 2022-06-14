@@ -5,13 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Sandbox;
 
-public partial class ClassicRadio : PCSuiteProps
+public partial class ClassicRadio : PHSuiteProps
 {
 	public override Model WorldModel => Model.Load( "models/radio/oldradio/oldradio.vmdl" );
+	public override int SuiteItemCost => 250;
 
 	Sound playingSound;
 
-	public override void Interact( PCPawn player )
+	public override void Interact( PHPawn player )
 	{
 		base.Interact( player );
 

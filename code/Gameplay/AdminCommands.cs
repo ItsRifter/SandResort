@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Sandbox;
-public partial class PCGame
+public partial class PHGame
 {
 	//Hardcoded for now until we can figure out an websocket admin way
 	public static string[] AdminList { get; protected set; }
@@ -26,7 +26,7 @@ public partial class PCGame
 			return;
 		}
 
-		var player = ConsoleSystem.Caller.Pawn as PCPawn;
+		var player = ConsoleSystem.Caller.Pawn as PHPawn;
 
 		if ( player == null )
 			return;
@@ -38,7 +38,7 @@ public partial class PCGame
 		}
 		else
 		{
-			PCPawn targetPlayer = null;
+			PHPawn targetPlayer = null;
 
 			foreach ( var client in Client.All )
 			{
@@ -51,7 +51,7 @@ public partial class PCGame
 					}
 					else
 					{
-						targetPlayer = client.Pawn as PCPawn;
+						targetPlayer = client.Pawn as PHPawn;
 					}
 				}
 			}
@@ -83,7 +83,7 @@ public partial class PCGame
 			return;
 		}
 
-		var player = ConsoleSystem.Caller.Pawn as PCPawn;
+		var player = ConsoleSystem.Caller.Pawn as PHPawn;
 
 		if ( player == null )
 			return;
@@ -95,7 +95,7 @@ public partial class PCGame
 		}
 		else
 		{
-			PCPawn targetPlayer = null;
+			PHPawn targetPlayer = null;
 
 			foreach ( var client in Client.All )
 			{
@@ -108,7 +108,7 @@ public partial class PCGame
 					}
 					else
 					{
-						targetPlayer = client.Pawn as PCPawn;
+						targetPlayer = client.Pawn as PHPawn;
 					}
 				}
 			}
@@ -134,10 +134,10 @@ public partial class PCGame
 			return;
 		}
 
-		if ( TypeLibrary.GetTypeByName<PCSuiteProps>( itemSuiteName ) == null )
+		if ( TypeLibrary.GetTypeByName<PHSuiteProps>( itemSuiteName ) == null )
 			return;
 
-		var player = ConsoleSystem.Caller.Pawn as PCPawn;
+		var player = ConsoleSystem.Caller.Pawn as PHPawn;
 
 		if ( player == null )
 			return;
@@ -146,7 +146,7 @@ public partial class PCGame
 			.Ignore( player )
 			.Run();
 
-		var itemSuite = TypeLibrary.Create<PCSuiteProps>( itemSuiteName );
+		var itemSuite = TypeLibrary.Create<PHSuiteProps>( itemSuiteName );
 
 		itemSuite.Rotation = player.Rotation.Inverse;
 		itemSuite.Position = tr.EndPosition;
@@ -162,10 +162,10 @@ public partial class PCGame
 			return;
 		}
 
-		if ( TypeLibrary.GetTypeByName<PCBaseNPC>( npcName ) == null )
+		if ( TypeLibrary.GetTypeByName<PHBaseNPC>( npcName ) == null )
 			return;
 
-		var player = ConsoleSystem.Caller.Pawn as PCPawn;
+		var player = ConsoleSystem.Caller.Pawn as PHPawn;
 
 		if ( player == null )
 			return;
@@ -174,7 +174,7 @@ public partial class PCGame
 			.Ignore( player )
 			.Run();
 
-		var npc = TypeLibrary.Create<PCBaseNPC>( npcName );
+		var npc = TypeLibrary.Create<PHBaseNPC>( npcName );
 
 		npc.Rotation = player.Rotation.Inverse;
 		npc.Position = tr.EndPosition;

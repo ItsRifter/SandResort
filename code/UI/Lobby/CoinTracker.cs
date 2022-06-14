@@ -24,7 +24,7 @@ public partial class CoinTracker : Panel
 	{
 		base.Tick();
 
-		var player = Local.Client.Pawn as PCPawn;
+		var player = Local.Client.Pawn as PHPawn;
 
 		if ( player == null ) 
 			return;

@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Sandbox;
-public partial class PCSuiteProps : Prop, IUse
+public partial class PHSuiteProps : Prop, IUse
 {
+	public virtual int SuiteItemCost => 1;
 	public virtual Model WorldModel => null;
 
 	public bool IsPreview = false;
@@ -40,7 +41,7 @@ public partial class PCSuiteProps : Prop, IUse
 			return;
 	}
 
-	public virtual void Interact( PCPawn player )
+	public virtual void Interact( PHPawn player )
 	{
 		//Do interactive stuff
 	}
@@ -50,7 +51,7 @@ public partial class PCSuiteProps : Prop, IUse
 		if ( !IsUsable( user ) )
 			return false;
 
-		if ( user is PCPawn player )
+		if ( user is PHPawn player )
 		{
 			Interact( player );
 			return true;

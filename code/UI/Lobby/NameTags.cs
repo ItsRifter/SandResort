@@ -7,7 +7,7 @@ using System.Linq;
 /// When a player is within radius of the camera we add this to their entity.
 /// We remove it again when they go out of range.
 /// </summary>
-internal class NameTagComponent : EntityComponent<PCPawn>
+internal class NameTagComponent : EntityComponent<PHPawn>
 {
 	NameTags NameTag;
 
@@ -41,7 +41,7 @@ internal class NameTagComponent : EntityComponent<PCPawn>
 	[Event.Frame]
 	public static void SystemUpdate()
 	{
-		foreach ( var player in Sandbox.Entity.All.OfType<PCPawn>() )
+		foreach ( var player in Sandbox.Entity.All.OfType<PHPawn>() )
 		{
 			if ( player.IsLocalPawn )
 			{

@@ -16,7 +16,7 @@ public interface IPlayableDevice
 	void EndVideo();
 }
 
-public partial class VideoAudioPlayer : PCSuiteProps, IPlayableDevice
+public partial class VideoAudioPlayer : PHSuiteProps, IPlayableDevice
 {
 	public string URLToWebSocket { get; } = "";
 

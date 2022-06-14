@@ -1,8 +1,8 @@
 {
-  "Title": "Play \u0026 Chill",
+  "Title": "PlayHome",
   "Type": "game",
   "Org": "playchill",
-  "Ident": "playnchill",
+  "Ident": "playhome",
   "Schema": 1,
   "HasAssets": true,
   "AssetsPath": "",

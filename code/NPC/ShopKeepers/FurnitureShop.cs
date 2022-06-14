@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Sandbox;
 
-public partial class FurnitureShop : PCBaseNPC
+public partial class FurnitureShop : PHBaseNPC
 {
-	public override void InteractWith( PCPawn player )
+	public override void InteractWith( PHPawn player )
 	{
 		base.InteractWith( player );
 
