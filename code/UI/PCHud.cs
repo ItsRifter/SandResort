@@ -17,6 +17,7 @@ public partial class PCHud : RootPanel
 		AddChild<CoinTracker>();
 
 		AddChild<ChatBox>();
+		AddChild<Shop>();
 	}
 }
 

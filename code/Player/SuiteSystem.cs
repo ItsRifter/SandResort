@@ -13,7 +13,7 @@ public partial class PCPawn
 	{
 		if ( previewProp == null ) return;
 
-		var tr = Trace.Ray( EyePosition, EyePosition + EyeRotation.Forward * 100 )
+		var tr = Trace.Ray( EyePosition, EyePosition + EyeRotation.Forward * 150 )
 			.Ignore( this )
 			.Ignore( previewProp )
 			.Radius( 2 )
