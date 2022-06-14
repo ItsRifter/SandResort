@@ -52,6 +52,14 @@ public partial class PCPawn : Player
 		//Deletes the corpse if valid
 		DestroyCorpse();
 		
+		if(PCGame.AdminList.Contains(Client.Name))
+		{
+			var adminGlasses = new ModelEntity();
+			adminGlasses.SetModel( "models/cloth/dealwithitglass/dwi_glass.vmdl" );
+			adminGlasses.SetParent( this, true );
+			
+			adminGlasses.EnableHideInFirstPerson = true;
+		}
 
 		timeLastRespawn = 0;
 	}
