@@ -9,6 +9,8 @@ public partial class PCGame
 	//Hardcoded for now until we can figure out an websocket admin way
 	public static string[] AdminList { get; protected set; }
 
+	static float eyeDist = 150.0f;
+
 	[ConCmd.Server( "pc_coins_give" )]
 	public static void AdminGiveCoins( int amount, string target = "" )
 	{
@@ -123,6 +125,34 @@ public partial class PCGame
 		}
 	}
 
+	[ConCmd.Server( "pc_spawn_item_suite" )]
+	public static void AdminSpawnItem( string itemSuiteName )
+	{
+		if ( AdminList == null || !AdminList.Contains( ConsoleSystem.Caller.Name ) )
+		{
+			Log.Error( "You do not have access to this command" );
+			return;
+		}
+
+		if ( TypeLibrary.GetTypeByName<PCSuiteProps>( itemSuiteName ) == null )
+			return;
+
+		var player = ConsoleSystem.Caller.Pawn as PCPawn;
+
+		if ( player == null )
+			return;
+
+		var tr = Trace.Ray( player.EyePosition, player.EyePosition + player.EyeRotation.Forward * eyeDist )
+			.Ignore( player )
+			.Run();
+
+		var itemSuite = TypeLibrary.Create<PCSuiteProps>( itemSuiteName );
+
+		itemSuite.Rotation = player.Rotation.Inverse;
+		itemSuite.Position = tr.EndPosition;
+		itemSuite.Spawn();
+	}
+
 	[ConCmd.Server( "pc_spawn_npc" )]
 	public static void AdminSpawnNPC( string npcName )
 	{
@@ -140,7 +170,7 @@ public partial class PCGame
 		if ( player == null )
 			return;
 
-		var tr = Trace.Ray( player.EyePosition, player.EyePosition + player.EyeRotation.Forward * 125 )
+		var tr = Trace.Ray( player.EyePosition, player.EyePosition + player.EyeRotation.Forward * eyeDist )
 			.Ignore( player )
 			.Run();
 

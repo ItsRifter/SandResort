@@ -11,13 +11,8 @@ public partial class AdminNPC : PCBaseNPC
 	{
 		base.InteractWith( player );
 
-
 		if ( !PCGame.AdminList.Contains( player.Client.Name ) )
 			return;
-
-		player.previewProp = TypeLibrary.Create<PCSuiteProps>( "BeerBarrel" );
-		player.previewProp.IsPreview = true;
-		player.previewProp.Spawn();
 	}
 }
 

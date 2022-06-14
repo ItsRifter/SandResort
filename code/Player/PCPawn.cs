@@ -11,6 +11,14 @@ public partial class PCPawn : Player
 
 	//Don't allow players to spam death and respawning
 	TimeSince timeLastDied;
+
+	public PCInventorySystem PCInventory;
+
+	public PCPawn()
+	{
+		PCInventory = new PCInventorySystem(this);
+	}
+
 	public override void Spawn()
 	{
 		base.Spawn();

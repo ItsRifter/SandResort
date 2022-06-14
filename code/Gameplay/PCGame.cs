@@ -41,12 +41,23 @@ public partial class PCGame : Game
 				"Baik"
 			};
 		}
+	}
 
-		if ( IsClient )
+	public override void DoPlayerDevCam( Client client )
+	{
+		if ( AdminList == null || !AdminList.Contains( client.Name ) )
+			return;
+
+		var camera = client.Components.Get<DevCamera>( true );
+
+		if ( camera == null )
 		{
-			curHud?.Delete();
-			curHud = new PCHud();
+			camera = new DevCamera();
+			client.Components.Add( camera );
+			return;
 		}
+
+		camera.Enabled = !camera.Enabled;
 	}
 
 	public override void DoPlayerNoclip( Client player )
