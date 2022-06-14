@@ -7,7 +7,7 @@ using Sandbox;
 
 public partial class ClassicRadio : PCSuiteProps
 {
-	public override Model WorldModel => Model.Load( "models/clutter/glassbottle/glassbottle.vmdl" );
+	public override Model WorldModel => Model.Load( "models/radio/oldradio/oldradio.vmdl" );
 
 	Sound playingSound;
 
