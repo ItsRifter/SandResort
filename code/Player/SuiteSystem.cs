@@ -9,6 +9,12 @@ public partial class PHPawn
 {
 	public PHSuiteProps previewProp;
 
+	public bool CheckPlacementSurface(Surface surface)
+	{
+
+		return true;
+	}
+
 	public void SimulatePropPlacement()
 	{
 		if ( previewProp == null ) return;
@@ -26,7 +32,7 @@ public partial class PHPawn
 		else
 			previewProp.RenderColor = new Color( 0, 255, 0, 0.5f );
 
-		Log.Info( tr.Normal );
+		Log.Info( CheckPlacementSurface( tr.Surface ) );
 
 		if (Input.Pressed(InputButton.PrimaryAttack))
 		{

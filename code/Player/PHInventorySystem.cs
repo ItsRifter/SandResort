@@ -31,6 +31,24 @@ public partial class PHInventorySystem : IBaseInventory
 		Owner = owner;
 	}
 
+	public bool AddCosmetic(Entity ent)
+	{
+		Host.AssertServer();
+
+		if ( ent.Owner != null )
+			return false;
+
+		if ( ent is not BaseCarriable carriable )
+			return false;
+
+		if ( !carriable.CanCarry( Owner ) )
+			return false;
+		
+		carriable.OnCarryStart( Owner );
+
+		return true;
+	}
+
 	public bool Add( Entity ent, bool makeactive = false )
 	{
 		Host.AssertServer();

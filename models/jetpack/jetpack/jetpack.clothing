@@ -4,7 +4,7 @@
 	{
 		Title = ""
 		Subtitle = ""
-		Category = 0
+		Category = 6
 		Model = resource:"models/jetpack/jetpack/jetpack.vmdl"
 		SkinMaterial = null
 		EyesMaterial = null

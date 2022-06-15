@@ -181,4 +181,25 @@ public partial class PHGame
 		npc.Position = tr.EndPosition;
 		npc.Spawn();
 	}
+
+	[ConCmd.Server( "ph_item_give" )]
+	public static void AdminGiveItem( string itemName )
+	{
+		if ( !Instance.AdminList.Contains( ConsoleSystem.Caller.Name ) )
+			return;
+		
+		var player = ConsoleSystem.Caller.Pawn as PHPawn;
+
+		if ( player == null )
+			return;
+
+		if ( TypeLibrary.GetTypeByName<PHUsableItemBase>( itemName ) == null )
+			return;
+
+		var item = TypeLibrary.Create<PHUsableItemBase>( itemName );
+		item.SetParent( player, true );
+
+		player.PHInventory.AddCosmetic( item );
+
+	}
 }

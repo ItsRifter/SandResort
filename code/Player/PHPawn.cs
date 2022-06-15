@@ -88,6 +88,8 @@ public partial class PHPawn : Player
 			else if ( LifeState == LifeState.Dead )
 				SimulateActionsWhilstDead();
 		}
+
+		SimulateActiveChild( cl, ActiveChild );
 	}
 
 	void SimulateActions()
