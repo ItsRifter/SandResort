@@ -7,14 +7,15 @@ using Sandbox;
 
 public partial class PHBaseNPC : AnimatedEntity
 {
-	public virtual string ModelPath => "models/citizen/citizen.vmdl"; 
+	public virtual string NPCName => "Base NPC";
+	public virtual string ModelPath => "models/citizen/citizen.vmdl";
 
 	DamageInfo lastDMG;
 
 	[ConVar.Replicated]
-	public static bool pd_nav_drawpath { get; set; }
+	public static bool ph_nav_drawpath { get; set; }
 
-	[ConCmd.Admin( "pd_npc_clear" )]
+	[ConCmd.Admin( "ph_npc_clear" )]
 	public static void ClearAllNPCs()
 	{
 		foreach ( var npc in All.OfType<PHBaseNPC>().ToArray() )

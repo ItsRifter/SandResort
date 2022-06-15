@@ -5,13 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Sandbox;
 
-public partial class AdminNPC : ShopKeeperBase
+public partial class ElectricShop : ShopKeeperBase
 {
-	public override string NPCName => "Admin Test Shop";
+	public override string NPCName => "Electrical Shop";
 
 	public override void InteractWith( PHPawn player )
 	{
 		base.InteractWith( player );
 	}
 }
-

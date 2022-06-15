@@ -21,9 +21,16 @@ public partial class PHPawn
 
 		previewProp.Position = tr.EndPosition;
 
-		if(Input.Pressed(InputButton.PrimaryAttack))
+		if ( tr.Normal.z != 1 || FindInBox( previewProp.WorldSpaceBounds ).Count() > 0 )
+			previewProp.RenderColor = new Color( 165, 0, 0, 0.5f);
+		else
+			previewProp.RenderColor = new Color( 0, 255, 0, 0.5f );
+
+		Log.Info( tr.Normal );
+
+		if (Input.Pressed(InputButton.PrimaryAttack))
 		{
-			if ( tr.Normal.z != 1 ) return;
+			if ( tr.Normal.z != 1 || FindInBox( previewProp.WorldSpaceBounds ).Count() > 0 ) return;
 
 			var placedProp = TypeLibrary.Create<PHSuiteProps>( previewProp.GetType().FullName );
 			placedProp.Model = previewProp.Model;

@@ -22,10 +22,10 @@ public partial class PHGame : Game
 		{
 			AllSuiteProps = new List<string>();
 
-			AdminList = new string[]
+			AdminList = new List<string>()
 			{
 				"ItsRifter",
-				"Pixel³",
+				"Self Proclaimed God",
 				"Baik"
 			};
 
@@ -47,10 +47,10 @@ public partial class PHGame : Game
 	{
 		if ( IsServer )
 		{
-			AdminList = new string[]
+			AdminList = new List<string>()
 			{
 				"ItsRifter",
-				"Pixel³",
+				"Self Proclaimed God",
 				"Baik"
 			};
 

@@ -7,14 +7,16 @@ using Sandbox;
 public partial class PHGame
 {
 	//Hardcoded for now until we can figure out an websocket admin way
-	public static string[] AdminList { get; protected set; }
+	
+	[Net]
+	public IList<string> AdminList { get; protected set; }
 
 	static float eyeDist = 150.0f;
 
 	[ConCmd.Server( "ph_coins_give" )]
 	public static void AdminGiveCoins( int amount, string target = "" )
 	{
-		if ( AdminList == null || !AdminList.Contains( ConsoleSystem.Caller.Name ) )
+		if ( Instance.AdminList == null || !Instance.AdminList.Contains( ConsoleSystem.Caller.Name ) )
 		{
 			Log.Error( "You do not have access to this command" );
 			return;
@@ -77,7 +79,7 @@ public partial class PHGame
 			return;
 		}
 
-		if ( AdminList == null || !AdminList.Contains( ConsoleSystem.Caller.Name ) )
+		if ( Instance.AdminList == null || !Instance.AdminList.Contains( ConsoleSystem.Caller.Name ) )
 		{
 			Log.Error( "You do not have access to this command" );
 			return;
@@ -128,7 +130,7 @@ public partial class PHGame
 	[ConCmd.Server( "ph_spawn_item_suite" )]
 	public static void AdminSpawnItem( string itemSuiteName )
 	{
-		if ( AdminList == null || !AdminList.Contains( ConsoleSystem.Caller.Name ) )
+		if ( Instance.AdminList == null || !Instance.AdminList.Contains( ConsoleSystem.Caller.Name ) )
 		{
 			Log.Error( "You do not have access to this command" );
 			return;
@@ -156,13 +158,13 @@ public partial class PHGame
 	[ConCmd.Server( "ph_spawn_npc" )]
 	public static void AdminSpawnNPC( string npcName )
 	{
-		if ( AdminList == null || !AdminList.Contains( ConsoleSystem.Caller.Name ) )
+		if ( Instance.AdminList == null || !Instance.AdminList.Contains( ConsoleSystem.Caller.Name ) )
 		{
 			Log.Error( "You do not have access to this command" );
 			return;
 		}
 
-		if ( TypeLibrary.GetTypeByName<PHBaseNPC>( npcName ) == null )
+		if ( TypeLibrary.GetTypeByName<ShopKeeperBase>( npcName ) == null )
 			return;
 
 		var player = ConsoleSystem.Caller.Pawn as PHPawn;
@@ -174,9 +176,8 @@ public partial class PHGame
 			.Ignore( player )
 			.Run();
 
-		var npc = TypeLibrary.Create<PHBaseNPC>( npcName );
+		var npc = TypeLibrary.Create<ShopKeeperBase>( npcName );
 
-		npc.Rotation = player.Rotation.Inverse;
 		npc.Position = tr.EndPosition;
 		npc.Spawn();
 	}

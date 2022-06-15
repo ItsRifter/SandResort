@@ -27,34 +27,51 @@ public partial class Shop : Panel
 
 		Panel shop = ShopMenu.Add.Panel( "shop" );
 		ShopName_Container = shop.Add.Panel( "shop-title" );
-		ShopName = ShopName_Container.Add.Label( "Test Shop", "shop-title" );
+		ShopName = ShopName_Container.Add.Label( "???", "shop-title" );
 
 		ShopItems = shop.Add.Panel( "shop-items" );
-
-
-		/*Panel item = ShopItems.Add.Panel( "shop-item" );
-
-		Panel info = item.Add.Panel( "shop-info" );
-		info.Add.Label( "Beer Barrel - 500", "shop-item-title" );
-		info.Add.Label( "A barrel of beer, don't get too drunk", "shop-item-description" );
-
-		item.AddEventListener( "onclick", () =>
-		{
-			PurchaseItem();
-		} );
-*/
 	}
 
-	public void OpenShop()
+	public void OpenShop( PHPawn player, Type shopType )
 	{
+
+		if ( shopType.FullName == "AdminNPC" && !PHGame.Instance.AdminList.Contains( player.Client.Name ) )
+		{
+			CloseShop();
+			isOpen = false;
+			return;
+		}
+
+		var tempNPC = TypeLibrary.Create<ShopKeeperBase>( shopType.FullName );
+
+		ShopName.SetText( tempNPC.NPCName );
+
+		tempNPC.Delete();
+
 		foreach ( var buyableItem in PHGame.Instance.GetAllSuiteProps() )
 		{
 			var itemDisplay = TypeLibrary.Create<PHSuiteProps>(buyableItem);
 
+			if ( shopType.FullName == "BarShop" && itemDisplay.ShopSeller != PHSuiteProps.ShopType.Bar )
+			{
+				itemDisplay.Delete();
+				continue;
+			}
+			else if ( shopType.FullName == "FurnitureShop" && itemDisplay.ShopSeller != PHSuiteProps.ShopType.Furniture )
+			{
+				itemDisplay.Delete();
+				continue;
+			}
+			else if ( shopType.FullName == "ElectricShop" && itemDisplay.ShopSeller != PHSuiteProps.ShopType.Electric )
+			{
+				itemDisplay.Delete();
+				continue;
+			}
+
 			Panel item = ShopItems.Add.Panel( "shop-item" );
 			
 			Panel info = item.Add.Panel( "shop-info" );
-			info.Add.Label( $"{itemDisplay.SuiteItemName} - {itemDisplay.SuiteItemCost}", "shop-item-title" );
+			info.Add.Label( $"{itemDisplay.SuiteItemName} - ${itemDisplay.SuiteItemCost}", "shop-item-title" );
 			info.Add.Label( itemDisplay.SuiteItemDesc, "shop-item-description" );
 			
 			item.AddEventListener( "onclick", () =>
@@ -71,28 +88,10 @@ public partial class Shop : Panel
 		ShopItems.DeleteChildren();
 	}
 
-	public Panel CreateItem(string title, string description, Action onClick)
-    {
-		Panel item = Add.Panel("shop-item");
-
-		Panel info = item.Add.Panel("shop-info");
-		info.Add.Label(title, "shop-item-title");
-		info.Add.Label(description, "shop-item-description");
-
-		item.AddEventListener("onclick", () =>
-		{
-			onClick();
-		});
-
-		return item;
-	}
-
 	public void PurchaseItem(string itemToBuy)
 	{
 		ConsoleSystem.Run( "ph_buy_item", itemToBuy, Local.Client.NetworkIdent );
-		//PHGame.PurchaseItem("beerbarrel");
 	}
-
 	public override void Tick()
 	{
 		base.Tick();
@@ -112,20 +111,81 @@ public partial class Shop : Panel
 			CloseShop();
 		}
 
-		if (Input.Pressed(InputButton.Use) && lastOpened > 0.3f && tr.Entity is AdminNPC)
+		if (Input.Pressed(InputButton.Use) && lastOpened > 0.3f && tr.Entity is ShopKeeperBase)
 		{
 			isOpen = !isOpen;
 			lastOpened = 0;
 
 			if ( isOpen )
-				OpenShop();
+				OpenShop( player, tr.Entity.GetType() );
 			else
 				CloseShop();
 		}
 
 		SetClass( "openshop", isOpen );
 	}
+}
 
 
+internal class ShopTagComponent : EntityComponent<ShopKeeperBase>
+{
+	ShopTag shopTag;
+
+	protected override void OnActivate()
+	{
+		shopTag = new ShopTag( Entity?.NPCName );
+	}
+
+	protected override void OnDeactivate()
+	{
+		shopTag?.Delete();
+		shopTag = null;
+	}
+
+	[Event.Frame]
+	public void FrameUpdate()
+	{
+		var tx = Entity.GetAttachment( "hat" ) ?? Entity.Transform;
+		tx.Position += Vector3.Up * 5.0f;
+		tx.Rotation = Rotation.LookAt( -CurrentView.Rotation.Forward );
+
+		shopTag.Transform = tx;
+	}
+
+	[Event.Frame]
+	public static void SystemUpdate()
+	{
+		foreach ( var shopKeeper in Sandbox.Entity.All.OfType<ShopKeeperBase>() )
+		{
+			var player = Local.Pawn;
+
+			var shouldRemove = player.Position.Distance( shopKeeper.Position ) > 250;
+			shouldRemove = shouldRemove || player.IsDormant;
+
+			if ( shouldRemove )
+			{
+				var c = player.Components.Get<ShopTagComponent>();
+				c?.Remove();
+				continue;
+			}
+
+			shopKeeper.Components.GetOrCreate<ShopTagComponent>();
+		}
+	}
+}
+
+public class ShopTag : WorldPanel
+{
+	public Label NameLabel;
+
+	internal ShopTag( string title )
+	{
+		StyleSheet.Load( "UI/Styles/Lobby/ShopTag.scss" );
+
+		NameLabel = Add.Label( title, "title" );
+
+		// this is the actual size and shape of the world panel
+		PanelBounds = new Rect( -500, -100, 1000, 200 );
+	}
 }
 

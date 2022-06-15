@@ -19,8 +19,16 @@ public partial class ClassicRadio : PHSuiteProps
 	{
 		base.Interact( player );
 
-		if( playingSound.Finished )
+		if ( playingSound.Finished )
+		{
 			playingSound = PlaySound( "interact_classicradio" );
+		}
+		else if ( !playingSound.Finished )
+		{
+			playingSound.Stop();
+			return;
+		}
+		
 	}
 }
 

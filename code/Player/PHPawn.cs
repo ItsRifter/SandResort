@@ -58,7 +58,7 @@ public partial class PHPawn : Player
 		//Deletes the corpse if valid
 		DestroyCorpse();
 		
-		if(PHGame.AdminList.Contains(Client.Name))
+		if( PHGame.Instance.AdminList.Contains(Client.Name))
 		{
 			var adminGlasses = new ModelEntity();
 			adminGlasses.SetModel( "models/cloth/dealwithitglass/dwi_glass.vmdl" );
@@ -126,7 +126,7 @@ public partial class PHPawn : Player
 					UseFail();
 					return;
 				}
-				else if (Using is PHBaseNPC npc)
+				else if (Using is ShopKeeperBase npc)
 					npc.InteractWith(this);
 
 			}
@@ -149,11 +149,11 @@ public partial class PHPawn : Player
 
 	protected override Entity FindUsable()
 	{
-		var tr = Trace.Ray( EyePosition, EyePosition + EyeRotation.Forward * 85 )
+		var tr = Trace.Ray( EyePosition, EyePosition + EyeRotation.Forward * 125 )
 			.Ignore( this )
 			.Run();
 
-		if ( tr.Entity is PHBaseNPC npc )
+		if ( tr.Entity is ShopKeeperBase npc )
 			return npc;
 
 		return base.FindUsable();

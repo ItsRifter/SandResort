@@ -47,7 +47,7 @@ public class NPCSteer
 
 		foreach ( var ent in Entity.FindInSphere( center, radius ) )
 		{
-			if ( ent is not PHBaseNPC ) continue;
+			if ( ent is not ShopKeeperBase ) continue;
 			if ( ent.IsWorld ) continue;
 
 			var delta = (position - ent.Position).WithZ( 0 );
