@@ -11,7 +11,7 @@ public partial class PHGame
 
 	static float eyeDist = 150.0f;
 
-	[ConCmd.Server( "pc_coins_give" )]
+	[ConCmd.Server( "ph_coins_give" )]
 	public static void AdminGiveCoins( int amount, string target = "" )
 	{
 		if ( AdminList == null || !AdminList.Contains( ConsoleSystem.Caller.Name ) )
@@ -68,7 +68,7 @@ public partial class PHGame
 		}
 	}
 
-	[ConCmd.Server( "pc_coins_take" )]
+	[ConCmd.Server( "ph_coins_take" )]
 	public static void AdminTakeCoins( int amount, string target = "" )
 	{
 		if ( amount <= 0 || amount >= 10000000 )
@@ -125,7 +125,7 @@ public partial class PHGame
 		}
 	}
 
-	[ConCmd.Server( "pc_spawn_item_suite" )]
+	[ConCmd.Server( "ph_spawn_item_suite" )]
 	public static void AdminSpawnItem( string itemSuiteName )
 	{
 		if ( AdminList == null || !AdminList.Contains( ConsoleSystem.Caller.Name ) )
@@ -153,7 +153,7 @@ public partial class PHGame
 		itemSuite.Spawn();
 	}
 
-	[ConCmd.Server( "pc_spawn_npc" )]
+	[ConCmd.Server( "ph_spawn_npc" )]
 	public static void AdminSpawnNPC( string npcName )
 	{
 		if ( AdminList == null || !AdminList.Contains( ConsoleSystem.Caller.Name ) )

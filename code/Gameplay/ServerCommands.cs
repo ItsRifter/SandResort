@@ -7,12 +7,15 @@ using Sandbox;
 
 public partial class PHGame
 {
-
-	public void PurchaseItem(string item)
+	[ConCmd.Server("ph_test")]
+	public static void PurchaseItem(string item, int plyID)
 	{
-		var buyer = Local.Pawn as PHPawn;
+		var buyer = ConsoleSystem.Caller.Pawn as PHPawn;
 
 		if ( buyer == null )
+			return;
+
+		if ( buyer.Client.NetworkIdent != plyID )
 			return;
 
 		var boughtItem = TypeLibrary.Create<PHSuiteProps>( item );

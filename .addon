@@ -16,7 +16,7 @@
     "GameNetworkType": 2,
     "MapSelect": 3,
     "MapList": [
-      "playchill.pc_lobby"
+      "playchill.ph_lobby"
     ],
     "RankType": 0,
     "PerMapRanking": false,

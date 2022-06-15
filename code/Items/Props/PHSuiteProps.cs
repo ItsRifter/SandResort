@@ -6,10 +6,24 @@ using System.Threading.Tasks;
 using Sandbox;
 public partial class PHSuiteProps : Prop, IUse
 {
+	public virtual string SuiteItemName => "Suite Base Item";
+	public virtual string SuiteItemDesc => "A base item for other suite items to derive from";
 	public virtual int SuiteItemCost => 1;
 	public virtual Model WorldModel => null;
 
 	public bool IsPreview = false;
+
+	public enum ShopType
+	{
+		Unspecified,
+		Bar,
+		Furniture,
+		Electric,
+		Music,
+		Wanderer,
+	}
+
+	public virtual ShopType ShopSeller => ShopType.Unspecified;
 
 	public override void Spawn()
 	{

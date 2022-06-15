@@ -14,6 +14,10 @@ public partial class PHPawn : Player
 
 	public PHInventorySystem PHInventory;
 
+	public float Drunkiness;
+	public TimeSince TimeLastDrank;
+	TimeSince timeTillSober;
+
 	public PHPawn()
 	{
 		PHInventory = new PHInventorySystem(this);
@@ -36,6 +40,8 @@ public partial class PHPawn : Player
 		EnableDrawing = true;
 		EnableHideInFirstPerson = true;
 		EnableShadowInFirstPerson = true;
+
+		Drunkiness = 0.0f;
 
 		//Use the base player respawn, NOT the respawn in this class
 		base.Respawn();
@@ -61,6 +67,8 @@ public partial class PHPawn : Player
 			adminGlasses.EnableHideInFirstPerson = true;
 		}
 
+		Drunkiness = 0.0f;
+
 		timeLastRespawn = 0;
 	}
 
@@ -82,11 +90,25 @@ public partial class PHPawn : Player
 		}
 	}
 
-	public void SimulateActions()
+	void SimulateActions()
 	{
 		TickPlayerUse();
-
 		SimulatePropPlacement();
+		
+		if ( Drunkiness > 0.0f )
+			SimulateDrunkState();
+	}
+
+	void SimulateDrunkState()
+	{
+		if ( TimeLastDrank < 7.5f )
+			return;
+
+		if ( timeTillSober < 2.5f )
+			return;
+
+		Drunkiness -= 2.5f;
+		timeTillSober = 0;
 	}
 
 	protected override void TickPlayerUse()
@@ -137,7 +159,7 @@ public partial class PHPawn : Player
 		return base.FindUsable();
 	}
 
-	public void SimulateActionsWhilstDead()
+	void SimulateActionsWhilstDead()
 	{
 		if(Input.Pressed(InputButton.PrimaryAttack) && timeLastDied > 3.0f)
 			Respawn();

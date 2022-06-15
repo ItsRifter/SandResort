@@ -7,8 +7,11 @@ using Sandbox;
 
 public partial class ClassicRadio : PHSuiteProps
 {
+	public override string SuiteItemName => "Classical Radio";
+	public override string SuiteItemDesc => "An old time radio, only has one channel still available";
 	public override Model WorldModel => Model.Load( "models/radio/oldradio/oldradio.vmdl" );
 	public override int SuiteItemCost => 250;
+	public override ShopType ShopSeller => ShopType.Electric;
 
 	Sound playingSound;
 

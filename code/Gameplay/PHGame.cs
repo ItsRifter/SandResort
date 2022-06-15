@@ -2,6 +2,7 @@
 using Sandbox;
 using Sandbox.UI.Construct;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,17 +11,23 @@ public partial class PHGame : Game
 {
 	public static PHGame Instance { get; private set; } = Current as PHGame;
 
+	[Net]
+	public IList<PHSuiteProps> AllSuiteProps { get; protected set; }
+
 	public PHGame()
 	{
 		if(IsServer)
 		{
-		
+			AllSuiteProps = new List<PHSuiteProps>();
+
 			AdminList = new string[]
 			{
 				"ItsRifter",
 				"Pixel³",
 				"Baik"
 			};
+
+			ResetSuitePropsList();
 		}
 
 		if ( IsClient )
@@ -38,6 +45,46 @@ public partial class PHGame : Game
 				"Pixel³",
 				"Baik"
 			};
+
+			ResetSuitePropsList();
+		}
+
+		if ( IsClient )
+			new PHHud();
+	}
+
+	public IList<PHSuiteProps> GetAllSuiteProps()
+	{
+		return AllSuiteProps;
+	}
+
+	public void ResetSuitePropsList()
+	{
+		if( AllSuiteProps.Count > 0 )
+		{
+			foreach ( var item in AllSuiteProps.ToArray() )
+			{
+				item.Delete();
+			}
+
+			AllSuiteProps.Clear();
+		}
+
+		foreach ( var item in TypeLibrary.GetTypes<PHSuiteProps>())
+		{
+			if ( item.ToString().Contains( "PHSuiteProps" ) )
+				continue;
+
+			var prop = TypeLibrary.Create<PHSuiteProps>( item.FullName );
+
+			if ( AllSuiteProps.Contains( prop ) )
+			{
+				prop.Delete();
+				continue;
+			}
+
+			AllSuiteProps.Add( prop );
+			prop.Delete();
 		}
 	}
 
