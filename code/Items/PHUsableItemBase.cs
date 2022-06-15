@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Sandbox;
 
-public partial class PHUsableItemBase : BaseCarriable, IUse
+public partial class PHUsableItemBase : BaseCarriable
 {
 	public virtual string ItemName => "Usable Base Item";
 	public virtual string ItemDesc => "A base item for other usable items to derive from";
@@ -19,6 +19,19 @@ public partial class PHUsableItemBase : BaseCarriable, IUse
 		base.Spawn();
 
 		Model = ItemModel;
+
+		MoveType = MoveType.None;
+		CollisionGroup = CollisionGroup.Interactive;
+		PhysicsEnabled = false;
+		UsePhysicsCollision = false;
+		EnableHideInFirstPerson = true;
+		EnableShadowInFirstPerson = true;
+	}
+
+	public override void ActiveStart( Entity ent )
+	{
+		base.ActiveStart( ent );
+		Log.Info( "START" );
 	}
 
 	public virtual void PickUpItem()

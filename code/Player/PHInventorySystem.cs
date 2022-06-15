@@ -38,13 +38,10 @@ public partial class PHInventorySystem : IBaseInventory
 		if ( ent.Owner != null )
 			return false;
 
-		if ( ent is not BaseCarriable carriable )
-			return false;
+		ent.Parent = Owner;
 
-		if ( !carriable.CanCarry( Owner ) )
-			return false;
-		
-		carriable.OnCarryStart( Owner );
+		(Owner as PHPawn).ActiveChildren.Add(ent);
+		ent.SetParent( Owner, true );
 
 		return true;
 	}

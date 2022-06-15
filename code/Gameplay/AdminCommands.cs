@@ -197,7 +197,6 @@ public partial class PHGame
 			return;
 
 		var item = TypeLibrary.Create<PHUsableItemBase>( itemName );
-		item.SetParent( player, true );
 
 		player.PHInventory.AddCosmetic( item );
 

@@ -1,10 +1,14 @@
 ﻿using Sandbox;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 
 public partial class PHPawn : Player
 {
+	[Net, Predicted]
+	public IList<Entity> ActiveChildren { get; set; }
+
 	public TimeSince timeLastRespawn;
 
 	DamageInfo lastDMGInfo;
@@ -70,6 +74,9 @@ public partial class PHPawn : Player
 		Drunkiness = 0.0f;
 
 		timeLastRespawn = 0;
+
+		if ( ActiveChildren == null )
+			ActiveChildren = new List<Entity>();
 	}
 
 	//Simulation on both server and client
@@ -89,7 +96,12 @@ public partial class PHPawn : Player
 				SimulateActionsWhilstDead();
 		}
 
-		SimulateActiveChild( cl, ActiveChild );
+		foreach ( var child in ActiveChildren)
+		{
+			if(child.IsAuthority)
+				child.Simulate( cl );
+		}
+
 	}
 
 	void SimulateActions()
