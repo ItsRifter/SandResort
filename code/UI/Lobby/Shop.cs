@@ -27,7 +27,7 @@ public partial class Shop : Panel
 
 		Panel shop = ShopMenu.Add.Panel( "shop" );
 		ShopName_Container = shop.Add.Panel( "shop-title" );
-		ShopName = ShopName_Container.Add.Label( "Bar", "shop-title" );
+		ShopName = ShopName_Container.Add.Label( "Test Shop", "shop-title" );
 
 		ShopItems = shop.Add.Panel( "shop-items" );
 
@@ -49,19 +49,26 @@ public partial class Shop : Panel
 	{
 		foreach ( var buyableItem in PHGame.Instance.GetAllSuiteProps() )
 		{
-			Log.Info( buyableItem );
+			var itemDisplay = TypeLibrary.Create<PHSuiteProps>(buyableItem);
 
-			//Panel item = ShopItems.Add.Panel( "shop-item" );
-			//
-			//Panel info = item.Add.Panel( "shop-info" );
-			//info.Add.Label( $"{buyableItem.SuiteItemName} - {buyableItem.SuiteItemCost}", "shop-item-title" );
-			//info.Add.Label( buyableItem.SuiteItemDesc, "shop-item-description" );
-			//
-			//item.AddEventListener( "onclick", () =>
-			//{
-			//	PurchaseItem();
-			//} );
+			Panel item = ShopItems.Add.Panel( "shop-item" );
+			
+			Panel info = item.Add.Panel( "shop-info" );
+			info.Add.Label( $"{itemDisplay.SuiteItemName} - {itemDisplay.SuiteItemCost}", "shop-item-title" );
+			info.Add.Label( itemDisplay.SuiteItemDesc, "shop-item-description" );
+			
+			item.AddEventListener( "onclick", () =>
+			{
+				PurchaseItem(buyableItem);
+			} );
+
+			itemDisplay.Delete();
 		}
+	}
+
+	public void CloseShop()
+	{
+		ShopItems.DeleteChildren();
 	}
 
 	public Panel CreateItem(string title, string description, Action onClick)
@@ -80,9 +87,9 @@ public partial class Shop : Panel
 		return item;
 	}
 
-	public void PurchaseItem()
+	public void PurchaseItem(string itemToBuy)
 	{
-		ConsoleSystem.Run( "ph_test", "BeerBarrel", Local.Client.NetworkIdent );
+		ConsoleSystem.Run( "ph_buy_item", itemToBuy, Local.Client.NetworkIdent );
 		//PHGame.PurchaseItem("beerbarrel");
 	}
 
@@ -99,18 +106,21 @@ public partial class Shop : Panel
 			.Ignore( player )
 			.Run();
 
-		if ( tr.Entity is null || tr.Entity is not AdminNPC )
+		if ( tr.Entity is null )
 		{
 			isOpen = false;
+			CloseShop();
 		}
 
-		if (Input.Pressed(InputButton.Use) && lastOpened > 0.3f)
+		if (Input.Pressed(InputButton.Use) && lastOpened > 0.3f && tr.Entity is AdminNPC)
 		{
 			isOpen = !isOpen;
 			lastOpened = 0;
 
-			if(isOpen)
+			if ( isOpen )
 				OpenShop();
+			else
+				CloseShop();
 		}
 
 		SetClass( "openshop", isOpen );

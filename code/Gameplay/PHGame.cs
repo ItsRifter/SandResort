@@ -12,19 +12,27 @@ public partial class PHGame : Game
 	public static PHGame Instance { get; private set; } = Current as PHGame;
 
 	[Net]
-	public IList<PHSuiteProps> AllSuiteProps { get; protected set; }
+	public IList<string> AllSuiteProps { get; protected set; }
+
+	List<string> skipPropItems;
 
 	public PHGame()
 	{
 		if(IsServer)
 		{
-			AllSuiteProps = new List<PHSuiteProps>();
+			AllSuiteProps = new List<string>();
 
 			AdminList = new string[]
 			{
 				"ItsRifter",
 				"Pixel³",
 				"Baik"
+			};
+
+			skipPropItems = new List<string>() 
+			{
+				"PHSuiteProps",
+				"VideoAudioPlayer"
 			};
 
 			ResetSuitePropsList();
@@ -53,7 +61,7 @@ public partial class PHGame : Game
 			new PHHud();
 	}
 
-	public IList<PHSuiteProps> GetAllSuiteProps()
+	public IList<string> GetAllSuiteProps()
 	{
 		return AllSuiteProps;
 	}
@@ -61,30 +69,17 @@ public partial class PHGame : Game
 	public void ResetSuitePropsList()
 	{
 		if( AllSuiteProps.Count > 0 )
-		{
-			foreach ( var item in AllSuiteProps.ToArray() )
-			{
-				item.Delete();
-			}
-
 			AllSuiteProps.Clear();
-		}
 
 		foreach ( var item in TypeLibrary.GetTypes<PHSuiteProps>())
 		{
-			if ( item.ToString().Contains( "PHSuiteProps" ) )
+			if ( skipPropItems.Contains(item.FullName) )
 				continue;
 
-			var prop = TypeLibrary.Create<PHSuiteProps>( item.FullName );
-
-			if ( AllSuiteProps.Contains( prop ) )
-			{
-				prop.Delete();
+			if ( AllSuiteProps.Contains(item.FullName) )
 				continue;
-			}
 
-			AllSuiteProps.Add( prop );
-			prop.Delete();
+			AllSuiteProps.Add(item.FullName);
 		}
 	}
 
