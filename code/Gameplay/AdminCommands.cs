@@ -183,11 +183,11 @@ public partial class PHGame
 	}
 
 	[ConCmd.Server( "ph_item_give" )]
-	public static void AdminGiveItem( string itemName )
+	public static void AdminGiveItem( string itemName, string target = "")
 	{
 		if ( !Instance.AdminList.Contains( ConsoleSystem.Caller.Name ) )
 			return;
-		
+
 		var player = ConsoleSystem.Caller.Pawn as PHPawn;
 
 		if ( player == null )
@@ -197,8 +197,41 @@ public partial class PHGame
 			return;
 
 		var item = TypeLibrary.Create<PHUsableItemBase>( itemName );
+			
+		if (string.IsNullOrEmpty(target))
+		{
+			Log.Info( $"{player.Client.Name} gave item {item.GetType().FullName} to themselves" );
+			player.PHInventory.AddCosmetic( item );
+		}
+		else
+		{
+			PHPawn targetPlayer = null;
 
-		player.PHInventory.AddCosmetic( item );
+			foreach ( var client in Client.All )
+			{
+				if ( client.Name.ToLower().Contains( target ) )
+				{
+					if ( targetPlayer != null )
+					{
+						Log.Error( "There are multiple targets with this name, be more specific" );
+						return;
+					}
+					else
+					{
+						targetPlayer = client.Pawn as PHPawn;
+					}
+				}
+			}
 
+			if ( targetPlayer != null )
+			{
+				Log.Info( $"{player.Client.Name} gave item {item.GetType().FullName} to {targetPlayer.Client.Name}" );
+				targetPlayer.PHInventory.AddCosmetic( item );
+			}
+			else
+			{
+				Log.Error( "No target found" );
+			}
+		}
 	}
 }

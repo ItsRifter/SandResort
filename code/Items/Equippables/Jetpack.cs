@@ -13,7 +13,7 @@ public partial class Jetpack : PHUsableItemBase
 	float JetFuelMax = 125.0f;
 	float JetFuelUsage = 2.5f;
 
-	float timeUntilRefuel = 5.0f;
+	float timeUntilRefuel = 3.5f;
 
 	TimeSince timeLastUse;
 
@@ -34,7 +34,7 @@ public partial class Jetpack : PHUsableItemBase
 				JetFuel = 50.0f;
 		}
 
-		if (Input.Down(InputButton.Jump) && JetFuel > 0)
+		if (Input.Down(InputButton.Jump) && JetFuel > 0 && (Parent as PHPawn).Controller is not NoclipController)
 		{
 			Parent.Velocity += Vector3.Up * 15f;
 

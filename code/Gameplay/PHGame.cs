@@ -61,6 +61,7 @@ public partial class PHGame : Game
 			new PHHud();
 	}
 
+
 	public IList<string> GetAllSuiteProps()
 	{
 		return AllSuiteProps;
@@ -118,6 +119,11 @@ public partial class PHGame : Game
 				basePlayer.DevController = new NoclipController();
 			}
 		}
+	}
+
+	public override void PostLevelLoaded()
+	{
+		base.PostLevelLoaded();
 	}
 
 	public override void ClientJoined( Client client )
