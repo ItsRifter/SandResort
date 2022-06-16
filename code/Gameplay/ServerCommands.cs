@@ -35,14 +35,34 @@ public partial class PHGame
 			return;
 		}
 
+		if ( !buyer.PHInventory.CanAdd( boughtItem ) )
+		{
+			boughtItem.Delete();
+			buyer.PlaySound( "player_use_fail" );
+			return;
+		}
+		
 		buyer.TakeCoins( boughtItem.SuiteItemCost );
 
 		buyer.PlaySound("buy_item");
 
-		//TEMPORARY: This should be removed later until an inventory is working
-		buyer.previewProp = boughtItem;
-		buyer.previewProp.IsPreview = true;
-		buyer.previewProp.Owner = buyer;
-		buyer.previewProp.Spawn();
+		buyer.PHInventory.AddItem( boughtItem );
+	}
+
+	[ConCmd.Server("ph_drag_item")]
+	public static void SetItem(string prop)
+	{
+		var dragger = ConsoleSystem.Caller.Pawn as PHPawn;
+
+		if ( dragger == null )
+			return;
+
+		if ( string.IsNullOrEmpty( prop ) )
+			return;
+
+		dragger.previewProp = TypeLibrary.Create<PHSuiteProps>(prop);
+		dragger.previewProp.IsPreview = true;
+		dragger.previewProp.Owner = dragger;
+		dragger.previewProp.Spawn();
 	}
 }

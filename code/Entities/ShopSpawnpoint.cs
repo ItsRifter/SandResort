@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 using Sandbox;
 using SandboxEditor;
 
-[Title( "Shopkeeper Spawnpoint" ), Description( "Indicates where shopkeepers should spawn at" )]
+[Library( "ph_shop_spawn" )]
+[Title( "Shopkeeper" ), Description( "Indicates where shopkeepers should spawn at" )]
 [EditorModel( "models/citizen/citizen.vmdl" )]
 [HammerEntity]
 public partial class ShopSpawnpoint : Entity

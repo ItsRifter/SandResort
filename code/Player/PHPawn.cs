@@ -25,6 +25,7 @@ public partial class PHPawn : Player
 	public PHPawn()
 	{
 		PHInventory = new PHInventorySystem(this);
+		CreateClientInventory(To.Single(this));
 	}
 
 	public override void Spawn()
@@ -62,7 +63,7 @@ public partial class PHPawn : Player
 		EnableDrawing = true;
 
 		//Deletes the corpse if valid
-		DestroyCorpse();
+		DestroyCorpse(To.Everyone);
 		
 		if( PHGame.Instance.AdminList.Contains(Client.Name))
 		{
@@ -90,13 +91,11 @@ public partial class PHPawn : Player
 		var controller = GetActiveController();
 		controller?.Simulate( cl, this, GetActiveAnimator() );
 
-		if ( IsServer )
-		{
-			if ( LifeState == LifeState.Alive )
-				SimulateActions();
-			else if ( LifeState == LifeState.Dead )
-				SimulateActionsWhilstDead();
-		}
+		
+		if ( LifeState == LifeState.Alive )
+			SimulateActions();
+		else if ( LifeState == LifeState.Dead )
+			SimulateActionsWhilstDead();
 		
 		foreach ( var child in ActiveChildren)
 		{
@@ -105,6 +104,8 @@ public partial class PHPawn : Player
 		}
 
 	}
+
+	int index = 0;
 
 	void SimulateActions()
 	{
@@ -127,6 +128,8 @@ public partial class PHPawn : Player
 		timeTillSober = 0;
 	}
 
+	Entity NPCInteration = null;
+
 	protected override void TickPlayerUse()
 	{
 		if ( !Host.IsServer ) return;
@@ -136,15 +139,21 @@ public partial class PHPawn : Player
 			if ( Input.Pressed( InputButton.Use ) )
 			{
 				Using = FindUsable();
-
-				if ( Using == null )
+				
+				NPCInteration = FindNPC();
+				
+				if ( Using == null && NPCInteration == null )
 				{
 					UseFail();
 					return;
 				}
-				else if (Using is ShopKeeperBase npc)
-					npc.InteractWith(this);
+			}
 
+			if ( NPCInteration is PHBaseNPC NPC )
+			{
+				NPC.InteractWith( this );
+				NPCInteration = null;
+				return;
 			}
 
 			if ( !Input.Down( InputButton.Use ) )
@@ -165,22 +174,47 @@ public partial class PHPawn : Player
 
 	protected override Entity FindUsable()
 	{
+		return base.FindUsable();
+	}
+
+	protected Entity FindNPC()
+	{
 		var tr = Trace.Ray( EyePosition, EyePosition + EyeRotation.Forward * 125 )
 			.Ignore( this )
 			.Run();
 
-		if ( tr.Entity is ShopKeeperBase npc )
-			return npc;
+		if ( tr.Entity is PHBaseNPC baseNPC )
+			return baseNPC;
 
-		return base.FindUsable();
+		if ( tr.Entity is ShopKeeperBase shopNPC )
+			return shopNPC;
+
+		return null;
 	}
-
 	void SimulateActionsWhilstDead()
 	{
-		if(Input.Pressed(InputButton.PrimaryAttack) && timeLastDied > 3.0f)
-			Respawn();
+		if(IsServer)
+		{
+			if(Input.Pressed(InputButton.PrimaryAttack) && timeLastDied > 3.0f)
+				Respawn();
+		}
 	}
 
+	[ClientRpc]
+	public void CreateClientInventory()
+	{
+		PHInventory.ClientInventory = new List<string>();
+	}
+
+	[ClientRpc]
+	public void UpdateClientInventory( string newItem, bool shouldAdd = true )
+	{
+		if ( shouldAdd )
+			PHInventory.ClientInventory.Add( newItem );
+		else if ( !shouldAdd )
+			PHInventory.ClientInventory.Remove( newItem );
+	}
+	
 	//When the player is killed
 	public override void OnKilled()
 	{
@@ -190,6 +224,13 @@ public partial class PHPawn : Player
 		EnableDrawing = false;
 
 		CreatePlayerRagdoll( lastDMGInfo.Force, lastDMGInfo.BoneIndex );
+
+		if(CurSuite != null)
+		{
+			CurSuite.SuiteTele.ClaimedSuite = false;
+			CurSuite = null;
+			Log.Info( $"{Client.Name} was automatically checked out by dying" );
+		}
 
 		//We should make a first person death camera in the future
 		CameraMode = new RagdollCamera();

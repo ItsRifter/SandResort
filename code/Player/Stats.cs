@@ -7,16 +7,30 @@ using Sandbox;
 
 public interface IPlayerStat
 {
-	public string PlayerName { get; }
+	public string PlayerName { get; set; }
 	public int PlayCoins { get; set; }
+	public List<string> InventoryItems { get; set;  }
 }
 
-public partial class PHPawn : IPlayerStat
+public class PlayerData : IPlayerStat
+{
+	public string PlayerName { get; set; }
+
+	public int PlayCoins { get; set; }
+
+	public List<string> InventoryItems { get; set; }
+
+	public List<SuitePropInfo> SuiteProps { get; set; }
+}
+
+public partial class PHPawn
 {
 	public string PlayerName { get => Client.Name; }
 
 	[Net, Local]
 	public int PlayCoins { get; set; }
+
+	public List<string> InventoryItems { get; }
 
 	public void GiveCoins(int addAmt)
 	{

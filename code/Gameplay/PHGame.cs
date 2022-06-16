@@ -143,6 +143,13 @@ public partial class PHGame : Game
 	{
 		CommitSave( cl );
 
+		if ( cl.Pawn is PHPawn player && player.CurSuite != null )
+		{
+			player.CurSuite.SuiteTele.ClaimedSuite = false;
+			player.CurSuite = null;
+			Log.Info( $"{cl.Name} was automatically checked out by disconnecting" );
+		}
+
 		base.ClientDisconnect( cl, reason );
 	}
 

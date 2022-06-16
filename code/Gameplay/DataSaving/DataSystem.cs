@@ -5,12 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Sandbox;
 
-public class PlayerStatSaveable : IPlayerStat
-{
-	public int PlayCoins { get; set; }
-	public string PlayerName { get; }
-}
-
 public partial class PHGame
 {
 	public void NewPlayer(Client cl)
@@ -19,7 +13,14 @@ public partial class PHGame
 
 		pawn.SetCoins( 500 );
 
-		FileSystem.Data.WriteJson( cl.PlayerId + ".json", (IPlayerStat) pawn );
+		var saveData = new PlayerData()
+		{
+			PlayerName = cl.Name,
+			PlayCoins = pawn.PlayCoins,
+			InventoryItems = pawn.PHInventory.GetAllItemsString()
+		};
+
+		FileSystem.Data.WriteJson( cl.PlayerId + ".json", saveData );
 
 	}
 
@@ -27,14 +28,22 @@ public partial class PHGame
 	{
 		var pawn = cl.Pawn as PHPawn;
 
-		FileSystem.Data.WriteJson( cl.PlayerId + ".json", (IPlayerStat) pawn );
+
+		var saveData = new PlayerData()
+		{
+			PlayerName = cl.Name,
+			PlayCoins = pawn.PlayCoins,
+			InventoryItems = pawn.PHInventory.GetAllItemsString()
+		};
+
+		FileSystem.Data.WriteJson( cl.PlayerId + ".json", saveData );
 		
 		return true;
 	}
 
 	public bool LoadSave(Client cl)
 	{
-		var data = FileSystem.Data.ReadJson<PlayerStatSaveable>( cl.PlayerId + ".json" );
+		var data = FileSystem.Data.ReadJson<PlayerData>( cl.PlayerId + ".json" );
 
 		if ( data == null )
 			return false;
@@ -45,6 +54,15 @@ public partial class PHGame
 			return false;
 
 		pawn.SetCoins(data.PlayCoins);
+
+		foreach ( var invItem in data.InventoryItems )
+		{
+			var item = TypeLibrary.Create(invItem, TypeLibrary.GetTypeByName(invItem)) as Entity;
+
+			pawn.PHInventory.AddItem( item );
+
+			item.Delete();
+		}
 
 		return true;
 	}

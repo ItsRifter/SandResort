@@ -8,6 +8,7 @@ public partial class PHSuiteProps : Prop, IUse
 {
 	public virtual string SuiteItemName => "Suite Base Item";
 	public virtual string SuiteItemDesc => "A base item for other suite items to derive from";
+	public virtual string SuiteItemImage => "ui/ph_icon_missing.png";
 	public virtual int SuiteItemCost => 1;
 	public virtual Model WorldModel => null;
 

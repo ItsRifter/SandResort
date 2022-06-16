@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Sandbox;
 public partial class Jetpack : PHUsableItemBase
 {
+	public override string ItemName => "Jetpack";
+	public override string ItemDesc => "A fun jetpack for you to jet across with limited fuel";
 	public override Model ItemModel => Model.Load( "models/jetpack/jetpack/jetpack.vmdl" );
 
 	public float JetFuel;

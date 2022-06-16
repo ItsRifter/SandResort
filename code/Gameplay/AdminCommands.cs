@@ -201,7 +201,7 @@ public partial class PHGame
 		if ( string.IsNullOrEmpty( target ) )
 		{
 			Log.Info( $"{player.Client.Name} gave item {item.GetType().FullName} to themselves" );
-			player.PHInventory.AddCosmetic( item );
+			player.PHInventory.AddItem( item );
 		}
 		else
 		{
@@ -226,7 +226,7 @@ public partial class PHGame
 			if ( targetPlayer != null )
 			{
 				Log.Info( $"{player.Client.Name} gave item {item.GetType().FullName} to {targetPlayer.Client.Name}" );
-				targetPlayer.PHInventory.AddCosmetic( item );
+				targetPlayer.PHInventory.AddItem( item );
 			}
 			else
 			{
@@ -315,6 +315,63 @@ public partial class PHGame
 			{
 				Log.Info( $"{caller.Name} forced a data load on {targetClient.Name}" );
 				Instance.LoadSave( targetClient );
+			}
+			else
+			{
+				Log.Error( "No target found" );
+			}
+		}
+	}
+
+	[ConCmd.Server("ph_bringplayer")]
+	public static void AdminBringPlayer( string target = "" )
+	{
+		var caller = ConsoleSystem.Caller;
+
+		if ( caller == null )
+			return;
+
+		if ( string.IsNullOrEmpty( target ) )
+		{
+			return;
+		}
+		else
+		{
+			PHPawn targetPlayer = null;
+
+			foreach ( var client in Client.All )
+			{
+				if ( client.Name.ToLower().Contains( target ) )
+				{
+					if ( targetPlayer != null )
+					{
+						Log.Error( "There are multiple targets with this name, be more specific" );
+						return;
+					}
+					else
+					{
+						targetPlayer = client.Pawn as PHPawn;
+					}
+				}
+			}
+
+			if ( targetPlayer != null )
+			{
+				if( targetPlayer.LifeState == LifeState.Dead)
+				{
+					Log.Error( "that player is dead" );
+					return;
+				}
+
+				var tr = Trace.Ray( caller.Pawn.EyePosition, caller.Pawn.EyePosition + caller.Pawn.EyeRotation.Forward * 999 )
+					.WorldAndEntities()
+					.Ignore( caller.Pawn )
+					.Run();
+
+				using (Prediction.Off())
+					targetPlayer.Position = tr.EndPosition;
+
+				Log.Info( $"{caller.Name} brought {targetPlayer.Client.Name} to them" );
 			}
 			else
 			{

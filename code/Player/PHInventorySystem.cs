@@ -8,7 +8,12 @@ using Sandbox;
 public partial class PHInventorySystem : IBaseInventory
 {
 	public Entity Owner { get; init; }
-	public List<Entity> HoldingList = new List<Entity>();
+
+	public List<Entity> InventoryList = new List<Entity>();
+
+	public IList<string> ClientInventory { get; set; } = new List<string>();
+
+	int maxHoldingAmount = 20;
 
 	public virtual Entity Active
 	{
@@ -31,19 +36,51 @@ public partial class PHInventorySystem : IBaseInventory
 		Owner = owner;
 	}
 
-	public bool AddCosmetic(Entity ent)
+
+	public void EquipCosmetic(Entity ent)
+	{
+		Host.AssertServer();
+
+		ent.Parent = Owner;
+
+		(Owner as PHPawn).ActiveChildren.Add( ent );
+		ent.SetParent( Owner, true );
+	}
+
+	public void UseItem(Entity ent)
+	{
+		Host.AssertServer();
+
+		InventoryList.Remove( ent );
+	}
+
+	public bool AddItem(Entity ent)
 	{
 		Host.AssertServer();
 
 		if ( ent.Owner != null )
 			return false;
 
-		ent.Parent = Owner;
+		if ( !CanAdd( ent ) )
+			return false;
 
-		(Owner as PHPawn).ActiveChildren.Add(ent);
-		ent.SetParent( Owner, true );
+		InventoryList.Add( ent );
+
+		(Owner as PHPawn).UpdateClientInventory( To.Single( Owner ), ent.ClassName );
 
 		return true;
+	}
+
+	public List<string> GetAllItemsString()
+	{
+		List<string> allItemsString = new List<string>();
+
+		foreach ( var item in InventoryList )
+		{
+			allItemsString.Add( item.ClassName );
+		}
+
+		return allItemsString;
 	}
 
 	public bool Add( Entity ent, bool makeactive = false )
@@ -71,6 +108,9 @@ public partial class PHInventorySystem : IBaseInventory
 
 	public virtual bool CanAdd( Entity ent )
 	{
+		if( InventoryList.Count < maxHoldingAmount )
+			return true;
+
 		if ( ent is BaseCarriable bc && bc.CanCarry( Owner ) )
 			return true;
 
@@ -82,18 +122,18 @@ public partial class PHInventorySystem : IBaseInventory
 		return false;
 	}
 
-	public int Count() => HoldingList.Count;
+	public int Count() => InventoryList.Count;
 
 	public void DeleteContents()
 	{
 		Host.AssertServer();
 
-		foreach ( var item in HoldingList.ToArray() )
+		foreach ( var item in InventoryList.ToArray() )
 		{
 			item.Delete();
 		}
 
-		HoldingList.Clear();
+		InventoryList.Clear();
 	}
 
 	public bool Drop( Entity ent )
