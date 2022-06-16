@@ -45,6 +45,8 @@ public partial class PHPawn : Player
 		EnableHideInFirstPerson = true;
 		EnableShadowInFirstPerson = true;
 
+		Tags.Add( "PH_Player" );
+
 		Drunkiness = 0.0f;
 
 		//Use the base player respawn, NOT the respawn in this class
@@ -95,7 +97,7 @@ public partial class PHPawn : Player
 			else if ( LifeState == LifeState.Dead )
 				SimulateActionsWhilstDead();
 		}
-
+		
 		foreach ( var child in ActiveChildren)
 		{
 			if(child.IsAuthority)

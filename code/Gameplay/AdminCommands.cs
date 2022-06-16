@@ -7,7 +7,7 @@ using Sandbox;
 public partial class PHGame
 {
 	//Hardcoded for now until we can figure out an websocket admin way
-	
+
 	[Net]
 	public IList<string> AdminList { get; protected set; }
 
@@ -183,7 +183,7 @@ public partial class PHGame
 	}
 
 	[ConCmd.Server( "ph_item_give" )]
-	public static void AdminGiveItem( string itemName, string target = "")
+	public static void AdminGiveItem( string itemName, string target = "" )
 	{
 		if ( !Instance.AdminList.Contains( ConsoleSystem.Caller.Name ) )
 			return;
@@ -197,8 +197,8 @@ public partial class PHGame
 			return;
 
 		var item = TypeLibrary.Create<PHUsableItemBase>( itemName );
-			
-		if (string.IsNullOrEmpty(target))
+
+		if ( string.IsNullOrEmpty( target ) )
 		{
 			Log.Info( $"{player.Client.Name} gave item {item.GetType().FullName} to themselves" );
 			player.PHInventory.AddCosmetic( item );
@@ -227,6 +227,94 @@ public partial class PHGame
 			{
 				Log.Info( $"{player.Client.Name} gave item {item.GetType().FullName} to {targetPlayer.Client.Name}" );
 				targetPlayer.PHInventory.AddCosmetic( item );
+			}
+			else
+			{
+				Log.Error( "No target found" );
+			}
+		}
+	}
+
+	[ConCmd.Server( "ph_data_save" )]
+	public static void AdminSaveData( string target = "" )
+	{
+		var caller = ConsoleSystem.Caller;
+
+		if ( caller == null )
+			return;
+
+		if (string.IsNullOrEmpty(target))
+		{
+			Instance.CommitSave( caller );
+		}
+		else
+		{
+			Client targetClient = null;
+
+			foreach ( var client in Client.All )
+			{
+				if ( client.Name.ToLower().Contains( target ) )
+				{
+					if ( targetClient != null )
+					{
+						Log.Error( "There are multiple targets with this name, be more specific" );
+						return;
+					}
+					else
+					{
+						targetClient = client;
+					}
+				}
+			}
+
+			if ( targetClient != null )
+			{
+				Log.Info( $"{caller.Name} forced a data save on {targetClient.Name}" );
+				Instance.CommitSave( targetClient );
+			}
+			else
+			{
+				Log.Error( "No target found" );
+			}
+		}
+	}
+
+	[ConCmd.Server( "ph_data_load" )]
+	public static void AdminLoadData( string target = "" )
+	{
+		var caller = ConsoleSystem.Caller;
+
+		if ( caller == null )
+			return;
+
+		if ( string.IsNullOrEmpty( target ) )
+		{
+			Instance.LoadSave( caller );
+		}
+		else
+		{
+			Client targetClient = null;
+
+			foreach ( var client in Client.All )
+			{
+				if ( client.Name.ToLower().Contains( target ) )
+				{
+					if ( targetClient != null )
+					{
+						Log.Error( "There are multiple targets with this name, be more specific" );
+						return;
+					}
+					else
+					{
+						targetClient = client;
+					}
+				}
+			}
+
+			if ( targetClient != null )
+			{
+				Log.Info( $"{caller.Name} forced a data load on {targetClient.Name}" );
+				Instance.LoadSave( targetClient );
 			}
 			else
 			{

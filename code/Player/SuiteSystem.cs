@@ -9,10 +9,26 @@ public partial class PHPawn
 {
 	public PHSuiteProps previewProp;
 
-	public bool CheckPlacementSurface(Surface surface)
-	{
+	float scrollRot = 0;
 
-		return true;
+	public bool CheckPlacementSurface(Vector3 surface)
+	{
+		if ( surface.x == 1 || surface.x == -1)
+			return true;
+
+		if ( surface.y == 1 || surface.y == -1 )
+			return true;
+
+		if ( surface.z == 1 || surface.z == -1 )
+			return true;
+
+		return false;
+	}
+
+
+	public void ShowSittingAngle()
+	{
+		DebugOverlay.Line( previewProp.Position + Vector3.Up * 16, previewProp.Position + Vector3.Up * 16 +  previewProp.Rotation.Forward * 35 );
 	}
 
 	public void SimulatePropPlacement()
@@ -20,23 +36,31 @@ public partial class PHPawn
 		if ( previewProp == null ) return;
 
 		var tr = Trace.Ray( EyePosition, EyePosition + EyeRotation.Forward * 150 )
-			.Ignore( this )
+			.WithoutTags( "PH_Player" )
 			.Ignore( previewProp )
-			.Radius( 2 )
 			.Run();
 
-		previewProp.Position = tr.EndPosition;
+		if( previewProp is PHSittableProp )
+			ShowSittingAngle();
 
-		if ( tr.Normal.z != 1 || FindInBox( previewProp.WorldSpaceBounds ).Count() > 0 )
+		scrollRot += Input.MouseWheel * 5;
+
+		previewProp.Rotation = Rotation.FromYaw( scrollRot );
+		previewProp.Position = tr.EndPosition;
+		
+		if ( FindInBox( previewProp.WorldSpaceBounds ).Count() > 0 )
+			previewProp.RenderColor = new Color( 165, 0, 0, 0.5f );
+		else if ( !CheckPlacementSurface( tr.Normal ) )
 			previewProp.RenderColor = new Color( 165, 0, 0, 0.5f);
 		else
 			previewProp.RenderColor = new Color( 0, 255, 0, 0.5f );
 
-		Log.Info( CheckPlacementSurface( tr.Surface ) );
-
 		if (Input.Pressed(InputButton.PrimaryAttack))
 		{
-			if ( tr.Normal.z != 1 || FindInBox( previewProp.WorldSpaceBounds ).Count() > 0 ) return;
+			if ( FindInBox( previewProp.WorldSpaceBounds ).Count() > 0 )
+				return;
+			else if ( tr.Normal.z != 1 ) 
+				return;
 
 			var placedProp = TypeLibrary.Create<PHSuiteProps>( previewProp.GetType().FullName );
 			placedProp.Model = previewProp.Model;

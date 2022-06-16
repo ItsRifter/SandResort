@@ -11,7 +11,8 @@ public partial class PHSuiteProps : Prop, IUse
 	public virtual int SuiteItemCost => 1;
 	public virtual Model WorldModel => null;
 
-	public bool IsPreview = false;
+	[Net]
+	public bool IsPreview { get; set; } = false;
 
 	public enum ShopType
 	{

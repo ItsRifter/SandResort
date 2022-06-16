@@ -5,10 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using Sandbox;
 
-public partial class PHPawn
+public interface IPlayerStat
 {
-	[Net]
-	public int PlayCoins { get; protected set; }
+	public string PlayerName { get; }
+	public int PlayCoins { get; set; }
+}
+
+public partial class PHPawn : IPlayerStat
+{
+	public string PlayerName { get => Client.Name; }
+
+	[Net, Local]
+	public int PlayCoins { get; set; }
 
 	public void GiveCoins(int addAmt)
 	{
@@ -21,5 +29,10 @@ public partial class PHPawn
 
 		if(PlayCoins < 0) 
 			PlayCoins = 0;
+	}
+
+	public void SetCoins(int setAmt)
+	{
+		PlayCoins = setAmt;
 	}
 }

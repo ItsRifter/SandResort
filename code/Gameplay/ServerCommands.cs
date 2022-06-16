@@ -42,6 +42,7 @@ public partial class PHGame
 		//TEMPORARY: This should be removed later until an inventory is working
 		buyer.previewProp = boughtItem;
 		buyer.previewProp.IsPreview = true;
+		buyer.previewProp.Owner = buyer;
 		buyer.previewProp.Spawn();
 	}
 }

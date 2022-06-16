@@ -10,8 +10,8 @@ public partial class Jetpack : PHUsableItemBase
 
 	public float JetFuel;
 
-	float JetFuelMax = 125.0f;
-	float JetFuelUsage = 2.5f;
+	float jetFuelMax = 125.0f;
+	float jetFuelUsage = 2.5f;
 
 	float timeUntilRefuel = 3.5f;
 
@@ -26,11 +26,11 @@ public partial class Jetpack : PHUsableItemBase
 	{
 		base.Simulate( cl );
 
-		if( timeLastUse >= timeUntilRefuel && JetFuel < JetFuelMax )
+		if( timeLastUse >= timeUntilRefuel && JetFuel < jetFuelMax )
 		{
 			JetFuel += 0.5f;
 
-			if ( JetFuel > JetFuelMax )
+			if ( JetFuel > jetFuelMax )
 				JetFuel = 50.0f;
 		}
 
@@ -39,7 +39,7 @@ public partial class Jetpack : PHUsableItemBase
 			Parent.Velocity += Vector3.Up * 15f;
 
 			timeLastUse = 0;
-			JetFuel -= 2.5f;
+			JetFuel -= jetFuelUsage;
 
 			if ( JetFuel < 0 )
 				JetFuel = 0;

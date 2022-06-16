@@ -134,10 +134,26 @@ public partial class PHGame : Game
 		pawn.Spawn();
 
 		client.Pawn = pawn;
+
+		if ( !LoadSave( client ) )
+			NewPlayer( client );
+
 	}
 	public override void ClientDisconnect( Client cl, NetworkDisconnectionReason reason )
 	{
+		CommitSave( cl );
+
 		base.ClientDisconnect( cl, reason );
+	}
+
+	public override void Shutdown()
+	{
+		foreach ( Client cl in Client.All)
+		{
+			CommitSave( cl );
+		}
+
+		base.Shutdown();
 	}
 
 	public override void DoPlayerSuicide( Client cl )
