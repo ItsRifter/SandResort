@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Sandbox;
 
-public partial class ShopKeeperBase : AnimatedEntity, IUse
+public partial class ShopKeeperBase : AnimatedEntity
 {
 	public virtual string NPCName => "Base Shop NPC";
 	public virtual string ModelPath => "models/citizen/citizen.vmdl";
@@ -29,25 +29,21 @@ public partial class ShopKeeperBase : AnimatedEntity, IUse
 
 	public virtual void InteractWith(PHPawn player)
 	{
-		//Do stuff upon interaction
+		if ( player.OpenShop )
+		{
+			player.OpenShop = false;
+			player.ShopKeeper = null;
+		}
+		else
+		{
+			player.OpenShop = true;
+			player.ShopKeeper = this;
+		}
 	}
 
 	public override void TakeDamage( DamageInfo info )
 	{
 		return;
-	}
-
-	public bool OnUse( Entity user )
-	{
-		if ( user is PHPawn player )
-			InteractWith( player );
-
-		return true;
-	}
-
-	public bool IsUsable( Entity user )
-	{
-		return true;
 	}
 	public override void OnKilled()
 	{

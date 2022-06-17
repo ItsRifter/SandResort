@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Sandbox;
-public partial class PHSuiteProps : Prop, IUse
+public partial class PHSuiteProps : ModelEntity, IUse
 {
 	public virtual string SuiteItemName => "Suite Base Item";
 	public virtual string SuiteItemDesc => "A base item for other suite items to derive from";
@@ -14,6 +14,8 @@ public partial class PHSuiteProps : Prop, IUse
 
 	[Net]
 	public bool IsPreview { get; set; } = false;
+
+	public bool IsMovingFrom { get; set; } = false;
 
 	public enum ShopType
 	{
@@ -29,8 +31,6 @@ public partial class PHSuiteProps : Prop, IUse
 
 	public override void Spawn()
 	{
-		base.Spawn();
-
 		Model = WorldModel;
 
 		if(IsPreview)
@@ -39,11 +39,7 @@ public partial class PHSuiteProps : Prop, IUse
 			EnableAllCollisions = false;
 		}
 		else
-		{
 			SetupPhysicsFromModel( PhysicsMotionType.Keyframed );
-			EnableAllCollisions = true;
-		}
-
 	}
 
 	protected override void OnPhysicsCollision( CollisionEventData eventData )

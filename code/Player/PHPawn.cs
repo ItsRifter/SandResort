@@ -9,6 +9,12 @@ public partial class PHPawn : Player
 	[Net, Predicted]
 	public IList<Entity> ActiveChildren { get; set; }
 
+	[Net]
+	public bool OpenShop { get; set; } = false;
+
+	[Net]
+	public ShopKeeperBase ShopKeeper { get; set; }
+
 	public TimeSince timeLastRespawn;
 
 	DamageInfo lastDMGInfo;
@@ -25,7 +31,7 @@ public partial class PHPawn : Player
 	public PHPawn()
 	{
 		PHInventory = new PHInventorySystem(this);
-		CreateClientInventory(To.Single(this));
+		CreateClientInventory();
 	}
 
 	public override void Spawn()
@@ -91,7 +97,12 @@ public partial class PHPawn : Player
 		var controller = GetActiveController();
 		controller?.Simulate( cl, this, GetActiveAnimator() );
 
-		
+		if ( cl.GetClientData( "cl_showfps", false ) )
+		{
+			var fps = 1 / RealTime.Delta;
+			DebugOverlay.ScreenText( $"{fps.ToString( "0.00" )} FPS", -2 );
+		}
+
 		if ( LifeState == LifeState.Alive )
 			SimulateActions();
 		else if ( LifeState == LifeState.Dead )
@@ -105,12 +116,42 @@ public partial class PHPawn : Player
 
 	}
 
-	int index = 0;
+	Entity NPCInteration = null;
+	TimeSince timeToInteract;
 
 	void SimulateActions()
 	{
-		TickPlayerUse();
-		SimulatePropPlacement();
+		if ( IsServer )
+		{
+			TickPlayerUse();
+
+			NPCInteration = FindNPC();
+
+			if( NPCInteration is SuiteReceptionist normalNPC && Input.Pressed( InputButton.Use ) )
+			{
+				if ( timeToInteract <= 1 )
+					return;
+
+				normalNPC.InteractWith(this);
+
+				timeToInteract = 0;
+			} 
+
+			if ( NPCInteration is ShopKeeperBase NPC && !OpenShop )
+			{
+				if (Input.Pressed(InputButton.Use) )
+				{
+					NPC.InteractWith( this );
+					return;
+				}
+			} else if (OpenShop && Input.Pressed( InputButton.Use ) )
+			{
+				OpenShop = false;
+				ShopKeeper = null;
+			}
+
+			SimulatePropPlacement();
+		}
 		
 		if ( Drunkiness > 0.0f )
 			SimulateDrunkState();
@@ -128,8 +169,6 @@ public partial class PHPawn : Player
 		timeTillSober = 0;
 	}
 
-	Entity NPCInteration = null;
-
 	protected override void TickPlayerUse()
 	{
 		if ( !Host.IsServer ) return;
@@ -140,21 +179,20 @@ public partial class PHPawn : Player
 			{
 				Using = FindUsable();
 				
-				NPCInteration = FindNPC();
+				//NPCInteration = FindNPC();
 				
-				if ( Using == null && NPCInteration == null )
+				if ( Using == null )
 				{
-					UseFail();
 					return;
 				}
 			}
 
-			if ( NPCInteration is PHBaseNPC NPC )
+/*			if ( NPCInteration is PHBaseNPC NPC )
 			{
 				NPC.InteractWith( this );
 				NPCInteration = null;
 				return;
-			}
+			}*/
 
 			if ( !Input.Down( InputButton.Use ) )
 			{
@@ -203,18 +241,27 @@ public partial class PHPawn : Player
 	[ClientRpc]
 	public void CreateClientInventory()
 	{
-		PHInventory.ClientInventory = new List<string>();
+		PHInventory.ClientInventory = new List<(string, string)>();
 	}
 
 	[ClientRpc]
-	public void UpdateClientInventory( string newItem, bool shouldAdd = true )
+	public void UpdateClientInventory( string newItem, string itemImage, bool shouldAdd = true )
 	{
 		if ( shouldAdd )
-			PHInventory.ClientInventory.Add( newItem );
+			PHInventory.ClientInventory.Add( (newItem, itemImage) );
 		else if ( !shouldAdd )
-			PHInventory.ClientInventory.Remove( newItem );
+			PHInventory.ClientInventory.Remove( (newItem, itemImage) );
 	}
-	
+
+	public override void TakeDamage( DamageInfo info )
+	{
+		if ( info.Attacker is PHPawn )
+			return;
+
+		lastDMGInfo = info;
+		base.TakeDamage( info );
+	}
+
 	//When the player is killed
 	public override void OnKilled()
 	{
@@ -227,9 +274,7 @@ public partial class PHPawn : Player
 
 		if(CurSuite != null)
 		{
-			CurSuite.SuiteTele.ClaimedSuite = false;
-			CurSuite = null;
-			Log.Info( $"{Client.Name} was automatically checked out by dying" );
+			CurSuite.RevokeSuite( this );
 		}
 
 		//We should make a first person death camera in the future

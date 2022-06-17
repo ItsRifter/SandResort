@@ -11,14 +11,18 @@ using SandboxEditor;
 [Title("Suite Room"), Description("Defines a suite room for saving and loading player owner items")]
 [HammerEntity]
 [SupportsSolid]
-public partial class SuiteRoomEnt : Entity
+public partial class SuiteRoomEnt : BaseTrigger
 {
 	public PHPawn SuiteOwner;
 
 	[Property, FGDType("target_destination")]
 	public string SuiteTeleporter { get; set; } = "";
 
+	[Property, FGDType( "target_destination" )]
+	public string SuiteKickerDestination { get; set; } = "";
+
 	public SuiteTeleporter SuiteTele;
+	public TeleDest SuiteKickedDest;
 
 	public override void Spawn()
 	{
@@ -36,6 +40,15 @@ public partial class SuiteRoomEnt : Entity
 					SuiteTele = tele;
 			}
 		}
+
+		if ( SuiteKickedDest == null )
+		{
+			foreach ( var tele in All.OfType<TeleDest>() )
+			{
+				if ( tele.Name.Contains( SuiteKickerDestination ) )
+					SuiteKickedDest = tele;
+			}
+		}
 	}
 
 	public override void ClientSpawn()
@@ -43,18 +56,42 @@ public partial class SuiteRoomEnt : Entity
 		base.ClientSpawn();
 	}
 
-	public SuiteRoomEnt ClaimSuite(PHPawn player)
+	public void RevokeSuite(PHPawn player)
 	{
-		SuiteOwner = player;
-		SuiteTele.ClaimedSuite = true;
-		Log.Info( "Claimed" );
+		var test = SaveSuite();
 
-		return this;
+		player.CurSuite.KickGuest();
+		player.CurSuite.SuiteTele.ClaimedSuite = false;
+		player.CurSuite.SuiteOwner = null;
+		player.CurSuite = null;
+
+		PHGame.Instance.CommitSuiteSave( player.Client, SaveSuite() );
 	}
 
-	public void RevokeSuite()
+	public void KickGuest(PHPawn player = null)
 	{
-		SuiteOwner = null;
+		if(player == null)
+		{
+			foreach ( var guest in FindInBox(WorldSpaceBounds) )
+			{
+				if(guest is PHPawn guestPlayer)
+				{
+					using ( Prediction.Off() )
+					{
+						guestPlayer.Position = SuiteKickedDest.Position;
+						guestPlayer.Rotation = SuiteKickedDest.Rotation;
+					}
+				}
+			}
+		}
+		else
+		{
+			using ( Prediction.Off() )
+			{
+				player.Position = SuiteKickedDest.Position;
+				player.Rotation = SuiteKickedDest.Rotation;
+			}
+		}
 	}
 
 	public List<PHSuiteProps> SaveSuite()

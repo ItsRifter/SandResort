@@ -30,6 +30,9 @@ public partial class SuiteReceptionist : PHBaseNPC
 	{
 		base.InteractWith( player );
 
+		if ( !IsServer )
+			return;
+
 		if ( player.CurSuite != null )
 		{
 			CheckOut( player );
@@ -39,45 +42,27 @@ public partial class SuiteReceptionist : PHBaseNPC
 		CheckIn( player );
 	}
 
-	int attempts = 2;
-
 	public void CheckIn( PHPawn player )
 	{
-		var curSuites = All.OfType<SuiteRoomEnt>();
+		var curSuites = All.OfType<SuiteRoomEnt>().ToArray();
 
 		SuiteRoomEnt randomSuite = null;
-		int tries = 0;
 
-		randomSuite = curSuites.OrderBy( x => Guid.NewGuid() ).FirstOrDefault();
-
-		while (randomSuite.SuiteOwner == null)
-		{
-			if ( attempts >= tries )
-				break;
-
-			randomSuite = curSuites.OrderBy( x => Guid.NewGuid() ).FirstOrDefault();
-			
-			if ( randomSuite.SuiteOwner != null )
-				break;
-
-			tries++;
-		}
-
-		if ( randomSuite == null )
-			return;
+		randomSuite = curSuites.OrderBy( x => Guid.NewGuid() ).FirstOrDefault( x => x.SuiteOwner == null );
 
 		Log.Info( $"{player.Client.Name} checked into {randomSuite.Name}" );
 
 		player.CurSuite = randomSuite;
+		player.CurSuite.SuiteOwner = player;
 		player.CurSuite.SuiteTele.ClaimedSuite = true;
+
+		PHGame.Instance.LoadSuiteSave( player.Client );
 	}
 
 	public void CheckOut( PHPawn player )
 	{
+		player.CurSuite.RevokeSuite( player );
 		Log.Info( $"{player.Client.Name} checked out" );
-
-		player.CurSuite.SuiteTele.ClaimedSuite = false;
-		player.CurSuite = null;
 	}
 
 	public override void TakeDamage( DamageInfo info )

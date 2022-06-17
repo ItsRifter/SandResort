@@ -47,22 +47,57 @@ public partial class PHGame
 		buyer.PlaySound("buy_item");
 
 		buyer.PHInventory.AddItem( boughtItem );
+
+		boughtItem.Delete();
 	}
 
-	[ConCmd.Server("ph_drag_item")]
-	public static void SetItem(string prop)
+	[ConCmd.Server( "ph_drag_item" )]
+	public static void DragItem( string dragName, string dragClass )
 	{
 		var dragger = ConsoleSystem.Caller.Pawn as PHPawn;
 
 		if ( dragger == null )
 			return;
 
-		if ( string.IsNullOrEmpty( prop ) )
+		dragger.PreviewProp = TypeLibrary.Create<PHSuiteProps>( dragName );
+		dragger.PreviewProp.Name = dragClass;
+		dragger.PreviewProp.IsPreview = true;
+		dragger.PreviewProp.IsMovingFrom = true;
+		dragger.PreviewProp.Spawn();
+	}
+
+	[ConCmd.Server( "ph_select_item" )]
+	public static void SetItem(string prop)
+	{
+		var setter = ConsoleSystem.Caller.Pawn as PHPawn;
+
+		if ( setter == null )
 			return;
 
-		dragger.previewProp = TypeLibrary.Create<PHSuiteProps>(prop);
-		dragger.previewProp.IsPreview = true;
-		dragger.previewProp.Owner = dragger;
-		dragger.previewProp.Spawn();
+		if( setter.PreviewProp != null )
+		{
+			setter.PreviewProp.Delete();
+			setter.PreviewProp = null;
+		}
+
+		setter.PreviewProp = TypeLibrary.Create<PHSuiteProps>(prop);
+		setter.PreviewProp.IsPreview = true;
+		setter.PreviewProp.Owner = setter;
+		setter.PreviewProp.Spawn();
+	}
+
+	[ConCmd.Server("ph_qmenu_clear")]
+	public static void CleanUpQMenu()
+	{
+		var player = ConsoleSystem.Caller.Pawn as PHPawn;
+
+		if ( player == null )
+			return;
+
+		if ( player.PreviewProp == null )
+			return;
+
+		player.PreviewProp.Delete();
+		player.PreviewProp = null;
 	}
 }

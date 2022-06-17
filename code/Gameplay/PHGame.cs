@@ -14,6 +14,7 @@ public partial class PHGame : Game
 	[Net]
 	public IList<string> AllSuiteProps { get; protected set; }
 
+
 	List<string> skipPropItems;
 
 	public PHGame()
@@ -61,6 +62,20 @@ public partial class PHGame : Game
 			new PHHud();
 	}
 
+	public List<(string, string, int, PHSuiteProps.ShopType)> GrabSuiteItem( string itemToGrab )
+	{
+		var grabbedItem = new List<(string, string, int, PHSuiteProps.ShopType)>();
+		var prop = TypeLibrary.Create<PHSuiteProps>( itemToGrab );
+
+		if ( prop == null )
+			return null;
+
+		grabbedItem.Add((prop.SuiteItemName, prop.SuiteItemDesc, prop.SuiteItemCost, prop.ShopSeller));
+
+		prop.Delete();
+
+		return grabbedItem;
+	}
 
 	public IList<string> GetAllSuiteProps()
 	{
@@ -69,7 +84,7 @@ public partial class PHGame : Game
 
 	public void ResetSuitePropsList()
 	{
-		if( AllSuiteProps.Count > 0 )
+		if ( AllSuiteProps.Count > 0 )
 			AllSuiteProps.Clear();
 
 		foreach ( var item in TypeLibrary.GetTypes<PHSuiteProps>())
@@ -145,8 +160,7 @@ public partial class PHGame : Game
 
 		if ( cl.Pawn is PHPawn player && player.CurSuite != null )
 		{
-			player.CurSuite.SuiteTele.ClaimedSuite = false;
-			player.CurSuite = null;
+			player.CurSuite.RevokeSuite( player );
 			Log.Info( $"{cl.Name} was automatically checked out by disconnecting" );
 		}
 

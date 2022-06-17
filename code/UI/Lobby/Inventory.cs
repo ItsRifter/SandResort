@@ -16,8 +16,7 @@ public partial class Inventory : Panel
 	public Panel MainBag;
 
 	bool isOpen;
-
-	List<string> holdingItems = new List<string>();
+	float scrollRot = 0.0f;
 
 	public Inventory()
 	{
@@ -26,8 +25,6 @@ public partial class Inventory : Panel
 		isOpen = false;
 
 		InventoryBar = Add.Panel("invBar");
-
-		//itemTest = InventoryBar.Add.Panel("quickItem");
 
 		InventoryBar.Add.Panel("quickItem");
 		InventoryBar.Add.Panel("quickItem");
@@ -47,49 +44,81 @@ public partial class Inventory : Panel
 
 	}
 
+	public void ResetInventorySlots()
+	{
+		MainBag.DeleteChildren();
+
+		for ( int i = 0; i < 20; i++ )
+		{
+			MainBag.Add.Panel( "bagItem" );
+		}
+	}
+
 	public void SetInventorySlots(PHPawn player)
 	{
+		if ( player.PHInventory.ClientInventory.Count <= 0 )
+		{
+			ResetInventorySlots();
+			return;
+		}
+		
 		int index = 0;
-
+		
 		foreach ( var item in player.PHInventory.ClientInventory )
 		{
-			var displayItem = TypeLibrary.Create(TypeLibrary.GetTypeByName(item).FullName, TypeLibrary.GetTypeByName(item)) as PHSuiteProps;
+			MainBag.GetChild( index ).Style.SetBackgroundImage( item.Item2 );
 
-			holdingItems.Add( displayItem.GetType().FullName );
-
-			MainBag.GetChild( index ).Style.SetBackgroundImage( displayItem.SuiteItemImage );
-
-			if( holdingItems[index] != null )
+			MainBag.GetChild( index ).AddEventListener( "onclick", () =>
 			{
-				MainBag.GetChild( index ).AddEventListener( "onclick", () =>
+				DragItem( item.Item1 );
+				
+			/*	foreach ( var bagItem in MainBag.Children)
 				{
-					DragItem( holdingItems[index] );
-					MainBag.GetChild( index ).Style.SetBackgroundImage( "" );
-					holdingItems.RemoveAt( index );
+					if ( bagItem.Style.BackgroundImage == null)
+						continue;
 
-				} );
-			}
+					bagItem.Style.SetBackgroundImage( "" );
+				}*/
 
-			displayItem.Delete();
+			} );
+
 			index++;
+		}
+	}
+
+	[Event.BuildInput]
+	public void BuildInput(InputBuilder inputBuild)
+	{
+		if ( Local.Pawn is not PHPawn player )
+			return;
+
+		if( isOpen && player.PreviewProp == null )
+		{
+			var mouseTR = Trace.Ray( inputBuild.Cursor.Origin, inputBuild.Cursor.Project( 180 ) )
+				.Ignore(player)
+				.Run();
+
+			if(mouseTR.Entity != null && mouseTR.Entity is PHSuiteProps prop && !prop.IsPreview)
+			{
+				ConsoleSystem.Run( "ph_drag_item", prop.GetType().FullName, prop.Name );
+				isOpen = false;
+			}
 		}
 	}
 
 	public void DragItem(string prop)
 	{
-		ConsoleSystem.Run( "ph_drag_item", prop );
+		ConsoleSystem.Run( "ph_select_item", prop );
+		ResetInventorySlots();
+		isOpen = false;
 	}
 
 	public override void Tick()
 	{
 		base.Tick();
 
-		var player = Local.Pawn as PHPawn;
-
-		if (player == null)
+		if ( Local.Pawn is not PHPawn player )
 			return;
-
-		//itemTest.Style.SetBackgroundImage($"avatar:{Local.Client.PlayerId}");
 
 		if (Input.Pressed(InputButton.Menu))
 		{
@@ -98,6 +127,7 @@ public partial class Inventory : Panel
 		}
 		else if (Input.Released(InputButton.Menu))
 		{
+			ConsoleSystem.Run( "ph_qmenu_clear" );
 			isOpen = false;
 		}
 

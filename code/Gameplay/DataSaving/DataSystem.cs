@@ -28,7 +28,6 @@ public partial class PHGame
 	{
 		var pawn = cl.Pawn as PHPawn;
 
-
 		var saveData = new PlayerData()
 		{
 			PlayerName = cl.Name,
@@ -38,6 +37,58 @@ public partial class PHGame
 
 		FileSystem.Data.WriteJson( cl.PlayerId + ".json", saveData );
 		
+		return true;
+	}
+
+	public bool CommitSuiteSave( Client cl, List<PHSuiteProps> props )
+	{
+		List<SuitePropInfo> data = new List<SuitePropInfo>();
+
+		foreach ( var prop in props )
+		{
+			SuitePropInfo suite = new SuitePropInfo()
+			{
+				PropName = prop.GetType().FullName,
+				Model = prop.Model,
+				Pos = prop.LocalPosition,
+				Rot = prop.LocalRotation,
+			};
+
+			data.Add( suite );
+
+			prop.Delete();
+		}
+
+		FileSystem.Data.WriteJson( cl.PlayerId + "_suite.json", data );
+
+		return true;
+	}
+
+	public bool LoadSuiteSave( Client cl )
+	{
+		var data = FileSystem.Data.ReadJson<List<SuitePropInfo>>( cl.PlayerId + "_suite.json" );
+		
+		if ( data == null )
+			return false;
+		
+		var pawn = cl.Pawn as PHPawn;
+
+		if ( pawn == null )
+			return false;
+
+		foreach( var item in data.ToArray() )
+		{
+			var suiteProp = TypeLibrary.Create<PHSuiteProps>( item.PropName );
+			
+			suiteProp.SetParent( pawn.CurSuite );
+
+			suiteProp.Model = item.Model;
+			suiteProp.LocalPosition = item.Pos;
+			suiteProp.LocalRotation = item.Rot;
+
+			suiteProp.Spawn();
+		}
+
 		return true;
 	}
 

@@ -15,8 +15,7 @@ public partial class Shop : Panel
 	public Label ShopName;
 	public Panel ShopItems;
 
-	bool isOpen;
-	TimeSince lastOpened;
+	bool hasOpened = false;
 
 	public Shop()
 	{
@@ -34,11 +33,14 @@ public partial class Shop : Panel
 
 	public void OpenShop( PHPawn player, Type shopType )
 	{
+		if ( hasOpened )
+			return;
+
+		hasOpened = true;
 
 		if ( shopType.FullName == "AdminNPC" && !PHGame.Instance.AdminList.Contains( player.Client.Name ) )
 		{
 			CloseShop();
-			isOpen = false;
 			return;
 		}
 
@@ -50,41 +52,37 @@ public partial class Shop : Panel
 
 		foreach ( var buyableItem in PHGame.Instance.GetAllSuiteProps() )
 		{
-			var itemDisplay = TypeLibrary.Create<PHSuiteProps>(buyableItem);
-
-			if ( shopType.FullName == "BarShop" && itemDisplay.ShopSeller != PHSuiteProps.ShopType.Bar )
-			{
-				itemDisplay.Delete();
-				continue;
-			}
-			else if ( shopType.FullName == "FurnitureShop" && itemDisplay.ShopSeller != PHSuiteProps.ShopType.Furniture )
-			{
-				itemDisplay.Delete();
-				continue;
-			}
-			else if ( shopType.FullName == "ElectricShop" && itemDisplay.ShopSeller != PHSuiteProps.ShopType.Electric )
-			{
-				itemDisplay.Delete();
-				continue;
-			}
-
-			Panel item = ShopItems.Add.Panel( "shop-item" );
+			var grabbingItem = PHGame.Instance.GrabSuiteItem( buyableItem );
 			
-			Panel info = item.Add.Panel( "shop-info" );
-			info.Add.Label( $"{itemDisplay.SuiteItemName} - ${itemDisplay.SuiteItemCost}", "shop-item-title" );
-			info.Add.Label( itemDisplay.SuiteItemDesc, "shop-item-description" );
+			if ( grabbingItem == null )
+				continue;
+
+			var item = grabbingItem.First();
+
+
+			if ( shopType.FullName == "BarShop" && item.Item4 != PHSuiteProps.ShopType.Bar )
+				continue;
+			else if ( shopType.FullName == "FurnitureShop" && item.Item4 != PHSuiteProps.ShopType.Furniture )
+				continue;
+			else if ( shopType.FullName == "ElectricShop" && item.Item4 != PHSuiteProps.ShopType.Electric )
+				continue;
+
+			Panel itemPnl = ShopItems.Add.Panel( "shop-item" );
 			
-			item.AddEventListener( "onclick", () =>
+			Panel info = itemPnl.Add.Panel( "shop-info" );
+			info.Add.Label( $"{item.Item1} - ${item.Item3}", "shop-item-title" );
+			info.Add.Label( item.Item2, "shop-item-description" );
+			
+			itemPnl.AddEventListener( "onclick", () =>
 			{
 				PurchaseItem(buyableItem);
 			} );
-
-			itemDisplay.Delete();
 		}
 	}
 
 	public void CloseShop()
 	{
+		hasOpened = false;
 		ShopItems.DeleteChildren();
 	}
 
@@ -92,6 +90,7 @@ public partial class Shop : Panel
 	{
 		ConsoleSystem.Run( "ph_buy_item", itemToBuy, Local.Client.NetworkIdent );
 	}
+
 	public override void Tick()
 	{
 		base.Tick();
@@ -101,28 +100,12 @@ public partial class Shop : Panel
 		if ( player == null )
 			return;
 
-		var tr = Trace.Ray( player.EyePosition, player.EyePosition + player.EyeRotation.Forward * 50)
-			.Ignore( player )
-			.Run();
-
-		if ( tr.Entity is null )
-		{
-			isOpen = false;
+		if ( player.OpenShop )
+			OpenShop(player, player.ShopKeeper.GetType());
+		else
 			CloseShop();
-		}
 
-		if (Input.Pressed(InputButton.Use) && lastOpened > 0.3f && tr.Entity is ShopKeeperBase)
-		{
-			isOpen = !isOpen;
-			lastOpened = 0;
-
-			if ( isOpen )
-				OpenShop( player, tr.Entity.GetType() );
-			else
-				CloseShop();
-		}
-
-		SetClass( "openshop", isOpen );
+		SetClass( "openshop", player.OpenShop );
 	}
 }
 

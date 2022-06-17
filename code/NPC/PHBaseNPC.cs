@@ -45,9 +45,9 @@ public partial class PHBaseNPC : AnimatedEntity
 
 	public NPCDebugDraw Draw => NPCDebugDraw.Once;
 
-	Vector3 InputVelocity;
+	//Vector3 InputVelocity;
 
-	Vector3 LookDir;
+	//Vector3 LookDir;
 
 	[Event.Tick.Server]
 	public void Tick()
@@ -95,6 +95,15 @@ public partial class PHBaseNPC : AnimatedEntity
 		animHelper.WithWishVelocity( InputVelocity );*/
 	}
 
+	public override void TakeDamage( DamageInfo info )
+	{
+		if ( info.Attacker is PHPawn )
+			return;
+
+		lastDMG = info;
+		base.TakeDamage( info );
+	}
+
 	public virtual void InteractWith(PHPawn player)
 	{
 	}
@@ -129,18 +138,18 @@ public partial class PHBaseNPC : AnimatedEntity
 					move.Position = tr.EndPosition;
 				}
 
-				if ( InputVelocity.Length > 0 )
+				/*if ( InputVelocity.Length > 0 )
 				{
 					var movement = move.Velocity.Dot( InputVelocity.Normal );
 					move.Velocity = move.Velocity - movement * InputVelocity.Normal;
 					move.ApplyFriction( tr.Surface.Friction * 10.0f, timeDelta );
 					move.Velocity += movement * InputVelocity.Normal;
 
-				}
-				else
-				{
+				}*/
+				//else
+				//{
 					move.ApplyFriction( tr.Surface.Friction * 10.0f, timeDelta );
-				}
+				//}
 			}
 			else
 			{
