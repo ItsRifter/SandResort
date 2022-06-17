@@ -15,7 +15,7 @@
   "Metadata": {
     "MaxPlayers": 64,
     "MinPlayers": 1,
-    "GameNetworkType": 2,
+    "GameNetworkType": 0,
     "MapSelect": 3,
     "MapList": [
       "playchill.ph_lobby"

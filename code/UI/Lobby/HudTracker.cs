@@ -68,7 +68,7 @@ public partial class HudTracker : Panel
 
 		Username.SetText( Local.Client.Name );
 
-		Avatar.Style.SetBackgroundImage( $"avatar:{Local.Client.PlayerId}" );
+		Avatar.Style.SetBackgroundImage( $"avatarbig:{Local.Client.PlayerId}" );
 	}
 }
 
