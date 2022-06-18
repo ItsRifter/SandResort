@@ -100,7 +100,7 @@ public partial class SuiteRoomEnt : BaseTrigger
 
 		foreach ( var item in FindInBox(WorldSpaceBounds) )
 		{
-			if ( item is PHSuiteProps prop )
+			if ( item is PHSuiteProps prop && prop.PropOwner != null )
 				suiteProps.Add( prop );
 		}
 

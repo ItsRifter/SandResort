@@ -175,6 +175,7 @@ public partial class PHGame : Game
 			if(player.SitProp != null)
 			{
 				Log.Info( player.SitProp );
+				player.SitProp.StandUp();
 			}
 		}
 

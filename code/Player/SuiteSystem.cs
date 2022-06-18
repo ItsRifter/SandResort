@@ -8,7 +8,7 @@ using Sandbox;
 public interface ISuiteProp
 {
 	string PropName { get; }
-	PHPawn PropOwner { get; }
+	string OwningPlayer { get; }
 	Model Model { get; }
 	Vector3 Pos { get; }
 	Rotation Rot { get; }
@@ -17,7 +17,7 @@ public interface ISuiteProp
 public class SuitePropInfo : ISuiteProp
 {
 	public string PropName { get; set; }
-	public PHPawn PropOwner { get; set; }
+	public string OwningPlayer { get; set; }
 	public Model Model { get; set; }
 	public Vector3 Pos { get; set; }
 	public Rotation Rot { get; set; }
@@ -46,10 +46,9 @@ public partial class PHPawn
 		return false;
 	}
 
-	[ClientRpc]
-	public void ShowSittingAngle(PHSuiteProps prop)
+	public void ShowSittingAngle()
 	{
-		DebugOverlay.Line( prop.Position + Vector3.Up * 16, prop.Position + Vector3.Up * 16 + prop.Rotation.Forward * 35 );
+		DebugOverlay.Line( PreviewProp.Position + Vector3.Up * 16, PreviewProp.Position + Vector3.Up * 16 + PreviewProp.Rotation.Forward * 35 );
 	}
 
 	public TimeSince timeToWaitPlacing;
@@ -58,28 +57,22 @@ public partial class PHPawn
 	{
 		if ( PreviewProp == null ) return;
 
-		if ( PreviewProp.IsMovingFrom && Input.Pressed(InputButton.SecondaryAttack) )
+		if ( PreviewProp.IsMovingFrom && Input.Pressed(InputButton.SecondaryAttack) && IsServer )
 		{
 			PHInventory.InventoryList.Add( PreviewProp );
 			UpdateClientInventory( PreviewProp.ClassName, PreviewProp.SuiteItemImage );
 
-			if ( IsServer )
-			{
-				All.OfType<PHSuiteProps>().FirstOrDefault( x => x.Name == PreviewProp.Name ).Delete();
+			All.OfType<PHSuiteProps>().FirstOrDefault( x => x.Name == PreviewProp.Name ).Delete();
 
-				PreviewProp.Delete();
-				PreviewProp = null;
-			}
+			PreviewProp.Delete();
+			PreviewProp = null;
 
 			return;
 		} 
-		else if (!PreviewProp.IsMovingFrom && Input.Pressed( InputButton.SecondaryAttack ) )
+		else if (!PreviewProp.IsMovingFrom && Input.Pressed( InputButton.SecondaryAttack ) && IsServer )
 		{
-			if ( IsServer )
-			{
-				PreviewProp.Delete();
-				PreviewProp = null;
-			}
+			PreviewProp.Delete();
+			PreviewProp = null;
 
 			return;
 		}
@@ -90,24 +83,27 @@ public partial class PHPawn
 			.Run();
 
 		if ( PreviewProp is PHSittableProp && PreviewProp.Owner == this )
-			ShowSittingAngle(To.Single(this), PreviewProp);
-
-		scrollRot += Input.MouseWheel * 5;
-
-		PreviewProp.Position = mouseTrace.EndPosition;
-		PreviewProp.Rotation = Rotation.FromYaw( scrollRot );
+			ShowSittingAngle();
 		
-		if( CurSuite == null )
-			PreviewProp.RenderColor = new Color( 165, 0, 0, 0.5f );
-		else if ( FindInBox( PreviewProp.WorldSpaceBounds ).Count() > 0 )
-			PreviewProp.RenderColor = new Color( 165, 0, 0, 0.5f );
-		else if ( !CheckPlacementSurface( mouseTrace.Normal ) )
-			PreviewProp.RenderColor = new Color( 165, 0, 0, 0.5f );
-		else
-			PreviewProp.RenderColor = new Color( 0, 255, 0, 0.5f );
+		if(IsServer)
+		{
+			scrollRot += Input.MouseWheel * 5;
+
+			PreviewProp.Position = mouseTrace.EndPosition;
+			PreviewProp.Rotation = Rotation.FromYaw( scrollRot );
+
+			if ( CurSuite == null )
+				PreviewProp.RenderColor = new Color( 165, 0, 0, 0.5f );
+			else if ( FindInBox( PreviewProp.WorldSpaceBounds ).Count() > 0 )
+				PreviewProp.RenderColor = new Color( 165, 0, 0, 0.5f );
+			else if ( !CheckPlacementSurface( mouseTrace.Normal ) )
+				PreviewProp.RenderColor = new Color( 165, 0, 0, 0.5f );
+			else
+				PreviewProp.RenderColor = new Color( 0, 255, 0, 0.5f );
+		}
 
 
-		if (Input.Pressed(InputButton.PrimaryAttack))
+		if (Input.Pressed(InputButton.PrimaryAttack) && IsServer)
 		{
 			if ( timeToWaitPlacing <= 0.5f )
 				return;
@@ -139,6 +135,7 @@ public partial class PHPawn
 				placedProp.Model = PreviewProp.Model;
 				placedProp.Position = PreviewProp.Position;
 				placedProp.Rotation = PreviewProp.Rotation;
+				placedProp.PropOwner = this;
 
 				placedProp.Spawn();
 				placedProp.SetParent( CurSuite );

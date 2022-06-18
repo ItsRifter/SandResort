@@ -13,6 +13,9 @@ public partial class PHSuiteProps : ModelEntity
 	public virtual Model WorldModel => null;
 
 	[Net]
+	public PHPawn PropOwner { get; set; }
+
+	[Net]
 	public bool IsPreview { get; set; } = false;
 
 	public bool IsMovingFrom { get; set; } = false;

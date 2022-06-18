@@ -60,8 +60,6 @@ public partial class Inventory : Panel
 
 	public void SetInventorySlots(PHPawn player)
 	{
-		Log.Info( player.PHInventory.ClientInventory.Count );
-
 		if ( player.PHInventory.ClientInventory.Count < 0 )
 		{
 			ConsoleSystem.Run( "ph_qmenu_reset" );
@@ -106,8 +104,8 @@ public partial class Inventory : Panel
 		InventoryBar.SetClass( "allowPointerEvents", mouseTR.Entity is not PHSuiteProps && lastProp == null && isOpen );
 		
 		SetClass( "allowPointerEvents", (mouseTR.Entity is PHSuiteProps || lastProp != null) && isOpen );
-
-		if ( mouseTR.Entity is PHSuiteProps hovering && player.PreviewProp == null && Input.Pressed( InputButton.PrimaryAttack ) )
+		
+		if ( mouseTR.Entity is PHSuiteProps hovering && player.PreviewProp == null && Input.Pressed( InputButton.PrimaryAttack ) && hovering.PropOwner == player )
 		{
 			ConsoleSystem.Run( "ph_drag_item", hovering.GetType().FullName, hovering.Name );
 			lastProp = hovering;

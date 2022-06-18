@@ -91,6 +91,8 @@ public partial class PHGame
 			suiteProp.Model = item.Model;
 			suiteProp.LocalPosition = item.Pos;
 			suiteProp.LocalRotation = item.Rot;
+			suiteProp.PropOwner = pawn;
+
 
 			suiteProp.Spawn();
 		}

@@ -85,7 +85,7 @@ public partial class PHGame
 
 		setter.PreviewProp = TypeLibrary.Create<PHSuiteProps>(prop);
 		setter.PreviewProp.IsPreview = true;
-		setter.PreviewProp.Owner = setter;
+		setter.PreviewProp.PropOwner = setter;
 		setter.PreviewProp.Spawn();
 	}
 

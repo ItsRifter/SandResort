@@ -152,10 +152,10 @@ public partial class PHPawn : Player
 				OpenShop = false;
 				ShopKeeper = null;
 			}
-
-			SimulatePropPlacement();
 		}
-		
+
+		SimulatePropPlacement();
+
 		if ( Drunkiness > 0.0f )
 			SimulateDrunkState();
 	}
