@@ -68,7 +68,7 @@ public partial class PHInventorySystem : IBaseInventory
 
 		var suiteItem = ent as PHSuiteProps;
 
-		(Owner as PHPawn).UpdateClientInventory( To.Single( Owner ), ent.ClassName, suiteItem.SuiteItemImage);
+		(Owner as PHPawn).UpdateClientInventory(ent.ClassName, suiteItem.SuiteItemImage);
 
 		return true;
 	}

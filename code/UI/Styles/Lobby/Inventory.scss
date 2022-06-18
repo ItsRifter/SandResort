@@ -3,6 +3,10 @@
     height: 100%;
     position: absolute;
 
+    &.allowPointerEvents {
+        pointer-events: initial;
+    }
+
     .invBar, .invBag {
         .bagItem {
             background-size: cover;
@@ -35,13 +39,17 @@
         transform: translateX(-50%) translateY(100%);
         transition: opacity 1s ease, transform 1s linear, box-shadow 1s ease;
         box-shadow: 0px 0px 0px 0px rgba(0,0,0,0);
+        pointer-events: none;
 
         &.openQuick {
             transform: translateY(0px) translateX(-50%);
             box-shadow: 0px -3px 6px 3px rgba(0,0,0,0.3);
             transition: opacity 0.2s ease, transform 0.2s linear, box-shadow 0.2s ease;
-            pointer-events: all;
             opacity: 1;
+        }
+
+        &.allowPointerEvents {
+            pointer-events: all;
         }
     }
 
@@ -64,7 +72,7 @@
         border-bottom-left-radius: 12px;
         border-bottom-right-radius: 12px;
         box-shadow: 0px 4px 4px 1px #2CA9C200;
-        //
+        pointer-events: none;
 
 
         .mainBag {
@@ -77,6 +85,10 @@
             box-shadow: 0px 2px 5px 4px #2CA9C2;
             transform: translateY(0px);
             opacity: 1;
+            pointer-events: none;
+        }
+
+        &.allowPointerEvents {
             pointer-events: all;
         }
 

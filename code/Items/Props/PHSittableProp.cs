@@ -76,7 +76,7 @@ public partial class PHSittableProp : PHSuiteProps
 		sittingPlayer.PhysicsBody.Enabled = true;
 
 		sittingPlayer.Client.Pawn = sittingPlayer;
-		sittingPlayer.sitProp = null;
+		sittingPlayer.SitProp = null;
 		sittingPlayer = null;
 		isSittingDown = false;
 
@@ -95,7 +95,7 @@ public partial class PHSittableProp : PHSuiteProps
 		{
 			camera.SetSitter( player );
 
-			player.sitProp = this;
+			player.SitProp = this;
 
 			player.Parent = this;
 			player.LocalPosition = Vector3.Up * 5;

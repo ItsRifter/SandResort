@@ -61,9 +61,12 @@ public partial class PHGame
 
 		dragger.PreviewProp = TypeLibrary.Create<PHSuiteProps>( dragName );
 		dragger.PreviewProp.Name = dragClass;
+		dragger.PreviewProp.Owner = dragger;
 		dragger.PreviewProp.IsPreview = true;
 		dragger.PreviewProp.IsMovingFrom = true;
 		dragger.PreviewProp.Spawn();
+
+		dragger.timeToWaitPlacing = 0;
 	}
 
 	[ConCmd.Server( "ph_select_item" )]
@@ -99,5 +102,17 @@ public partial class PHGame
 
 		player.PreviewProp.Delete();
 		player.PreviewProp = null;
+	}
+
+	[ConCmd.Server( "ph_qmenu_reset" )]
+	public static void ResetQMenu()
+	{
+		var player = ConsoleSystem.Caller.Pawn as PHPawn;
+
+		if ( player == null )
+			return;
+
+		player.PHInventory.ClientInventory.Clear();
+
 	}
 }

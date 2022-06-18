@@ -15,7 +15,7 @@ public partial class PHPawn : Player
 	[Net]
 	public ShopKeeperBase ShopKeeper { get; set; }
 
-	public PHSittableProp sitProp;
+	public PHSittableProp SitProp;
 
 	public TimeSince timeLastRespawn;
 
@@ -182,21 +182,18 @@ public partial class PHPawn : Player
 			{
 				Using = FindUsable();
 				
-				//NPCInteration = FindNPC();
-				
 				if ( Using == null )
 				{
 					return;
 				}
 			}
 
-/*			if ( NPCInteration is PHBaseNPC NPC )
+			if ( Using is PHSuiteProps prop )
 			{
-				NPC.InteractWith( this );
-				NPCInteration = null;
+				prop.Interact( this );
+				Using = null;
 				return;
-			}*/
-
+			}
 			if ( !Input.Down( InputButton.Use ) )
 			{
 				StopUsing();
@@ -215,6 +212,13 @@ public partial class PHPawn : Player
 
 	protected override Entity FindUsable()
 	{
+		var tr = Trace.Ray( EyePosition, EyePosition + EyeRotation.Forward * 125 )
+			.Ignore( this )
+			.Run();
+
+		if ( tr.Entity is PHSuiteProps prop )
+			return prop;
+
 		return base.FindUsable();
 	}
 

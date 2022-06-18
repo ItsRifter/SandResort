@@ -34,7 +34,7 @@ public partial class PHPawn
 
 	public bool CheckPlacementSurface(Vector3 surface)
 	{
-		if ( surface.x == 1 || surface.x == -1)
+		if ( surface.x == 1 || surface.x == -1 )
 			return true;
 
 		if ( surface.y == 1 || surface.y == -1 )
@@ -51,6 +51,9 @@ public partial class PHPawn
 	{
 		DebugOverlay.Line( prop.Position + Vector3.Up * 16, prop.Position + Vector3.Up * 16 + prop.Rotation.Forward * 35 );
 	}
+
+	public TimeSince timeToWaitPlacing;
+
 	public void SimulatePropPlacement()
 	{
 		if ( PreviewProp == null ) return;
@@ -69,7 +72,8 @@ public partial class PHPawn
 			}
 
 			return;
-		} else if (!PreviewProp.IsMovingFrom && Input.Pressed( InputButton.SecondaryAttack ) )
+		} 
+		else if (!PreviewProp.IsMovingFrom && Input.Pressed( InputButton.SecondaryAttack ) )
 		{
 			if ( IsServer )
 			{
@@ -97,13 +101,21 @@ public partial class PHPawn
 			PreviewProp.RenderColor = new Color( 165, 0, 0, 0.5f );
 		else if ( FindInBox( PreviewProp.WorldSpaceBounds ).Count() > 0 )
 			PreviewProp.RenderColor = new Color( 165, 0, 0, 0.5f );
+		else if ( !CheckPlacementSurface( mouseTrace.Normal ) )
+			PreviewProp.RenderColor = new Color( 165, 0, 0, 0.5f );
 		else
 			PreviewProp.RenderColor = new Color( 0, 255, 0, 0.5f );
 
 
 		if (Input.Pressed(InputButton.PrimaryAttack))
 		{
+			if ( timeToWaitPlacing <= 0.5f )
+				return;
+
 			if ( FindInBox( PreviewProp.WorldSpaceBounds ).Count() > 0 )
+				return;
+
+			if ( !CheckPlacementSurface( mouseTrace.Normal ) )
 				return;
 			
 			if ( CurSuite == null )

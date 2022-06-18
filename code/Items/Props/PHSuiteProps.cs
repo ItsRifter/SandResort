@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Sandbox;
-public partial class PHSuiteProps : ModelEntity, IUse
+public partial class PHSuiteProps : ModelEntity
 {
 	public virtual string SuiteItemName => "Suite Base Item";
 	public virtual string SuiteItemDesc => "A base item for other suite items to derive from";
@@ -56,24 +56,5 @@ public partial class PHSuiteProps : ModelEntity, IUse
 	public virtual void Interact( PHPawn player )
 	{
 		//Do interactive stuff
-	}
-
-	public bool OnUse( Entity user )
-	{
-		if ( !IsUsable( user ) )
-			return false;
-
-		if ( user is PHPawn player )
-		{
-			Interact( player );
-			return true;
-		}
-
-		return false;
-	}
-
-	public bool IsUsable( Entity user )
-	{
-		return !IsPreview;
 	}
 }

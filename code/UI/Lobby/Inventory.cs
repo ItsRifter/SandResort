@@ -15,8 +15,10 @@ public partial class Inventory : Panel
 	public Panel InvBag;
 	public Panel MainBag;
 
+	PHSuiteProps lastProp;
+
 	bool isOpen;
-	float scrollRot = 0.0f;
+	TimeSince waitToReopenMenu;
 
 	public Inventory()
 	{
@@ -42,6 +44,8 @@ public partial class Inventory : Panel
 			MainBag.Add.Panel("bagItem");
 		}
 
+		waitToReopenMenu = 0;
+
 	}
 
 	public void ResetInventorySlots()
@@ -56,30 +60,24 @@ public partial class Inventory : Panel
 
 	public void SetInventorySlots(PHPawn player)
 	{
-		if ( player.PHInventory.ClientInventory.Count <= 0 )
+		Log.Info( player.PHInventory.ClientInventory.Count );
+
+		if ( player.PHInventory.ClientInventory.Count < 0 )
 		{
+			ConsoleSystem.Run( "ph_qmenu_reset" );
 			ResetInventorySlots();
-			return;
 		}
-		
+	
 		int index = 0;
 		
 		foreach ( var item in player.PHInventory.ClientInventory )
 		{
+
 			MainBag.GetChild( index ).Style.SetBackgroundImage( item.Item2 );
 
 			MainBag.GetChild( index ).AddEventListener( "onclick", () =>
 			{
 				DragItem( item.Item1 );
-				
-			/*	foreach ( var bagItem in MainBag.Children)
-				{
-					if ( bagItem.Style.BackgroundImage == null)
-						continue;
-
-					bagItem.Style.SetBackgroundImage( "" );
-				}*/
-
 			} );
 
 			index++;
@@ -92,25 +90,34 @@ public partial class Inventory : Panel
 		if ( Local.Pawn is not PHPawn player )
 			return;
 
-		if( isOpen && player.PreviewProp == null )
-		{
-			var mouseTR = Trace.Ray( inputBuild.Cursor.Origin, inputBuild.Cursor.Project( 180 ) )
-				.Ignore(player)
-				.Run();
+		if ( !isOpen )
+			return;
 
-			if(mouseTR.Entity != null && mouseTR.Entity is PHSuiteProps prop && !prop.IsPreview)
-			{
-				ConsoleSystem.Run( "ph_drag_item", prop.GetType().FullName, prop.Name );
-				isOpen = false;
-			}
+		if( lastProp == null && player.PreviewProp != null )
+		{
+			lastProp = player.PreviewProp;
 		}
+	
+		var mouseTR = Trace.Ray( inputBuild.Cursor.Origin, inputBuild.Cursor.Project( 180 ) )
+			.Ignore(player)
+			.Run();
+
+		InvBag.SetClass( "allowPointerEvents", mouseTR.Entity is not PHSuiteProps && lastProp == null && isOpen );
+		InventoryBar.SetClass( "allowPointerEvents", mouseTR.Entity is not PHSuiteProps && lastProp == null && isOpen );
+		
+		SetClass( "allowPointerEvents", (mouseTR.Entity is PHSuiteProps || lastProp != null) && isOpen );
+
+		if ( mouseTR.Entity is PHSuiteProps hovering && player.PreviewProp == null && Input.Pressed( InputButton.PrimaryAttack ) )
+		{
+			ConsoleSystem.Run( "ph_drag_item", hovering.GetType().FullName, hovering.Name );
+			lastProp = hovering;
+		}	
+
 	}
 
 	public void DragItem(string prop)
 	{
 		ConsoleSystem.Run( "ph_select_item", prop );
-		ResetInventorySlots();
-		isOpen = false;
 	}
 
 	public override void Tick()
@@ -120,19 +127,53 @@ public partial class Inventory : Panel
 		if ( Local.Pawn is not PHPawn player )
 			return;
 
-		if (Input.Pressed(InputButton.Menu))
+		if (Input.Down(InputButton.Menu) )
 		{
+			if ( waitToReopenMenu <= 0.45f )
+				return;
+
 			isOpen = true;
 			SetInventorySlots( player );
 		}
 		else if (Input.Released(InputButton.Menu))
 		{
 			ConsoleSystem.Run( "ph_qmenu_clear" );
+
+			SetClass( "allowPointerEvents", false );
+			InventoryBar.SetClass( "allowPointerEvents", false );
+			InvBag.SetClass( "allowPointerEvents", false );
+
+			lastProp = null;
 			isOpen = false;
+
+			waitToReopenMenu = 0;
+		}
+
+		if ( Input.Pressed( InputButton.PrimaryAttack ) && player.PreviewProp != null )
+		{
+			isOpen = false;
+
+			InventoryBar.SetClass( "allowPointerEvents", false );
+			InvBag.SetClass( "allowPointerEvents", false );
+
+			waitToReopenMenu = 0;
+		}
+
+		if (Input.Pressed(InputButton.SecondaryAttack) && player.PreviewProp != null)
+		{
+			isOpen = false;
+
+			InventoryBar.SetClass( "allowPointerEvents", false );
+			InvBag.SetClass( "allowPointerEvents", false );
+			SetClass( "allowPointerEvents", false );
+			lastProp = null;
+
+			waitToReopenMenu = 0;
 		}
 
 		InvBag.SetClass( "openBag", isOpen );
 		InventoryBar.SetClass( "openQuick", isOpen );
+
 	}
 }
 

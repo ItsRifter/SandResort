@@ -172,10 +172,9 @@ public partial class PHGame : Game
 				Log.Info( $"{cl.Name} was automatically checked out by disconnecting" );
 			}
 
-			if(player.sitProp != null)
+			if(player.SitProp != null)
 			{
-				Log.Info( player.sitProp );
-				player.sitProp.StandUp();
+				Log.Info( player.SitProp );
 			}
 		}
 

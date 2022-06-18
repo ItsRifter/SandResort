@@ -19,8 +19,6 @@ public class PlayerData : IPlayerStat
 	public int PlayCoins { get; set; }
 
 	public List<string> InventoryItems { get; set; }
-
-	public List<SuitePropInfo> SuiteProps { get; set; }
 }
 
 public partial class PHPawn
