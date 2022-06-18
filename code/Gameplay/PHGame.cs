@@ -27,7 +27,8 @@ public partial class PHGame : Game
 			{
 				"ItsRifter",
 				"Self Proclaimed God",
-				"Baik"
+				"Baik",
+				"G Kaf"
 			};
 
 			skipPropItems = new List<string>() 
