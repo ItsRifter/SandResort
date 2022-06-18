@@ -26,7 +26,13 @@ public partial class PHGame
 
 	public bool CommitSave(Client cl)
 	{
+		if ( cl.IsBot )
+			return false;
+
 		var pawn = cl.Pawn as PHPawn;
+
+		if ( pawn == null )
+			return false;
 
 		var saveData = new PlayerData()
 		{

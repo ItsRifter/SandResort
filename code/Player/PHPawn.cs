@@ -15,6 +15,8 @@ public partial class PHPawn : Player
 	[Net]
 	public ShopKeeperBase ShopKeeper { get; set; }
 
+	public PHSittableProp sitProp;
+
 	public TimeSince timeLastRespawn;
 
 	DamageInfo lastDMGInfo;

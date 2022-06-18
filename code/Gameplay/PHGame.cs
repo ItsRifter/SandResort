@@ -28,7 +28,9 @@ public partial class PHGame : Game
 				76561197972285500, // ItsRifter
 				76561198320469005, // RedHacker2 / Self Proclaimed God,
 				76561197991940798, // Baik
-				76561197975823217 // G Kaf
+				76561197975823217, // G Kaf
+				76561198169265681, // Jake
+				76561198142761957 // Lokiv
 			};
 
 			skipPropItems = new List<string>() 
@@ -54,7 +56,9 @@ public partial class PHGame : Game
 				76561197972285500, // ItsRifter
 				76561198320469005, // RedHacker2 / Self Proclaimed God,
 				76561197991940798, // Baik
-				76561197975823217 // G Kaf
+				76561197975823217, // G Kaf
+				76561198169265681, // Jake
+				76561198142761957 // Lokiv
 			};
 
 			ResetSuitePropsList();
@@ -160,10 +164,19 @@ public partial class PHGame : Game
 	{
 		CommitSave( cl );
 
-		if ( cl.Pawn is PHPawn player && player.CurSuite != null )
+		if ( cl.Pawn is PHPawn player )
 		{
-			player.CurSuite.RevokeSuite( player );
-			Log.Info( $"{cl.Name} was automatically checked out by disconnecting" );
+			if( player.CurSuite != null )
+			{
+				player.CurSuite.RevokeSuite( player );
+				Log.Info( $"{cl.Name} was automatically checked out by disconnecting" );
+			}
+
+			if(player.sitProp != null)
+			{
+				Log.Info( player.sitProp );
+				player.sitProp.StandUp();
+			}
 		}
 
 		base.ClientDisconnect( cl, reason );

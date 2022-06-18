@@ -64,15 +64,11 @@ public partial class PHSittableProp : PHSuiteProps
 	protected override void OnDestroy()
 	{
 		base.OnDestroy();
-
-		if ( sittingPlayer.IsValid() )
-			sittingPlayer.Parent = null;
 	}
 
 	public void StandUp()
 	{
 		timeLastSat = 0;
-
 		sittingPlayer.EnableHideInFirstPerson = true;
 
 		sittingPlayer.LocalPosition = Vector3.Up * 10 + LocalRotation.Forward * 35;
@@ -80,7 +76,7 @@ public partial class PHSittableProp : PHSuiteProps
 		sittingPlayer.PhysicsBody.Enabled = true;
 
 		sittingPlayer.Client.Pawn = sittingPlayer;
-
+		sittingPlayer.sitProp = null;
 		sittingPlayer = null;
 		isSittingDown = false;
 
@@ -98,6 +94,8 @@ public partial class PHSittableProp : PHSuiteProps
 		if ( !isSittingDown )
 		{
 			camera.SetSitter( player );
+
+			player.sitProp = this;
 
 			player.Parent = this;
 			player.LocalPosition = Vector3.Up * 5;
