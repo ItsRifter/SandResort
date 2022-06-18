@@ -140,6 +140,19 @@ public partial class PHPawn
 				placedProp.Spawn();
 				placedProp.SetParent( CurSuite );
 
+				if ( AchList.FirstOrDefault( x => x.GetType().FullName == "Suiteaholic" ) == null )
+				{
+					if ( AchChecker.FirstOrDefault( x => x.GetType().FullName == "Suiteaholic" ) == null )
+						AchChecker.Add( new WalkMarathon() );
+				}
+
+				var walkMarathon = AchChecker.FirstOrDefault( x => x.GetType().FullName == "Suiteaholic" ) ?? null;
+
+				if ( walkMarathon != null && !walkMarathon.HasCompleted )
+				{
+					AchChecker.First( x => x.GetType().FullName == "Suiteaholic" ).UpdateAchievement( this );
+				}
+
 				foreach ( var item in PHInventory.InventoryList.ToArray() )
 				{
 					if ( (item as PHSuiteProps).SuiteItemName == PreviewProp.SuiteItemName )
@@ -158,6 +171,19 @@ public partial class PHPawn
 				var movedProp = All.OfType<PHSuiteProps>().FirstOrDefault( x => x.Name == PreviewProp.Name );
 				movedProp.Position = PreviewProp.Position;
 				movedProp.Rotation = PreviewProp.Rotation;
+
+				if ( AchList.FirstOrDefault( x => x.GetType().FullName == "OCD" ) == null )
+				{
+					if ( AchChecker.FirstOrDefault( x => x.GetType().FullName == "OCD" ) == null )
+						AchChecker.Add( new OCD() );
+				}
+
+				var OCD = AchChecker.FirstOrDefault( x => x.GetType().FullName == "OCD" ) ?? null;
+
+				if ( OCD != null && !OCD.HasCompleted )
+				{
+					AchChecker.First( x => x.GetType().FullName == "OCD" ).UpdateAchievement( this );
+				}
 			}
 
 			if ( IsServer )

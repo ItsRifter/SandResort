@@ -17,8 +17,16 @@ public partial class PHGame
 		{
 			PlayerName = cl.Name,
 			PlayCoins = pawn.PlayCoins,
-			InventoryItems = pawn.PHInventory.GetAllItemsString()
+			InventoryItems = pawn.PHInventory.GetAllItemsString(),
+			Achievements = new List<string>(),
+			AchProgress = new List<(string, int)>()
 		};
+
+		var autoAch = new AchBase();
+
+		autoAch.ServerAutoGiveAchievement( pawn, new NewGuest() );
+
+		autoAch = null;
 
 		FileSystem.Data.WriteJson( cl.PlayerId + ".json", saveData );
 
@@ -34,11 +42,27 @@ public partial class PHGame
 		if ( pawn == null )
 			return false;
 
+		List<string> totalAchs = new List<string>();
+
+		List<(string, int)> progressingAchs = new List<(string, int)>();
+	
+		foreach ( var ach in pawn.AchList )
+		{
+			totalAchs.Add( ach.GetType().FullName );
+		}
+
+		foreach ( var check in pawn.AchChecker )
+		{
+			progressingAchs.Add( (check.AchName, check.AchProgress) );
+		}
+
 		var saveData = new PlayerData()
 		{
 			PlayerName = cl.Name,
 			PlayCoins = pawn.PlayCoins,
-			InventoryItems = pawn.PHInventory.GetAllItemsString()
+			InventoryItems = pawn.PHInventory.GetAllItemsString(),
+			Achievements = totalAchs,
+			AchProgress = progressingAchs
 		};
 
 		FileSystem.Data.WriteJson( cl.PlayerId + ".json", saveData );
@@ -93,7 +117,6 @@ public partial class PHGame
 			suiteProp.LocalRotation = item.Rot;
 			suiteProp.PropOwner = pawn;
 
-
 			suiteProp.Spawn();
 		}
 
@@ -113,6 +136,18 @@ public partial class PHGame
 			return false;
 
 		pawn.SetCoins(data.PlayCoins);
+
+		if ( pawn.AchList == null )
+			pawn.AchList = new List<string>();
+
+		foreach ( var ach in data.Achievements )
+		{
+			if ( pawn.AchList.Contains( ach ) )
+				continue;
+
+			pawn.AchList.Add( TypeLibrary.Create<AchBase>( ach ).AchName );
+		}
+
 
 		foreach ( var invItem in data.InventoryItems )
 		{

@@ -14,7 +14,6 @@ public partial class PHGame : Game
 	[Net]
 	public IList<string> AllSuiteProps { get; protected set; }
 
-
 	List<string> skipPropItems;
 
 	public PHGame()
@@ -62,6 +61,11 @@ public partial class PHGame : Game
 			};
 
 			ResetSuitePropsList();
+
+			foreach ( Client cl in Client.All)
+			{
+				LoadSave( cl );	
+			}
 		}
 
 		if ( IsClient )
@@ -158,7 +162,6 @@ public partial class PHGame : Game
 
 		if ( !LoadSave( client ) )
 			NewPlayer( client );
-
 	}
 	public override void ClientDisconnect( Client cl, NetworkDisconnectionReason reason )
 	{

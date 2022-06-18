@@ -19,16 +19,21 @@ public partial class PHPawn : Player
 
 	public TimeSince timeLastRespawn;
 
-	DamageInfo lastDMGInfo;
-
-	//Don't allow players to spam death and respawning
-	TimeSince timeLastDied;
+	public List<string> AchList;
 
 	public PHInventorySystem PHInventory;
 
 	public float Drunkiness;
 	public TimeSince TimeLastDrank;
+
+	public List<AchBase> AchChecker;
+
 	TimeSince timeTillSober;
+
+	//Don't allow players to spam death and respawning
+	TimeSince timeLastDied;
+
+	DamageInfo lastDMGInfo;
 
 	public PHPawn()
 	{
@@ -57,6 +62,12 @@ public partial class PHPawn : Player
 		Tags.Add( "PH_Player" );
 
 		Drunkiness = 0.0f;
+
+		if( AchList == null )
+			AchList = new List<string>();
+
+		if ( AchChecker == null )
+			AchChecker = new List<AchBase>();
 
 		//Use the base player respawn, NOT the respawn in this class
 		base.Respawn();
@@ -298,6 +309,22 @@ public partial class PHPawn : Player
 
 	public override void OnAnimEventFootstep( Vector3 pos, int foot, float volume )
 	{
+		if(IsServer)
+		{
+			if( AchList.FirstOrDefault( x => x == "WalkMarathon" ) == null )
+			{
+				if( AchChecker.FirstOrDefault( x => x.GetType().FullName == "WalkMarathon" ) == null )
+					AchChecker.Add( new WalkMarathon() );
+			}
+
+			var walkMarathon = AchChecker.FirstOrDefault( x => x.GetType().FullName == "WalkMarathon" ) ?? null;
+
+			if ( walkMarathon != null && !walkMarathon.HasCompleted )
+			{
+				AchChecker.First( x => x.GetType().FullName == "WalkMarathon" ).UpdateAchievement(this);
+			}
+		}
+
 		base.OnAnimEventFootstep( pos, foot, volume * 10 );
 	}
 

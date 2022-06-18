@@ -10,15 +10,17 @@ public interface IPlayerStat
 	public string PlayerName { get; set; }
 	public int PlayCoins { get; set; }
 	public List<string> InventoryItems { get; set;  }
+	public List<string> Achievements { get; set; }
+	public List<(string, int)> AchProgress { get; set; }
 }
 
 public class PlayerData : IPlayerStat
 {
 	public string PlayerName { get; set; }
-
 	public int PlayCoins { get; set; }
-
 	public List<string> InventoryItems { get; set; }
+	public List<string> Achievements { get; set; }
+	public List<(string, int)> AchProgress { get; set; }
 }
 
 public partial class PHPawn
