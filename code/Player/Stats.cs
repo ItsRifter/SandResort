@@ -5,13 +5,20 @@ using System.Text;
 using System.Threading.Tasks;
 using Sandbox;
 
+public class AchData
+{
+	public string AchievementName { get; set; }
+	public string AchievementClass { get; set; }
+	public int AchievementProgress { get; set; }
+	public bool IsCompleted { get; set; }
+}
+
 public interface IPlayerStat
 {
 	public string PlayerName { get; set; }
 	public int PlayCoins { get; set; }
 	public List<string> InventoryItems { get; set;  }
-	public List<string> Achievements { get; set; }
-	public List<(string, int)> AchProgress { get; set; }
+	public List<AchData> Achievements { get; set; }
 }
 
 public class PlayerData : IPlayerStat
@@ -19,8 +26,7 @@ public class PlayerData : IPlayerStat
 	public string PlayerName { get; set; }
 	public int PlayCoins { get; set; }
 	public List<string> InventoryItems { get; set; }
-	public List<string> Achievements { get; set; }
-	public List<(string, int)> AchProgress { get; set; }
+	public List<AchData> Achievements { get; set; }
 }
 
 public partial class PHPawn

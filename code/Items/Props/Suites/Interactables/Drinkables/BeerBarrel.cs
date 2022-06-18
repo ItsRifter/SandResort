@@ -8,6 +8,7 @@ public partial class BeerBarrel : PHSuiteProps
 {
 	public override string SuiteItemName => "Barrel of Beer";
 	public override string SuiteItemDesc => "A barrel of beer, don't get too drunk";
+	public override string SuiteItemImage => "ui/ph_icon_beerbarrel.png";
 	public override Model WorldModel => Model.Load( "models/clutter/barrel/wood_barrel.vmdl" );
 	public override int SuiteItemCost => 500;
 	public override ShopType ShopSeller => ShopType.Bar;

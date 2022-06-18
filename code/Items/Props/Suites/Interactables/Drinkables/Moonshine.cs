@@ -8,6 +8,7 @@ public partial class Moonshine : PHSuiteProps
 {
 	public override string SuiteItemName => "Moonshine Bottle";
 	public override string SuiteItemDesc => "A rather big bottle containing alcohol, seriously drink very responibly";
+	public override string SuiteItemImage => "ui/ph_icon_moonshine.png";
 	public override Model WorldModel => Model.Load( "models/clutter/moonshine/moonshine.vmdl" );
 	public override int SuiteItemCost => 50;
 	public override ShopType ShopSeller => ShopType.Bar;

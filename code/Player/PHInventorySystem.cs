@@ -67,8 +67,8 @@ public partial class PHInventorySystem : IBaseInventory
 		InventoryList.Add( ent );
 
 		if( ent is PHSuiteProps suiteItem )
-			(Owner as PHPawn).UpdateClientInventory(ent.ClassName, suiteItem.SuiteItemImage);
-		else if (ent is PHUsableItemBase usableItem)
+			(Owner as PHPawn).UpdateClientInventory( ent.ClassName, suiteItem.SuiteItemImage );
+		else if ( ent is PHUsableItemBase )
 			(Owner as PHPawn).UpdateClientInventory( ent.ClassName, "" );
 
 		return true;

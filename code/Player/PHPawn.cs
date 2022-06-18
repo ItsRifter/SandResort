@@ -19,7 +19,7 @@ public partial class PHPawn : Player
 
 	public TimeSince timeLastRespawn;
 
-	public List<string> AchList;
+	public List<AchBase> AchList;
 
 	public PHInventorySystem PHInventory;
 
@@ -64,7 +64,7 @@ public partial class PHPawn : Player
 		Drunkiness = 0.0f;
 
 		if( AchList == null )
-			AchList = new List<string>();
+			AchList = new List<AchBase>();
 
 		if ( AchChecker == null )
 			AchChecker = new List<AchBase>();
@@ -132,11 +132,31 @@ public partial class PHPawn : Player
 
 	Entity NPCInteration = null;
 	TimeSince timeToInteract;
-
+	TimeSince jumpingJackCooldown;
 	void SimulateActions()
 	{
 		if ( IsServer )
 		{
+			
+			if(Input.Pressed(InputButton.Jump) && jumpingJackCooldown > 0.85f )
+			{
+				jumpingJackCooldown = 0;
+
+				if ( AchList.FirstOrDefault( x => x.AchName == "Jumping Jacks" ) == null )
+				{
+					if ( AchChecker.FirstOrDefault( x => x.AchName == "Jumping Jacks" ) == null )
+						AchChecker.Add( new JumpingJacks() );
+				}
+
+				var walkMarathon = AchChecker.FirstOrDefault( x => x.AchName == "Jumping Jacks" ) ?? null;
+
+				if ( walkMarathon != null && !walkMarathon.HasCompleted )
+				{
+					AchChecker.First( x => x.AchName == "Jumping Jacks" ).UpdateAchievement( this );
+				}
+			}
+			
+
 			TickPlayerUse();
 
 			NPCInteration = FindNPC();
@@ -311,17 +331,17 @@ public partial class PHPawn : Player
 	{
 		if(IsServer)
 		{
-			if( AchList.FirstOrDefault( x => x == "WalkMarathon" ) == null )
+			if( AchList.FirstOrDefault( x => x.AchName == "Walk Marathon" ) == null )
 			{
-				if( AchChecker.FirstOrDefault( x => x.GetType().FullName == "WalkMarathon" ) == null )
+				if( AchChecker.FirstOrDefault( x => x.AchName == "Walk Marathon" ) == null )
 					AchChecker.Add( new WalkMarathon() );
 			}
 
-			var walkMarathon = AchChecker.FirstOrDefault( x => x.GetType().FullName == "WalkMarathon" ) ?? null;
+			var walkMarathon = AchChecker.FirstOrDefault( x => x.AchName == "Walk Marathon" ) ?? null;
 
 			if ( walkMarathon != null && !walkMarathon.HasCompleted )
 			{
-				AchChecker.First( x => x.GetType().FullName == "WalkMarathon" ).UpdateAchievement(this);
+				AchChecker.First( x => x.AchName == "Walk Marathon" ).UpdateAchievement(this);
 			}
 		}
 

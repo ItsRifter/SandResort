@@ -14,6 +14,7 @@ public partial class AchBase
 	public virtual string AchUnlockSound => "ach_award";
 	public virtual int AchProgressMax => 1;
 	public virtual int AchCoinsReward => 1;
+
 	public bool HasCompleted = false;
 
 	public virtual List<Entity> AchItemRewards => new List<Entity>()
@@ -22,27 +23,17 @@ public partial class AchBase
 		//Example: new Jetpack();
 	};
 
-	public int AchProgress = 0;
-
-	public void ServerAutoGiveAchievement( PHPawn player, AchBase achievement )
-	{
-		player.PlaySound( AchUnlockSound );
-		player.AchList.Add( achievement.AchName );
-		ConsoleSystem.Run( "say", $"{player.Client.Name} has earned the achievement: {achievement.AchName}", true );
-		HasCompleted = true;
-	}
+	public virtual int AchProgress { get; set; } = 0;
 
 	public void UpdateAchievement(PHPawn player, int updateProgress = 1)
 	{
 		AchProgress += updateProgress;
 
-		Log.Info( $"{AchName} - {AchProgress}" );
-
 		if ( AchProgress >= AchProgressMax )
 			GiveAchievement( player );
 	}
 
-	public void GiveAchievement(PHPawn player, AchBase serverAch = null)
+	public void GiveAchievement(PHPawn player)
 	{
 		player.GiveCoins( AchCoinsReward );
 
@@ -53,7 +44,7 @@ public partial class AchBase
 		}
 
 		player.PlaySound( AchUnlockSound );
-		player.AchList.Add( AchName );
+		player.AchList.Add( this );
 		
 		HasCompleted = true;
 

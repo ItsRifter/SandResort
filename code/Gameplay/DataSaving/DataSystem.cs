@@ -18,13 +18,15 @@ public partial class PHGame
 			PlayerName = cl.Name,
 			PlayCoins = pawn.PlayCoins,
 			InventoryItems = pawn.PHInventory.GetAllItemsString(),
-			Achievements = new List<string>(),
-			AchProgress = new List<(string, int)>()
+			Achievements = new List<AchData>()
 		};
 
-		var autoAch = new AchBase();
+		var autoAch = new NewGuest();
+		autoAch.HasCompleted = true;
+		pawn.PlaySound( autoAch.AchUnlockSound );
+		pawn.AchList.Add( autoAch );
 
-		autoAch.ServerAutoGiveAchievement( pawn, new NewGuest() );
+		ConsoleSystem.Run( "say", $"{pawn.Client.Name} has earned the achievement: {autoAch.AchName}", true );
 
 		autoAch = null;
 
@@ -42,18 +44,18 @@ public partial class PHGame
 		if ( pawn == null )
 			return false;
 
-		List<string> totalAchs = new List<string>();
+		List<AchData> achDataList = new List<AchData>();
 
-		List<(string, int)> progressingAchs = new List<(string, int)>();
-	
-		foreach ( var ach in pawn.AchList )
+		foreach ( var ach in pawn.AchChecker)
 		{
-			totalAchs.Add( ach.GetType().FullName );
-		}
+			AchData achData = new AchData();
 
-		foreach ( var check in pawn.AchChecker )
-		{
-			progressingAchs.Add( (check.AchName, check.AchProgress) );
+			achData.AchievementName = ach.AchName;
+			achData.AchievementClass = ach.GetType().FullName;
+			achData.AchievementProgress = ach.AchProgress;
+			achData.IsCompleted = ach.HasCompleted;
+
+			achDataList.Add( achData );
 		}
 
 		var saveData = new PlayerData()
@@ -61,12 +63,54 @@ public partial class PHGame
 			PlayerName = cl.Name,
 			PlayCoins = pawn.PlayCoins,
 			InventoryItems = pawn.PHInventory.GetAllItemsString(),
-			Achievements = totalAchs,
-			AchProgress = progressingAchs
+			Achievements = achDataList
 		};
 
 		FileSystem.Data.WriteJson( cl.PlayerId + ".json", saveData );
 		
+		return true;
+	}
+
+	public bool LoadSave( Client cl )
+	{
+		var data = FileSystem.Data.ReadJson<PlayerData>( cl.PlayerId + ".json" );
+
+		if ( data == null )
+			return false;
+
+		var pawn = cl.Pawn as PHPawn;
+
+		if ( pawn == null )
+			return false;
+
+		pawn.SetCoins( data.PlayCoins );
+
+		List<AchBase> achLoadData = new List<AchBase>();
+
+		foreach ( var ach in data.Achievements )
+		{
+			if ( achLoadData.Find(x => x.AchName == ach.AchievementName) != null )
+				continue;
+
+			AchBase achLoad = TypeLibrary.Create<AchBase>(ach.AchievementClass);
+			achLoad.AchProgress = ach.AchievementProgress;
+			achLoad.HasCompleted = ach.IsCompleted;
+
+			achLoadData.Add( achLoad );
+		}
+
+		pawn.AchList = achLoadData;
+		pawn.AchChecker = pawn.AchList;
+
+		foreach ( var invItem in data.InventoryItems )
+		{
+			var item = TypeLibrary.Create( invItem, TypeLibrary.GetTypeByName( invItem ) ) as Entity;
+
+			pawn.PHInventory.AddItem( item );
+
+			item.Delete();
+		}
+
 		return true;
 	}
 
@@ -118,44 +162,6 @@ public partial class PHGame
 			suiteProp.PropOwner = pawn;
 
 			suiteProp.Spawn();
-		}
-
-		return true;
-	}
-
-	public bool LoadSave(Client cl)
-	{
-		var data = FileSystem.Data.ReadJson<PlayerData>( cl.PlayerId + ".json" );
-
-		if ( data == null )
-			return false;
-
-		var pawn = cl.Pawn as PHPawn;
-
-		if ( pawn == null )
-			return false;
-
-		pawn.SetCoins(data.PlayCoins);
-
-		if ( pawn.AchList == null )
-			pawn.AchList = new List<string>();
-
-		foreach ( var ach in data.Achievements )
-		{
-			if ( pawn.AchList.Contains( ach ) )
-				continue;
-
-			pawn.AchList.Add( TypeLibrary.Create<AchBase>( ach ).AchName );
-		}
-
-
-		foreach ( var invItem in data.InventoryItems )
-		{
-			var item = TypeLibrary.Create(invItem, TypeLibrary.GetTypeByName(invItem)) as Entity;
-
-			pawn.PHInventory.AddItem( item );
-
-			item.Delete();
 		}
 
 		return true;

@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using Sandbox;
 using Sandbox.UI;
 using Sandbox.UI.Construct;
+using Sandbox.UI.Tests;
 
+[Library]
 public partial class Inventory : Panel
 {
 	public Panel InvPanel;
@@ -70,7 +72,6 @@ public partial class Inventory : Panel
 		
 		foreach ( var item in player.PHInventory.ClientInventory )
 		{
-
 			MainBag.GetChild( index ).Style.SetBackgroundImage( item.Item2 );
 
 			MainBag.GetChild( index ).AddEventListener( "onclick", () =>
