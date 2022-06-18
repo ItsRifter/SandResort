@@ -32,27 +32,7 @@ public partial class HudTracker : Panel
 		mainContainer.Add.Panel("gradient_bottomleft");
 
 		Avatar = hud.Add.Panel( "logo" );
-
-		// BEING REPLACED //
-		//CoinPnl = Add.Panel("mainCoinPanel");
-		//CoinLbl = Add.Label("???", "gradiant-coins");
-		//Add.Label( "Alex help" );
-		//// -- //
-		//keyboardActions = CoinPnl.Add.Panel("keyboardActions");
-		//// F: Pay respect //
-		//keyboardActions.AddChild(CreateKeyUI("F", "now i am in a void panel"));
-
-		// -- //
 	}
-
-	//public Panel CreateKeyUI(string keyTest, string actionText)
-    //{
-	//	Panel action = Add.Panel("keyAction");
-	//	Panel action1key = action.Add.Panel("key"); action1key.Add.Label(keyTest);
-	//	action.Add.Label(actionText);
-	//
-	//	return action;
-	//}
 
 	public override void Tick()
 	{

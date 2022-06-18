@@ -8,6 +8,7 @@ using Sandbox;
 public interface ISuiteProp
 {
 	string PropName { get; }
+	PHPawn PropOwner { get; }
 	Model Model { get; }
 	Vector3 Pos { get; }
 	Rotation Rot { get; }
@@ -16,6 +17,7 @@ public interface ISuiteProp
 public class SuitePropInfo : ISuiteProp
 {
 	public string PropName { get; set; }
+	public PHPawn PropOwner { get; set; }
 	public Model Model { get; set; }
 	public Vector3 Pos { get; set; }
 	public Rotation Rot { get; set; }

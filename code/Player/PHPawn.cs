@@ -71,7 +71,8 @@ public partial class PHPawn : Player
 		//Deletes the corpse if valid
 		DestroyCorpse(To.Everyone);
 		
-		if( PHGame.Instance.AdminList.Contains(Client.Name))
+		//this is temporary, just to show off glasses to admins/devs
+		if( PHGame.Instance.AdminList.Contains(Client.PlayerId ) )
 		{
 			var adminGlasses = new ModelEntity();
 			adminGlasses.SetModel( "models/cloth/dealwithitglass/dwi_glass.vmdl" );

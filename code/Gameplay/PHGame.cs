@@ -23,12 +23,12 @@ public partial class PHGame : Game
 		{
 			AllSuiteProps = new List<string>();
 
-			AdminList = new List<string>()
+			AdminList = new List<long>()
 			{
-				"ItsRifter",
-				"Self Proclaimed God",
-				"Baik",
-				"G Kaf"
+				76561197972285500, // ItsRifter
+				76561198320469005, // RedHacker2 / Self Proclaimed God,
+				76561197991940798, // Baik
+				76561197975823217 // G Kaf
 			};
 
 			skipPropItems = new List<string>() 
@@ -49,11 +49,12 @@ public partial class PHGame : Game
 	{
 		if ( IsServer )
 		{
-			AdminList = new List<string>()
+			AdminList = new List<long>()
 			{
-				"ItsRifter",
-				"Self Proclaimed God",
-				"Baik"
+				76561197972285500, // ItsRifter
+				76561198320469005, // RedHacker2 / Self Proclaimed God,
+				76561197991940798, // Baik
+				76561197975823217 // G Kaf
 			};
 
 			ResetSuitePropsList();
@@ -102,7 +103,7 @@ public partial class PHGame : Game
 
 	public override void DoPlayerDevCam( Client client )
 	{
-		if ( AdminList == null || !AdminList.Contains( client.Name ) )
+		if ( AdminList == null || !AdminList.Contains( client.PlayerId ) )
 			return;
 
 		var camera = client.Components.Get<DevCamera>( true );
@@ -119,7 +120,7 @@ public partial class PHGame : Game
 
 	public override void DoPlayerNoclip( Client player )
 	{
-		if ( AdminList == null || !AdminList.Contains( player.Name ) )
+		if ( AdminList == null || !AdminList.Contains( player.PlayerId ) )
 			return;
 
 		if ( player.Pawn is Player basePlayer )

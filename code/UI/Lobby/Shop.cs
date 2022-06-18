@@ -38,7 +38,7 @@ public partial class Shop : Panel
 
 		hasOpened = true;
 
-		if ( shopType.FullName == "AdminNPC" && !PHGame.Instance.AdminList.Contains( player.Client.Name ) )
+		if ( shopType.FullName == "AdminNPC" && !PHGame.Instance.AdminList.Contains( player.Client.PlayerId ) )
 		{
 			CloseShop();
 			return;
