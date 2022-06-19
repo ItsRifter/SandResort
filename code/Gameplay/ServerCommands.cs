@@ -61,7 +61,7 @@ public partial class PHGame
 
 		dragger.PreviewProp = TypeLibrary.Create<PHSuiteProps>( dragName );
 		dragger.PreviewProp.Name = dragClass;
-		dragger.PreviewProp.Owner = dragger;
+		dragger.PreviewProp.PropOwner = dragger;
 		dragger.PreviewProp.IsPreview = true;
 		dragger.PreviewProp.IsMovingFrom = true;
 		dragger.PreviewProp.Spawn();

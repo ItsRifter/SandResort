@@ -10,10 +10,7 @@ public partial class PHPawn : Player
 	public IList<Entity> ActiveChildren { get; set; }
 
 	[Net]
-	public bool OpenShop { get; set; } = false;
-
-	[Net]
-	public ShopKeeperBase ShopKeeper { get; set; }
+	public Entity InteractNPC { get; set; }
 
 	public PHSittableProp SitProp;
 
@@ -130,14 +127,15 @@ public partial class PHPawn : Player
 
 	}
 
-	Entity NPCInteration = null;
-	TimeSince timeToInteract;
 	TimeSince jumpingJackCooldown;
 	void SimulateActions()
 	{
 		if ( IsServer )
 		{
-			
+
+			if ( InteractNPC != null && Position.Distance( InteractNPC.Position ) > 250 )
+				InteractNPC = null;
+		
 			if(Input.Pressed(InputButton.Jump) && jumpingJackCooldown > 0.85f )
 			{
 				jumpingJackCooldown = 0;
@@ -148,30 +146,7 @@ public partial class PHPawn : Player
 
 			TickPlayerUse();
 
-			NPCInteration = FindNPC();
-
-			if( NPCInteration is SuiteReceptionist normalNPC && Input.Pressed( InputButton.Use ) )
-			{
-				if ( timeToInteract <= 1 )
-					return;
-
-				normalNPC.InteractWith(this);
-
-				timeToInteract = 0;
-			} 
-
-			if ( NPCInteration is ShopKeeperBase NPC && !OpenShop )
-			{
-				if (Input.Pressed(InputButton.Use) )
-				{
-					NPC.InteractWith( this );
-					return;
-				}
-			} else if (OpenShop && Input.Pressed( InputButton.Use ) )
-			{
-				OpenShop = false;
-				ShopKeeper = null;
-			}
+			InteractNPC = FindNPC();
 		}
 
 		SimulatePropPlacement();

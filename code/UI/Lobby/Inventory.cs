@@ -131,8 +131,10 @@ public partial class Inventory : Panel
 
 		if (Input.Pressed(InputButton.Menu) )
 		{
-			if ( waitToReopenMenu <= 0.45f )
+			if ( waitToReopenMenu <= 0.15f )
 				return;
+
+			Style.ZIndex = 5;
 
 			isOpen = true;
 			SetInventorySlots( player );
@@ -148,6 +150,8 @@ public partial class Inventory : Panel
 			lastProp = null;
 			isOpen = false;
 
+			Style.ZIndex = 0;
+
 			waitToReopenMenu = 0;
 		}
 
@@ -158,6 +162,8 @@ public partial class Inventory : Panel
 			InventoryBar.SetClass( "allowPointerEvents", false );
 			InvBag.SetClass( "allowPointerEvents", false );
 			ResetInventorySlots();
+
+			Style.ZIndex = 0;
 
 			waitToReopenMenu = 0;
 		}
@@ -170,6 +176,8 @@ public partial class Inventory : Panel
 			InvBag.SetClass( "allowPointerEvents", false );
 			SetClass( "allowPointerEvents", false );
 			lastProp = null;
+
+			Style.ZIndex = 0;
 
 			waitToReopenMenu = 0;
 		}

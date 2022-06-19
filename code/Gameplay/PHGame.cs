@@ -165,6 +165,13 @@ public partial class PHGame : Game
 
 		client.Pawn = pawn;
 
+		//This should be uncommented upon release
+		/*if ( !Host.IsDedicatedServer )
+		{
+			ConsoleSystem.Run( "say", "You are playing this on your PC, please join the dedicated servers", true );
+			return;
+		}*/
+
 		//If there is no save file, it is a new player so set them up
 		if ( !LoadSave( client ) )
 			NewPlayer( client );

@@ -46,7 +46,11 @@ public partial class PHPawn
 
 	public void ShowSittingAngle()
 	{
+		if ( IsClient )
+			return;
+		
 		DebugOverlay.Line( PreviewProp.Position + Vector3.Up * 16, PreviewProp.Position + Vector3.Up * 16 + PreviewProp.Rotation.Forward * 35 );
+		
 	}
 
 	public TimeSince timeToWaitPlacing;
@@ -80,7 +84,7 @@ public partial class PHPawn
 			.Ignore( PreviewProp )
 			.Run();
 
-		if ( PreviewProp is PHSittableProp && PreviewProp.Owner == this )
+		if ( PreviewProp is PHSittableProp && PreviewProp.PropOwner == this )
 			ShowSittingAngle();
 		
 		if(IsServer)

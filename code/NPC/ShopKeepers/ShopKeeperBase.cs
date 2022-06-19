@@ -29,16 +29,7 @@ public partial class ShopKeeperBase : AnimatedEntity
 
 	public virtual void InteractWith(PHPawn player)
 	{
-		if ( player.OpenShop )
-		{
-			player.OpenShop = false;
-			player.ShopKeeper = null;
-		}
-		else
-		{
-			player.OpenShop = true;
-			player.ShopKeeper = this;
-		}
+		
 	}
 
 	public override void TakeDamage( DamageInfo info )

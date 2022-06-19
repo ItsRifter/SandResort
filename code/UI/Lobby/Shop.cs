@@ -36,6 +36,8 @@ public partial class Shop : Panel
 		if ( hasOpened )
 			return;
 
+		Style.ZIndex = 5;
+
 		hasOpened = true;
 
 		if ( shopType.FullName == "AdminNPC" && !PHGame.Instance.AdminList.Contains( player.Client.PlayerId ) )
@@ -58,7 +60,6 @@ public partial class Shop : Panel
 				continue;
 
 			var item = grabbingItem.First();
-
 
 			if ( shopType.FullName == "BarShop" && item.Item4 != PHSuiteProps.ShopType.Bar )
 				continue;
@@ -84,6 +85,7 @@ public partial class Shop : Panel
 	{
 		hasOpened = false;
 		ShopItems.DeleteChildren();
+		Style.ZIndex = 0;
 	}
 
 	public void PurchaseItem(string itemToBuy)
@@ -95,17 +97,21 @@ public partial class Shop : Panel
 	{
 		base.Tick();
 
-		var player = Local.Pawn as PHPawn;
-
-		if ( player == null )
+		if ( Local.Pawn is not PHPawn player )
 			return;
 
-		if ( player.OpenShop )
-			OpenShop(player, player.ShopKeeper.GetType());
-		else
+		if ( player.InteractNPC == null )
+		{
+			hasOpened = false;
+			CloseShop();
+		}
+
+		if ( player.InteractNPC is ShopKeeperBase && !hasOpened && Input.Pressed( InputButton.Use ) )
+			OpenShop(player, player.InteractNPC.GetType());
+		else if (Input.Pressed(InputButton.Use) && hasOpened )
 			CloseShop();
 
-		SetClass( "openshop", player.OpenShop );
+		SetClass( "openshop", hasOpened );
 	}
 }
 

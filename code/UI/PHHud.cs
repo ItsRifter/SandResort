@@ -29,8 +29,9 @@ public partial class PHHud : RootPanel
 		//TEMPORARY, We should create our own chatbox with message storing n stuff
 		AddChild<PHChatBox>();
 
-		AddChild<Inventory>();
+		AddChild<SuiteReceptionUI>();
 		AddChild<Shop>();
+		AddChild<Inventory>();
 	}
 }
 

@@ -36,14 +36,14 @@ public partial class SuiteReceptionist : PHBaseNPC
 		if ( player.Drunkiness > 0 )
 			player.CheckOrUpdateAchievement( "Best pickup line", "PickupLine" );
 
-		if ( player.CurSuite != null )
+		/*if ( player.CurSuite != null )
 		{
 			CheckOut( player );
 			return;
 		}
 
 		if(!CheckIn(player))
-			ConsoleSystem.Run( "ph_server_say", "There are no suites available at this time", player.Client.Id );
+			ConsoleSystem.Run( "ph_server_say", "There are no suites available at this time", player.Client.Id );*/
 	}
 
 	//Checks the player in (if there is a suite available)
@@ -71,6 +71,38 @@ public partial class SuiteReceptionist : PHBaseNPC
 		PHGame.Instance.LoadSuiteSave( player.Client );
 
 		return true;
+	}
+
+	[ConCmd.Server("ph_claim_suite")]
+	public static void ClaimSuiteStatic(int suiteIndex, int plyID)
+	{
+		var player = ConsoleSystem.Caller.Pawn as PHPawn;
+
+		if ( player == null || player.Client.Id != plyID )
+			return;
+
+		if ( player.CurSuite != null )
+			return;
+
+		var curSuites = All.OfType<SuiteRoomEnt>().ToArray();
+
+		SuiteRoomEnt randomSuite = null;
+
+		randomSuite = curSuites[suiteIndex];
+
+		//If there is no suite available, return false
+		if ( randomSuite == null )
+			return;
+
+		ConsoleSystem.Run( "ph_server_say", $"You have checked into suite {randomSuite.Name.Substring( 6 )}", player.Client.Id );
+
+		Log.Info( $"{player.Client.Name} checked into {randomSuite.Name}" );
+
+		player.CurSuite = randomSuite;
+		player.CurSuite.SuiteOwner = player;
+		player.CurSuite.SuiteTele.ClaimedSuite = true;
+
+		PHGame.Instance.LoadSuiteSave( player.Client );
 	}
 
 	//Check the player out of the suite
