@@ -8,7 +8,6 @@ using Sandbox;
 public interface ISuiteProp
 {
 	string PropName { get; }
-	string OwningPlayer { get; }
 	Model Model { get; }
 	Vector3 Pos { get; }
 	Rotation Rot { get; }
@@ -17,7 +16,6 @@ public interface ISuiteProp
 public class SuitePropInfo : ISuiteProp
 {
 	public string PropName { get; set; }
-	public string OwningPlayer { get; set; }
 	public Model Model { get; set; }
 	public Vector3 Pos { get; set; }
 	public Rotation Rot { get; set; }

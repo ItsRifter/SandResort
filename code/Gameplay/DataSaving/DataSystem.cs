@@ -34,7 +34,7 @@ public partial class PHGame
 
 	}
 
-	public bool CommitSave(Client cl)
+	public bool CommitSave(Client cl, List<PHSuiteProps> props = null)
 	{
 		if ( cl.IsBot )
 			return false;
@@ -58,97 +58,53 @@ public partial class PHGame
 			achDataList.Add( achData );
 		}
 
+		List<SuitePropInfo> dataProps = new List<SuitePropInfo>();
+
+		if ( props != null )
+		{
+			foreach ( var prop in props )
+			{
+				SuitePropInfo suite = new SuitePropInfo()
+				{
+					PropName = prop.ClassName,
+					Model = prop.Model,
+					Pos = prop.LocalPosition,
+					Rot = prop.LocalRotation
+				};
+
+				dataProps.Add( suite );
+
+				prop.Delete();
+			}
+		}
+
 		var saveData = new PlayerData()
 		{
 			PlayerName = cl.Name,
 			PlayCoins = pawn.PlayCoins,
 			InventoryItems = pawn.PHInventory.GetAllItemsString(),
-			Achievements = achDataList
+			Achievements = achDataList,
+			SuiteProps = dataProps
 		};
 
 		FileSystem.Data.WriteJson( $"{cl.PlayerId}.json", saveData );
 		
 		return true;
 	}
-
-	public bool LoadSave( Client cl )
-	{
-		var data = FileSystem.Data.ReadJson<PlayerData>( cl.PlayerId + ".json" );
-
-		if ( data == null )
-			return false;
-
-		var pawn = cl.Pawn as PHPawn;
-
-		if ( pawn == null )
-			return false;
-
-		pawn.SetCoins( data.PlayCoins );
-
-		List<AchBase> achLoadData = new List<AchBase>();
-
-		foreach ( var ach in data.Achievements )
-		{
-			if ( achLoadData.Find(x => x.AchName == ach.AchievementName) != null )
-				continue;
-
-			AchBase achLoad = TypeLibrary.Create<AchBase>(ach.AchievementClass);
-			achLoad.AchProgress = ach.AchievementProgress;
-			achLoad.HasCompleted = ach.IsCompleted;
-
-			achLoadData.Add( achLoad );
-		}
-
-		pawn.AchList = achLoadData;
-		pawn.AchChecker = pawn.AchList;
-
-		foreach ( var invItem in data.InventoryItems )
-		{
-			var item = TypeLibrary.Create( invItem, TypeLibrary.GetTypeByName( invItem ) ) as Entity;
-
-			pawn.PHInventory.AddItem( item );
-
-			item.Delete();
-		}
-
-		return true;
-	}
-
-	public bool CommitSuiteSave( Client cl, List<PHSuiteProps> props )
-	{
-		List<SuitePropInfo> data = new List<SuitePropInfo>();
-
-		foreach ( var prop in props )
-		{
-			SuitePropInfo suite = new SuitePropInfo()
-			{
-				PropName = prop.GetType().FullName,
-				Model = prop.Model,
-				Pos = prop.LocalPosition,
-				Rot = prop.LocalRotation,
-			};
-
-			data.Add( suite );
-
-			prop.Delete();
-		}
-
-		FileSystem.Data.WriteJson( $"{cl.PlayerId}.json", data );
-
-		return true;
-	}
-
 	public bool LoadSuiteSave( Client cl )
 	{
-		var data = FileSystem.Data.ReadJson<List<SuitePropInfo>>( $"{cl.PlayerId}.json" );
+		var data = FileSystem.Data.ReadJson<PlayerData>( $"{cl.PlayerId}.json" );
 		
 		if ( data == null )
+			return false;
+
+		if ( data.SuiteProps == null )
 			return false;
 
 		if ( cl.Pawn is not PHPawn pawn )
 			return false;
 
-		foreach( SuitePropInfo item in data.ToArray() )
+		foreach( SuitePropInfo item in data.SuiteProps.ToArray() )
 		{
 			PHSuiteProps suiteProp = TypeLibrary.Create<PHSuiteProps>( item.PropName );
 			
@@ -187,6 +143,25 @@ public partial class PHGame
 
 			item.Delete();
 		}
+
+		pawn.SetCoins( data.PlayCoins );
+
+		List<AchBase> achLoadData = new List<AchBase>();
+
+		foreach ( var ach in data.Achievements )
+		{
+			if ( achLoadData.Find( x => x.AchName == ach.AchievementName ) != null )
+				continue;
+
+			AchBase achLoad = TypeLibrary.Create<AchBase>( ach.AchievementClass );
+			achLoad.AchProgress = ach.AchievementProgress;
+			achLoad.HasCompleted = ach.IsCompleted;
+
+			achLoadData.Add( achLoad );
+		}
+
+		pawn.AchList = achLoadData;
+		pawn.AchChecker = achLoadData;
 
 		return true;
 	}

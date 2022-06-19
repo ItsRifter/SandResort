@@ -19,6 +19,7 @@ public interface IPlayerStat
 	public int PlayCoins { get; set; }
 	public List<string> InventoryItems { get; set;  }
 	public List<AchData> Achievements { get; set; }
+	public List<SuitePropInfo> SuiteProps { get; set; }
 }
 
 public class PlayerData : IPlayerStat
@@ -27,6 +28,7 @@ public class PlayerData : IPlayerStat
 	public int PlayCoins { get; set; }
 	public List<string> InventoryItems { get; set; }
 	public List<AchData> Achievements { get; set; }
+	public List<SuitePropInfo> SuiteProps { get; set; }
 }
 
 public partial class PHPawn

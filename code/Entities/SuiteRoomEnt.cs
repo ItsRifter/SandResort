@@ -65,7 +65,7 @@ public partial class SuiteRoomEnt : BaseTrigger
 		player.CurSuite.SuiteOwner = null;
 		player.CurSuite = null;
 
-		PHGame.Instance.CommitSuiteSave( player.Client, SaveSuite() );
+		PHGame.Instance.CommitSave( player.Client, SaveSuite() );
 	}
 
 	public void KickGuest(PHPawn player = null)
