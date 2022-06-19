@@ -142,18 +142,7 @@ public partial class PHPawn : Player
 			{
 				jumpingJackCooldown = 0;
 
-				if ( AchList.FirstOrDefault( x => x.AchName == "Jumping Jacks" ) == null )
-				{
-					if ( AchChecker.FirstOrDefault( x => x.AchName == "Jumping Jacks" ) == null )
-						AchChecker.Add( new JumpingJacks() );
-				}
-
-				var walkMarathon = AchChecker.FirstOrDefault( x => x.AchName == "Jumping Jacks" ) ?? null;
-
-				if ( walkMarathon != null && !walkMarathon.HasCompleted )
-				{
-					AchChecker.First( x => x.AchName == "Jumping Jacks" ).UpdateAchievement( this );
-				}
+				CheckOrUpdateAchievement( "Jumping Jacks", "JumpingJacks" );
 			}
 			
 
@@ -313,6 +302,9 @@ public partial class PHPawn : Player
 		if(CurSuite != null)
 		{
 			CurSuite.RevokeSuite( this );
+			
+			if ( IsServer )
+				ConsoleSystem.Run( "ph_server_say", "You were automatically checked out of your suite", Client.Id );
 		}
 
 		//We should make a first person death camera in the future
@@ -327,22 +319,27 @@ public partial class PHPawn : Player
 		base.FrameSimulate( cl );
 	}
 
+	public void CheckOrUpdateAchievement(string achievement, string className)
+	{
+		if ( AchList.FirstOrDefault( x => x.AchName == achievement ) == null )
+		{
+			if ( AchChecker.FirstOrDefault( x => x.AchName == achievement ) == null )
+				AchChecker.Add( TypeLibrary.Create<AchBase>( className ) );
+		}
+
+		var achUpdate = AchChecker.FirstOrDefault( x => x.AchName == achievement ) ?? null;
+
+		if ( achUpdate != null && !achUpdate.HasCompleted )
+		{
+			AchChecker.First( x => x.AchName == achievement ).UpdateAchievement( this );
+		}
+	}
+
 	public override void OnAnimEventFootstep( Vector3 pos, int foot, float volume )
 	{
 		if(IsServer)
 		{
-			if( AchList.FirstOrDefault( x => x.AchName == "Walk Marathon" ) == null )
-			{
-				if( AchChecker.FirstOrDefault( x => x.AchName == "Walk Marathon" ) == null )
-					AchChecker.Add( new WalkMarathon() );
-			}
-
-			var walkMarathon = AchChecker.FirstOrDefault( x => x.AchName == "Walk Marathon" ) ?? null;
-
-			if ( walkMarathon != null && !walkMarathon.HasCompleted )
-			{
-				AchChecker.First( x => x.AchName == "Walk Marathon" ).UpdateAchievement(this);
-			}
+			CheckOrUpdateAchievement( "Walk Marathon", "WalkMarathon" );
 		}
 
 		base.OnAnimEventFootstep( pos, foot, volume * 10 );

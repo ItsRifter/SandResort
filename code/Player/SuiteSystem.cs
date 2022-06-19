@@ -170,18 +170,7 @@ public partial class PHPawn
 				movedProp.Position = PreviewProp.Position;
 				movedProp.Rotation = PreviewProp.Rotation;
 
-				if ( AchList.FirstOrDefault( x => x.GetType().FullName == "OCD" ) == null )
-				{
-					if ( AchChecker.FirstOrDefault( x => x.GetType().FullName == "OCD" ) == null )
-						AchChecker.Add( new OCD() );
-				}
-
-				var OCD = AchChecker.FirstOrDefault( x => x.GetType().FullName == "OCD" ) ?? null;
-
-				if ( OCD != null && !OCD.HasCompleted )
-				{
-					AchChecker.First( x => x.GetType().FullName == "OCD" ).UpdateAchievement( this );
-				}
+				CheckOrUpdateAchievement( "OCD", "OCD" );
 			}
 
 			if ( IsServer )

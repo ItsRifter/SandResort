@@ -67,7 +67,7 @@ public partial class SuiteReceptionist : PHBaseNPC
 		player.CurSuite.RevokeSuite( player );
 
 		if ( IsServer )
-			ConsoleSystem.Run( "ph_server_say", $"You have checked out of your suite", player.Client.Id );
+			ConsoleSystem.Run( "ph_server_say", "You have checked out of your suite", player.Client.Id );
 
 		Log.Info( $"{player.Client.Name} checked out" );
 	}
