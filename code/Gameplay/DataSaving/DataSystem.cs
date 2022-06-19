@@ -30,7 +30,7 @@ public partial class PHGame
 
 		autoAch = null;
 
-		FileSystem.Data.WriteJson( cl.PlayerId + ".json", saveData );
+		FileSystem.Data.WriteJson($"{cl.PlayerId}.json", saveData );
 
 	}
 
@@ -66,7 +66,7 @@ public partial class PHGame
 			Achievements = achDataList
 		};
 
-		FileSystem.Data.WriteJson( cl.PlayerId + ".json", saveData );
+		FileSystem.Data.WriteJson( $"{cl.PlayerId}.json", saveData );
 		
 		return true;
 	}
@@ -133,26 +133,24 @@ public partial class PHGame
 			prop.Delete();
 		}
 
-		FileSystem.Data.WriteJson( cl.PlayerId + "_suite.json", data );
+		FileSystem.Data.WriteJson( $"{cl.PlayerId}.json", data );
 
 		return true;
 	}
 
 	public bool LoadSuiteSave( Client cl )
 	{
-		var data = FileSystem.Data.ReadJson<List<SuitePropInfo>>( cl.PlayerId + "_suite.json" );
+		var data = FileSystem.Data.ReadJson<List<SuitePropInfo>>( $"{cl.PlayerId}.json" );
 		
 		if ( data == null )
 			return false;
-		
-		var pawn = cl.Pawn as PHPawn;
 
-		if ( pawn == null )
+		if ( cl.Pawn is not PHPawn pawn )
 			return false;
 
-		foreach( var item in data.ToArray() )
+		foreach( SuitePropInfo item in data.ToArray() )
 		{
-			var suiteProp = TypeLibrary.Create<PHSuiteProps>( item.PropName );
+			PHSuiteProps suiteProp = TypeLibrary.Create<PHSuiteProps>( item.PropName );
 			
 			suiteProp.SetParent( pawn.CurSuite );
 
@@ -162,6 +160,32 @@ public partial class PHGame
 			suiteProp.PropOwner = pawn;
 
 			suiteProp.Spawn();
+		}
+
+		return true;
+	}
+
+	public bool LoadSave(Client cl)
+	{
+		var data = FileSystem.Data.ReadJson<PlayerData>( $"{cl.PlayerId}.json" );
+
+		if ( data == null )
+			return false;
+
+		var pawn = cl.Pawn as PHPawn;
+
+		if ( pawn == null )
+			return false;
+
+		pawn.SetCoins(data.PlayCoins);
+
+		foreach ( var invItem in data.InventoryItems )
+		{
+			Entity item = TypeLibrary.Create(invItem, TypeLibrary.GetTypeByName(invItem)) as Entity;
+
+			pawn.PHInventory.AddItem( item );
+
+			item.Delete();
 		}
 
 		return true;
