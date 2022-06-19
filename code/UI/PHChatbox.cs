@@ -88,6 +88,15 @@ public partial class PHChatBox : Panel
 		Current?.AddEntry( null, message, avatar );
 	}
 
+	[ConCmd.Server("ph_server_say")]
+	public static void ServerPrivateMessage( string message, int plyID )
+	{
+		if ( plyID != ConsoleSystem.Caller.Id )
+			return;
+
+		AddChatEntry(To.Single(ConsoleSystem.Caller), "Receptionist", message );
+	}
+
 	[ConCmd.Server( "say" )]
 	public static void Say( string message, bool isConsole = false )
 	{

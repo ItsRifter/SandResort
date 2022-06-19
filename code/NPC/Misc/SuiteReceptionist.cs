@@ -50,6 +50,9 @@ public partial class SuiteReceptionist : PHBaseNPC
 
 		randomSuite = curSuites.OrderBy( x => Guid.NewGuid() ).FirstOrDefault( x => x.SuiteOwner == null );
 
+		if(IsServer)
+			ConsoleSystem.Run( "ph_server_say", $"You have checked into suite {randomSuite.Name.Substring( 6 )}", player.Client.Id );
+
 		Log.Info( $"{player.Client.Name} checked into {randomSuite.Name}" );
 
 		player.CurSuite = randomSuite;
@@ -62,6 +65,10 @@ public partial class SuiteReceptionist : PHBaseNPC
 	public void CheckOut( PHPawn player )
 	{
 		player.CurSuite.RevokeSuite( player );
+
+		if ( IsServer )
+			ConsoleSystem.Run( "ph_server_say", $"You have checked out of your suite", player.Client.Id );
+
 		Log.Info( $"{player.Client.Name} checked out" );
 	}
 
