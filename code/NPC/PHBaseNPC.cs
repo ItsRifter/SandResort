@@ -106,6 +106,7 @@ public partial class PHBaseNPC : AnimatedEntity
 
 	public virtual void InteractWith(PHPawn player)
 	{
+		//Do interaction stuff
 	}
 
 	protected virtual void Move( float timeDelta )

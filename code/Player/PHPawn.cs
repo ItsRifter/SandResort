@@ -268,16 +268,16 @@ public partial class PHPawn : Player
 	[ClientRpc]
 	public void CreateClientInventory()
 	{
-		PHInventory.ClientInventory = new List<(string, string)>();
+		PHInventory.ClientInventory = new List<string>();
 	}
 
 	[ClientRpc]
-	public void UpdateClientInventory( string newItem, string itemImage, bool shouldAdd = true )
+	public void UpdateClientInventory( string newItem, bool shouldAdd = true )
 	{
 		if ( shouldAdd )
-			PHInventory.ClientInventory.Add( (newItem, itemImage) );
+			PHInventory.ClientInventory.Add( newItem );
 		else if ( !shouldAdd )
-			PHInventory.ClientInventory.Remove( (newItem, itemImage) );
+			PHInventory.ClientInventory.Remove(newItem);
 	}
 
 	public override void TakeDamage( DamageInfo info )
@@ -302,7 +302,7 @@ public partial class PHPawn : Player
 		if(CurSuite != null)
 		{
 			CurSuite.RevokeSuite( this );
-			
+
 			if ( IsServer )
 				ConsoleSystem.Run( "ph_server_say", "You were automatically checked out of your suite", Client.Id );
 		}

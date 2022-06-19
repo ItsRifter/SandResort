@@ -58,7 +58,7 @@ public partial class PHPawn
 		if ( PreviewProp.IsMovingFrom && Input.Pressed(InputButton.SecondaryAttack) && IsServer )
 		{
 			PHInventory.InventoryList.Add( PreviewProp );
-			UpdateClientInventory( PreviewProp.ClassName, PreviewProp.SuiteItemImage );
+			UpdateClientInventory( PreviewProp.ClassName );
 
 			All.OfType<PHSuiteProps>().FirstOrDefault( x => x.Name == PreviewProp.Name ).Delete();
 
@@ -138,18 +138,7 @@ public partial class PHPawn
 				placedProp.Spawn();
 				placedProp.SetParent( CurSuite );
 
-				if ( AchList.FirstOrDefault( x => x.GetType().FullName == "Suiteaholic" ) == null )
-				{
-					if ( AchChecker.FirstOrDefault( x => x.GetType().FullName == "Suiteaholic" ) == null )
-						AchChecker.Add( new WalkMarathon() );
-				}
-
-				var walkMarathon = AchChecker.FirstOrDefault( x => x.GetType().FullName == "Suiteaholic" ) ?? null;
-
-				if ( walkMarathon != null && !walkMarathon.HasCompleted )
-				{
-					AchChecker.First( x => x.GetType().FullName == "Suiteaholic" ).UpdateAchievement( this );
-				}
+				CheckOrUpdateAchievement( "Suite OCD", "OCD" );
 
 				foreach ( var item in PHInventory.InventoryList.ToArray() )
 				{
@@ -162,7 +151,7 @@ public partial class PHPawn
 					}
 				}
 
-				UpdateClientInventory( placedProp.ClassName, placedProp.SuiteItemImage, false );
+				UpdateClientInventory( placedProp.ClassName, false );
 			} 
 			else if ( PreviewProp.IsMovingFrom )
 			{
@@ -170,7 +159,7 @@ public partial class PHPawn
 				movedProp.Position = PreviewProp.Position;
 				movedProp.Rotation = PreviewProp.Rotation;
 
-				CheckOrUpdateAchievement( "OCD", "OCD" );
+				CheckOrUpdateAchievement( "Suite OCD", "OCD" );
 			}
 
 			if ( IsServer )

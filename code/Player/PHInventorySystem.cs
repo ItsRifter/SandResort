@@ -11,7 +11,7 @@ public partial class PHInventorySystem : IBaseInventory
 
 	public List<Entity> InventoryList = new List<Entity>();
 
-	public IList<(string, string)> ClientInventory { get; set; } = new List<(string, string)>();
+	public IList<string> ClientInventory { get; set; }
 
 	int maxHoldingAmount = 20;
 
@@ -64,12 +64,15 @@ public partial class PHInventorySystem : IBaseInventory
 		if ( !CanAdd( ent ) )
 			return false;
 
+		if ( Owner is not PHPawn player )
+			return false;
+
 		InventoryList.Add( ent );
 
 		if( ent is PHSuiteProps suiteItem )
-			(Owner as PHPawn).UpdateClientInventory( ent.ClassName, suiteItem.SuiteItemImage );
+			player.UpdateClientInventory(ent.ClassName );
 		else if ( ent is PHUsableItemBase )
-			(Owner as PHPawn).UpdateClientInventory( ent.ClassName, "" );
+			player.UpdateClientInventory(ent.ClassName );
 
 		return true;
 	}

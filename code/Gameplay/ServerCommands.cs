@@ -112,7 +112,10 @@ public partial class PHGame
 		if ( player == null )
 			return;
 
-		player.PHInventory.ClientInventory.Clear();
+		if ( player.PHInventory.ClientInventory == null )
+			player.CreateClientInventory();
+		else
+			player.PHInventory.ClientInventory.Clear();
 
 	}
 }

@@ -7,6 +7,8 @@ using Sandbox;
 
 public partial class PHGame
 {
+
+	//Creates a new player save
 	public void NewPlayer(Client cl)
 	{
 		var pawn = cl.Pawn as PHPawn;
@@ -18,7 +20,8 @@ public partial class PHGame
 			PlayerName = cl.Name,
 			PlayCoins = pawn.PlayCoins,
 			InventoryItems = pawn.PHInventory.GetAllItemsString(),
-			Achievements = new List<AchData>()
+			Achievements = new List<AchData>(),
+			SuiteProps = new List<SuitePropInfo>()
 		};
 
 		var autoAch = new NewGuest();
@@ -34,6 +37,7 @@ public partial class PHGame
 
 	}
 
+	//Normal saving
 	public bool CommitSave(Client cl, List<PHSuiteProps> props = null)
 	{
 		if ( cl.IsBot )
@@ -60,6 +64,7 @@ public partial class PHGame
 
 		List<SuitePropInfo> dataProps = new List<SuitePropInfo>();
 
+		//If we're updating player's suite props
 		if ( props != null )
 		{
 			foreach ( var prop in props )
@@ -76,6 +81,11 @@ public partial class PHGame
 
 				prop.Delete();
 			}
+		} 
+		else
+		{
+			//Get the last suite props if we aren't updating this
+			dataProps = FileSystem.Data.ReadJson<PlayerData>( $"{cl.PlayerId}.json" ).SuiteProps;
 		}
 
 		var saveData = new PlayerData()
@@ -91,6 +101,8 @@ public partial class PHGame
 		
 		return true;
 	}
+
+	//Suite loading, we won't load other player stats but their suite
 	public bool LoadSuiteSave( Client cl )
 	{
 		var data = FileSystem.Data.ReadJson<PlayerData>( $"{cl.PlayerId}.json" );
@@ -121,6 +133,7 @@ public partial class PHGame
 		return true;
 	}
 
+	//Normal loading
 	public bool LoadSave(Client cl)
 	{
 		var data = FileSystem.Data.ReadJson<PlayerData>( $"{cl.PlayerId}.json" );
@@ -140,6 +153,8 @@ public partial class PHGame
 			Entity item = TypeLibrary.Create(invItem, TypeLibrary.GetTypeByName(invItem)) as Entity;
 
 			pawn.PHInventory.AddItem( item );
+
+			pawn.UpdateClientInventory(item.ClassName);
 
 			item.Delete();
 		}

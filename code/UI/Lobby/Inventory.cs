@@ -72,11 +72,13 @@ public partial class Inventory : Panel
 		
 		foreach ( var item in player.PHInventory.ClientInventory )
 		{
-			MainBag.GetChild( index ).Style.SetBackgroundImage( item.Item2 );
+			var createItem = TypeLibrary.Create<PHSuiteProps>( item );
+
+			MainBag.GetChild( index ).Style.SetBackgroundImage( createItem.SuiteItemImage );
 
 			MainBag.GetChild( index ).AddEventListener( "onclick", () =>
 			{
-				DragItem( item.Item1 );
+				DragItem( createItem.ClassName );
 			} );
 
 			index++;
@@ -108,6 +110,7 @@ public partial class Inventory : Panel
 		
 		if ( mouseTR.Entity is PHSuiteProps hovering && player.PreviewProp == null && Input.Pressed( InputButton.PrimaryAttack ) && hovering.PropOwner == player )
 		{
+			ResetInventorySlots();
 			ConsoleSystem.Run( "ph_drag_item", hovering.GetType().FullName, hovering.Name );
 			lastProp = hovering;
 		}	
@@ -126,7 +129,7 @@ public partial class Inventory : Panel
 		if ( Local.Pawn is not PHPawn player )
 			return;
 
-		if (Input.Down(InputButton.Menu) )
+		if (Input.Pressed(InputButton.Menu) )
 		{
 			if ( waitToReopenMenu <= 0.45f )
 				return;
@@ -154,6 +157,7 @@ public partial class Inventory : Panel
 
 			InventoryBar.SetClass( "allowPointerEvents", false );
 			InvBag.SetClass( "allowPointerEvents", false );
+			ResetInventorySlots();
 
 			waitToReopenMenu = 0;
 		}

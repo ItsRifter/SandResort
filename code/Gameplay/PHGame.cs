@@ -64,6 +64,9 @@ public partial class PHGame : Game
 
 			foreach ( Client cl in Client.All)
 			{
+				if ( cl.Pawn is PHPawn player )
+					player.CreateClientInventory();
+				
 				LoadSave( cl );	
 			}
 		}
@@ -109,6 +112,7 @@ public partial class PHGame : Game
 		}
 	}
 
+	//Allow admins to use dev cam
 	public override void DoPlayerDevCam( Client client )
 	{
 		if ( AdminList == null || !AdminList.Contains( client.PlayerId ) )
@@ -126,6 +130,7 @@ public partial class PHGame : Game
 		camera.Enabled = !camera.Enabled;
 	}
 
+	//Allow admins to toggle noclipping
 	public override void DoPlayerNoclip( Client player )
 	{
 		if ( AdminList == null || !AdminList.Contains( player.PlayerId ) )
@@ -160,6 +165,7 @@ public partial class PHGame : Game
 
 		client.Pawn = pawn;
 
+		//If there is no save file, it is a new player so set them up
 		if ( !LoadSave( client ) )
 			NewPlayer( client );
 	}
@@ -169,15 +175,16 @@ public partial class PHGame : Game
 
 		if ( cl.Pawn is PHPawn player )
 		{
+			//If they have a suite, revoke it from them 
 			if( player.CurSuite != null )
 			{
 				player.CurSuite.RevokeSuite( player );
 				Log.Info( $"{cl.Name} was automatically checked out by disconnecting" );
 			}
 
+			//If they are sitting on props that are sittable, make them stand up before fully disconnecting
 			if(player.SitProp != null)
 			{
-				Log.Info( player.SitProp );
 				player.SitProp.StandUp();
 			}
 		}
@@ -188,10 +195,8 @@ public partial class PHGame : Game
 	public override void Shutdown()
 	{
 		foreach ( Client cl in Client.All)
-		{
 			CommitSave( cl );
-		}
-
+	
 		base.Shutdown();
 	}
 

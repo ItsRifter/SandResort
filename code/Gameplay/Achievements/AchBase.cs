@@ -25,6 +25,7 @@ public partial class AchBase
 
 	public virtual int AchProgress { get; set; } = 0;
 
+	//Updates the achievement
 	public void UpdateAchievement(PHPawn player, int updateProgress = 1)
 	{
 		AchProgress += updateProgress;
@@ -33,10 +34,12 @@ public partial class AchBase
 			GiveAchievement( player );
 	}
 
+	//Upon progress reached to max, give the achievement to the player and announce it
 	public void GiveAchievement(PHPawn player)
 	{
 		player.GiveCoins( AchCoinsReward );
 
+		//If there are specific rewards, give them to the player
 		if( AchItemRewards.Count > 0 )
 		{
 			foreach ( var achItem in AchItemRewards )
