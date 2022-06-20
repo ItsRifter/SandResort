@@ -39,9 +39,9 @@
 						collision_interact_as = ""
 						collision_interact_with = ""
 						collision_interact_exclude = ""
-						origin = [ -0.283206, 0.003726, -0.000399 ]
+						origin = [ 0.514195, 0.003726, -0.000399 ]
 						angles = [ 0.0, 0.0, 0.0 ]
-						dimensions = [ 1.063465, 29.783422, 17.959721 ]
+						dimensions = [ 1.03189, 29.783422, 17.959721 ]
 					},
 				]
 			},
