@@ -59,6 +59,28 @@
 				]
 			},
 			{
+				_class = "RenderMeshList"
+				children = 
+				[
+					{
+						_class = "RenderMeshFile"
+						filename = "models/special/gift/gift.fbx"
+						import_translation = [ 0.0, 0.0, 0.0 ]
+						import_rotation = [ 0.0, 0.0, 0.0 ]
+						import_scale = 1.0
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						parent_bone = ""
+						import_filter = 
+						{
+							exclude_by_default = false
+							exception_list = [  ]
+						}
+					},
+				]
+			},
+			{
 				_class = "PhysicsShapeList"
 				children = 
 				[
@@ -66,7 +88,7 @@
 						_class = "PhysicsHullFile"
 						name = "gift_phy"
 						parent_bone = ""
-						surface_prop = "default"
+						surface_prop = "plastic"
 						collision_group = ""
 						collision_interact_as = ""
 						collision_interact_with = ""
@@ -83,28 +105,6 @@
 						maxHullVertices = 0
 						import_mode = "SingleHull"
 						optimization_algorithm = "IFR"
-						import_filter = 
-						{
-							exclude_by_default = false
-							exception_list = [  ]
-						}
-					},
-				]
-			},
-			{
-				_class = "RenderMeshList"
-				children = 
-				[
-					{
-						_class = "RenderMeshFile"
-						filename = "models/special/gift/gift.fbx"
-						import_translation = [ 0.0, 0.0, 0.0 ]
-						import_rotation = [ 0.0, 0.0, 0.0 ]
-						import_scale = 1.0
-						align_origin_x_type = "None"
-						align_origin_y_type = "None"
-						align_origin_z_type = "None"
-						parent_bone = ""
 						import_filter = 
 						{
 							exclude_by_default = false
