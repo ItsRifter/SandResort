@@ -66,7 +66,6 @@ public partial class SuiteReceptionist : PHBaseNPC
 
 		player.CurSuite = randomSuite;
 		player.CurSuite.SuiteOwner = player;
-		player.CurSuite.SuiteTele.ClaimedSuite = true;
 
 		PHGame.Instance.LoadSuiteSave( player.Client );
 
@@ -100,7 +99,6 @@ public partial class SuiteReceptionist : PHBaseNPC
 
 		player.CurSuite = randomSuite;
 		player.CurSuite.SuiteOwner = player;
-		player.CurSuite.SuiteTele.ClaimedSuite = true;
 
 		PHGame.Instance.LoadSuiteSave( player.Client );
 	}

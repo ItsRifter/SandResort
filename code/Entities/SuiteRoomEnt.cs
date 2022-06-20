@@ -15,13 +15,9 @@ public partial class SuiteRoomEnt : BaseTrigger
 {
 	public PHPawn SuiteOwner;
 
-	[Property, FGDType("target_destination")]
-	public string SuiteTeleporter { get; set; } = "";
-
 	[Property, FGDType( "target_destination" )]
 	public string SuiteKickerDestination { get; set; } = "";
 
-	public SuiteTeleporter SuiteTele;
 	public TeleDest SuiteKickedDest;
 
 	public override void Spawn()
@@ -32,16 +28,7 @@ public partial class SuiteRoomEnt : BaseTrigger
 	[Event.Tick.Server]
 	public void FindSuiteTeleport()
 	{
-		if( SuiteTele == null)
-		{
-			foreach ( var tele in All.OfType<SuiteTeleporter>() )
-			{
-				if ( tele.Name.Contains( SuiteTeleporter ) )
-					SuiteTele = tele;
-			}
-		}
-
-		if ( SuiteKickedDest == null )
+		if ( SuiteKickedDest == null && !string.IsNullOrEmpty( SuiteKickerDestination ) )
 		{
 			foreach ( var tele in All.OfType<TeleDest>() )
 			{
@@ -58,10 +45,7 @@ public partial class SuiteRoomEnt : BaseTrigger
 
 	public void RevokeSuite(PHPawn player)
 	{
-		var test = SaveSuite();
-
 		player.CurSuite.KickGuest();
-		player.CurSuite.SuiteTele.ClaimedSuite = false;
 		player.CurSuite.SuiteOwner = null;
 		player.CurSuite = null;
 

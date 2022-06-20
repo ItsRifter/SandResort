@@ -81,6 +81,8 @@ public partial class Inventory : Panel
 				DragItem( createItem.ClassName );
 			} );
 
+			createItem.Delete();
+
 			index++;
 		}
 	}
