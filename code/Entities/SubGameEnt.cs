@@ -45,6 +45,7 @@ public class SubGameEnt : ModelEntity
 
 			entity.Delete();
 		}
+
 		RenderColor = new Color( 255, 255, 255, 0 );
 		EnableAllCollisions = false;
 	}
