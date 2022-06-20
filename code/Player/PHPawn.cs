@@ -128,10 +128,13 @@ public partial class PHPawn : Player
 	}
 
 	TimeSince jumpingJackCooldown;
+
 	void SimulateActions()
 	{
 		if ( IsServer )
 		{
+			if ( InteractNPC is SuiteReceptionist suiteRecep && Input.Pressed(InputButton.Use) )
+				suiteRecep.InteractWith( this );
 
 			if ( InteractNPC != null && Position.Distance( InteractNPC.Position ) > 250 )
 				InteractNPC = null;
