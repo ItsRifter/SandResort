@@ -48,7 +48,7 @@ public class RagdollCamera : CameraMode
 
 	public virtual Vector3 GetSpectatePoint()
 	{
-		if ( Local.Pawn is PHPawn player && player.Corpse.IsValid() )
+		if ( Local.Pawn is LobbyPawn player && player.Corpse.IsValid() )
 		{
 			return player.Corpse.PhysicsGroup.MassCenter;
 		}

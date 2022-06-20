@@ -4,7 +4,7 @@ using System;
 public partial class ChairCam : CameraMode
 {
 	[Net]
-	protected PHPawn sitter { get; set; }
+	protected LobbyPawn sitter { get; set; }
 
 	protected virtual float OrbitSmoothingSpeed => 25.0f;
 	protected virtual float MinOrbitPitch => -65.0f;
@@ -46,7 +46,7 @@ public partial class ChairCam : CameraMode
 		DoFirstPerson( chair, body );
 	}
 
-	public void SetSitter(PHPawn playerPawn)
+	public void SetSitter(LobbyPawn playerPawn)
 	{
 		sitter = playerPawn;
 	}

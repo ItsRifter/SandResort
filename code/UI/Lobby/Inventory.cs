@@ -60,7 +60,7 @@ public partial class Inventory : Panel
 		}
 	}
 
-	public void SetInventorySlots(PHPawn player)
+	public void SetInventorySlots(LobbyPawn player)
 	{
 		if ( player.PHInventory.ClientInventory.Count < 0 )
 		{
@@ -90,7 +90,7 @@ public partial class Inventory : Panel
 	[Event.BuildInput]
 	public void BuildInput(InputBuilder inputBuild)
 	{
-		if ( Local.Pawn is not PHPawn player )
+		if ( Local.Pawn is not LobbyPawn player )
 			return;
 
 		if ( !isOpen )
@@ -128,7 +128,7 @@ public partial class Inventory : Panel
 	{
 		base.Tick();
 
-		if ( Local.Pawn is not PHPawn player )
+		if ( Local.Pawn is not LobbyPawn player )
 			return;
 
 		if (Input.Pressed(InputButton.Menu) )

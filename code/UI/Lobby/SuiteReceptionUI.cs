@@ -151,7 +151,7 @@ public partial class SuiteReceptionUI : Panel
 	{
 		base.Tick();
 
-		if ( Local.Pawn is not PHPawn player )
+		if ( Local.Pawn is not LobbyPawn player )
 			return;
 
 		if( player.InteractNPC == null )

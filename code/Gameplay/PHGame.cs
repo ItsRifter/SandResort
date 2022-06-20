@@ -64,7 +64,7 @@ public partial class PHGame : Game
 
 			foreach ( Client cl in Client.All)
 			{
-				if ( cl.Pawn is PHPawn player )
+				if ( cl.Pawn is LobbyPawn player )
 					player.CreateClientInventory();
 				
 				LoadSave( cl );	
@@ -160,7 +160,7 @@ public partial class PHGame : Game
 	{
 		base.ClientJoined( client );
 
-		var pawn = new PHPawn();
+		var pawn = new LobbyPawn();
 		pawn.Spawn();
 
 		client.Pawn = pawn;
@@ -180,7 +180,7 @@ public partial class PHGame : Game
 	{
 		CommitSave( cl );
 
-		if ( cl.Pawn is PHPawn player )
+		if ( cl.Pawn is LobbyPawn player )
 		{
 			//If they have a suite, revoke it from them 
 			if( player.CurSuite != null )
@@ -209,7 +209,7 @@ public partial class PHGame : Game
 
 	public override void DoPlayerSuicide( Client cl )
 	{
-		if(cl.Pawn is PHPawn player)
+		if(cl.Pawn is LobbyPawn player)
 		{
 			if( player.timeLastRespawn >= 3.0f)
 				base.DoPlayerSuicide( cl );

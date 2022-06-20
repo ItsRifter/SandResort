@@ -14,7 +14,7 @@ using SandboxEditor;
 public partial class SuiteRoomEnt : BaseTrigger
 {
 	[Net]
-	public PHPawn SuiteOwner { get; set; }
+	public LobbyPawn SuiteOwner { get; set; }
 
 	public bool IsLocked = false;
 	public bool ClaimedSuite = false;
@@ -54,7 +54,7 @@ public partial class SuiteRoomEnt : BaseTrigger
 		base.ClientSpawn();
 	}
 
-	public void RevokeSuite(PHPawn player)
+	public void RevokeSuite(LobbyPawn player)
 	{
 		player.CurSuite.KickGuest();
 		player.CurSuite.SuiteOwner = null;
@@ -64,13 +64,13 @@ public partial class SuiteRoomEnt : BaseTrigger
 		PHGame.Instance.CommitSave( player.Client, SaveSuite() );
 	}
 
-	public void KickGuest(PHPawn player = null)
+	public void KickGuest(LobbyPawn player = null)
 	{
 		if(player == null)
 		{
 			foreach ( var guest in FindInBox(WorldSpaceBounds) )
 			{
-				if(guest is PHPawn guestPlayer)
+				if(guest is LobbyPawn guestPlayer)
 				{
 					using ( Prediction.Off() )
 					{

@@ -43,7 +43,7 @@ public partial class PHInventorySystem : IBaseInventory
 
 		ent.Parent = Owner;
 
-		(Owner as PHPawn).ActiveChildren.Add( ent );
+		(Owner as LobbyPawn).ActiveChildren.Add( ent );
 		ent.SetParent( Owner, true );
 	}
 
@@ -64,7 +64,7 @@ public partial class PHInventorySystem : IBaseInventory
 		if ( !CanAdd( ent ) )
 			return false;
 
-		if ( Owner is not PHPawn player )
+		if ( Owner is not LobbyPawn player )
 			return false;
 
 		InventoryList.Add( ent );

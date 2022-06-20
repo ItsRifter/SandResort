@@ -7,7 +7,7 @@ using Sandbox;
 public partial class PHSittableProp : PHSuiteProps
 {
 	[Net]
-	public PHPawn sittingPlayer { get; private set; }
+	public LobbyPawn sittingPlayer { get; private set; }
 
 	bool isSittingDown = false;
 	public ChairCam camera;
@@ -82,7 +82,7 @@ public partial class PHSittableProp : PHSuiteProps
 
 	}
 
-	public override void Interact( PHPawn player )
+	public override void Interact( LobbyPawn player )
 	{
 		base.Interact( player );
 

@@ -28,7 +28,7 @@ public partial class PHGame
 			return;
 		}
 
-		var player = ConsoleSystem.Caller.Pawn as PHPawn;
+		var player = ConsoleSystem.Caller.Pawn as LobbyPawn;
 
 		if ( player == null )
 			return;
@@ -40,7 +40,7 @@ public partial class PHGame
 		}
 		else
 		{
-			PHPawn targetPlayer = null;
+			LobbyPawn targetPlayer = null;
 
 			foreach ( var client in Client.All )
 			{
@@ -53,7 +53,7 @@ public partial class PHGame
 					}
 					else
 					{
-						targetPlayer = client.Pawn as PHPawn;
+						targetPlayer = client.Pawn as LobbyPawn;
 					}
 				}
 			}
@@ -85,7 +85,7 @@ public partial class PHGame
 			return;
 		}
 
-		var player = ConsoleSystem.Caller.Pawn as PHPawn;
+		var player = ConsoleSystem.Caller.Pawn as LobbyPawn;
 
 		if ( player == null )
 			return;
@@ -97,7 +97,7 @@ public partial class PHGame
 		}
 		else
 		{
-			PHPawn targetPlayer = null;
+			LobbyPawn targetPlayer = null;
 
 			foreach ( var client in Client.All )
 			{
@@ -110,7 +110,7 @@ public partial class PHGame
 					}
 					else
 					{
-						targetPlayer = client.Pawn as PHPawn;
+						targetPlayer = client.Pawn as LobbyPawn;
 					}
 				}
 			}
@@ -139,7 +139,7 @@ public partial class PHGame
 		if ( TypeLibrary.GetTypeByName<PHSuiteProps>( itemSuiteName ) == null )
 			return;
 
-		var player = ConsoleSystem.Caller.Pawn as PHPawn;
+		var player = ConsoleSystem.Caller.Pawn as LobbyPawn;
 
 		if ( player == null )
 			return;
@@ -167,7 +167,7 @@ public partial class PHGame
 		if ( TypeLibrary.GetTypeByName<ShopKeeperBase>( npcName ) == null )
 			return;
 
-		var player = ConsoleSystem.Caller.Pawn as PHPawn;
+		var player = ConsoleSystem.Caller.Pawn as LobbyPawn;
 
 		if ( player == null )
 			return;
@@ -188,7 +188,7 @@ public partial class PHGame
 		if ( !Instance.AdminList.Contains( ConsoleSystem.Caller.PlayerId ) )
 			return;
 
-		var player = ConsoleSystem.Caller.Pawn as PHPawn;
+		var player = ConsoleSystem.Caller.Pawn as LobbyPawn;
 
 		if ( player == null )
 			return;
@@ -205,7 +205,7 @@ public partial class PHGame
 		}
 		else
 		{
-			PHPawn targetPlayer = null;
+			LobbyPawn targetPlayer = null;
 
 			foreach ( var client in Client.All )
 			{
@@ -218,7 +218,7 @@ public partial class PHGame
 					}
 					else
 					{
-						targetPlayer = client.Pawn as PHPawn;
+						targetPlayer = client.Pawn as LobbyPawn;
 					}
 				}
 			}
@@ -337,7 +337,7 @@ public partial class PHGame
 		}
 		else
 		{
-			PHPawn targetPlayer = null;
+			LobbyPawn targetPlayer = null;
 
 			foreach ( var client in Client.All )
 			{
@@ -350,7 +350,7 @@ public partial class PHGame
 					}
 					else
 					{
-						targetPlayer = client.Pawn as PHPawn;
+						targetPlayer = client.Pawn as LobbyPawn;
 					}
 				}
 			}
