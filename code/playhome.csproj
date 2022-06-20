@@ -12,16 +12,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Compile Remove="UI\Styles\bruh\**" />
-	  <EmbeddedResource Remove="UI\Styles\bruh\**" />
-	  <None Remove="UI\Styles\bruh\**" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Remove="UI\Styles\libraries\NewFile1.txt" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<None Update="**\*.scss" DependentUpon="%(Filename).cs" />
 		<None Update="**\*.css" DependentUpon="%(Filename).cs" />
 		<None Update="**\*.sass" DependentUpon="%(Filename).cs" />

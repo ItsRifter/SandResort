@@ -20,7 +20,8 @@ public partial class SuiteReceptionUI : Panel
 
 	public Label suiteName;
 	public Label suiteValue;
-	public Button Checkout;
+	public Button Checkoutbtn;
+	public Panel suiteImage;
 
 	public SuiteReceptionUI()
     {
@@ -40,36 +41,38 @@ public partial class SuiteReceptionUI : Panel
 			userSuite.Style.Set( "display: flex;" );
 		});
 
-		// UI
+		//UI
 
 		rootSuitesPanel = Add.Panel( "mainSuitesPanel" );
 		rootSuitesPanel.AddChild( TabsUi );
 
-		// root
+		//root
 		checkInSuite = rootSuitesPanel.Add.Panel("checkinSuites");
 		userSuite = rootSuitesPanel.Add.Panel("tabuserSuite");
-		//
-		// // check in // //
+		
+		//check in
 		Panel titlePanel = checkInSuite.Add.Panel( "titlePanel" );
 		titlePanel.Add.Label( "Suite Receptionist", "title" );
 		checkInSuite.Add.Panel("seperator");
 		Suites = checkInSuite.Add.Panel( "suites" );
-		//
-		// // user suite // //
+		
+		//user suite
 		Panel titlePanel_usersuite = userSuite.Add.Panel("titlePanel");
 		titlePanel_usersuite.Add.Label("Your suite", "title");
 		userSuite.Add.Panel("seperator");
-		//
-		Panel SuiteContainer =		userSuite.Add.Panel("suite-container");
-		Panel MainSuite =			SuiteContainer.Add.Panel("suite");
-		Panel MainSuite_inner =		MainSuite.Add.Panel( "suite-inner" );   // inner container
-		Panel suiteImage =			MainSuite_inner.Add.Panel("suite-img"); // image of the suite
+		
+		Panel SuiteContainer     =	userSuite.Add.Panel("suite-container");
+		Panel MainSuite			 =	SuiteContainer.Add.Panel("suite");
+		Panel MainSuite_inner	 =	MainSuite.Add.Panel( "suite-inner" );   // inner container
+		/* */ suiteImage		 =	MainSuite_inner.Add.Panel("suite-img"); // image of the suite
 		Panel suiteInfoContainer =	MainSuite_inner.Add.Panel("suite-info");// info about the suite
-																			//
 
-		suiteInfoContainer.Add.Label( "No suite", "suite-title" );
-		suiteInfoContainer.Add.Label( "Value: $69420" , "value");
-		suiteInfoContainer.Add.Button("No suite to check out", "checkout");
+
+		suiteName = suiteInfoContainer.Add.Label( "No suite", "suite-title" );
+		suiteValue = suiteInfoContainer.Add.Label( "Value: $69420" , "value");
+		Checkoutbtn = suiteInfoContainer.Add.Button("Check out", "checkout");
+
+		MainSuite.Add.Panel( "suite-bkg-image" );
 
 		userSuite.Add.Panel("seperator");
 
@@ -112,15 +115,21 @@ public partial class SuiteReceptionUI : Panel
 			Panel suiteinner = suite.Add.Panel( "suiteinner" );
 
 			//Image
-			suiteinner.Add.Panel( "suiteimage" );
+			var suiteBG = suiteinner.Add.Panel( "suiteimage" );
 
 			Panel suiteStatus = suiteinner.Add.Panel( "status" );
 			suiteStatus.Add.Label( $"Suite {i+1}", "title" );
 
-			if( newSuite.SuiteOwner != null )
+			if ( newSuite.SuiteOwner != null )
+			{
 				suiteStatus.Add.Label( $"{newSuite.SuiteOwner.PlayerName}'s Suite", "ownership" );
+				suiteBG.Style.BackgroundImage = Texture.Load( FileSystem.Mounted, "ui/suitebasic.jpg" );
+			}
 			else
-				suiteStatus.Add.Label( "Vacant", "ownership" );
+			{
+				suiteStatus.Add.Label( "Claim Suite", "ownership" );
+				suiteBG.Style.BackgroundImage = Texture.Load( FileSystem.Mounted, "ui/suitevacant.jpg" );
+			}
 
 			suite.AddEventListener( "onclick", () =>
 			{
