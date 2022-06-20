@@ -19,6 +19,8 @@ public partial class GameWorldPanel : WorldPanel
 
 	public BBox TriggerBox;
 
+
+
 	public GameWorldPanel()
 	{
 		StyleSheet.Load( "UI/Styles/Lobby/WorldUI/GameWorldPanel.scss" );

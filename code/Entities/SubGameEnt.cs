@@ -11,10 +11,16 @@ using SandboxEditor;
 [SupportsSolid]
 [HammerEntity]
 
-public class SubGameEnt : ModelEntity
+[BoundsHelper("minBound", "maxBound", true, true)]
+
+public class SubGameEnt : BaseTrigger
 {
 	public List<SubGameSpawnpoint> Spawnpoints;
 	public List<ModelEntity> Models;
+	public List<BrushEntity> BaseArea;
+
+	bool isActive = false;
+	bool hasSpawned = false;
 
 	public enum SubGameArea
 	{
@@ -34,20 +40,37 @@ public class SubGameEnt : ModelEntity
 
 		Spawnpoints = new List<SubGameSpawnpoint>();
 		Models = new List<ModelEntity>();
+		BaseArea = new List<BrushEntity>();
+	}
 
-		foreach ( var entity in FindInBox(WorldSpaceBounds) )
+	[Event.Tick.Server]
+	public void Test()
+	{
+		
+		if ( hasSpawned )
+			return;
+
+		foreach ( var entity in FindInBox( WorldSpaceBounds ) )
 		{
+			Log.Info(entity);
+
 			if ( entity is SubGameSpawnpoint spawn )
 				Spawnpoints.Add( spawn );
 
-			if ( entity is ModelEntity model )
+			if ( entity is ModelEntity model && entity is not BrushEntity )
 				Models.Add( model );
+
+			if ( entity is BrushEntity brush )
+			{
+				BaseArea.Add( brush );
+				brush.Enabled = false;
+				continue;
+			}
 
 			entity.Delete();
 		}
 
-		RenderColor = new Color( 255, 255, 255, 0 );
-		EnableAllCollisions = false;
+		hasSpawned = true;
 	}
 
 	public void LoadArea()
@@ -59,8 +82,20 @@ public class SubGameEnt : ModelEntity
 			newSpawn.Rotation = spawn.Rotation;
 		}
 
-		RenderColor = new Color( 255, 255, 255, 1 );
-		EnableAllCollisions = true;
+		foreach ( var model in Models )
+		{
+			ModelEntity newModel = new ModelEntity();
+			newModel.Position = model.Position;
+			newModel.Rotation = model.Rotation;
+			newModel.Model = model.Model;
+
+			Log.Info( model );
+		}
+
+		foreach ( var brush in BaseArea )
+		{
+
+		}
 	}
 
 	public void RestartArea()
@@ -80,8 +115,11 @@ public class SubGameEnt : ModelEntity
 
 	public void WipeAreaAndRemove()
 	{
-		RenderColor = new Color( 255, 255, 255, 0 );
-		EnableAllCollisions = false;
+		foreach ( var spawn in Spawnpoints )
+			spawn.Delete();
+
+		foreach ( var brush in BaseArea )
+			brush.Enabled = false;
 	}
 }
 
