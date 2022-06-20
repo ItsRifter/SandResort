@@ -26,7 +26,7 @@ public partial class SuiteReceptionist : PHBaseNPC
 		SetBodyGroup( 1, 0 );
 	}
 
-	public override void InteractWith( PHPawn player )
+	public override void InteractWith( LobbyPawn player )
 	{
 		base.InteractWith( player );
 
@@ -49,7 +49,7 @@ public partial class SuiteReceptionist : PHBaseNPC
 	[ConCmd.Server("ph_claim_suite")]
 	public static void ClaimSuiteStatic(int suiteIndex, int plyID)
 	{
-		var player = ConsoleSystem.Caller.Pawn as PHPawn;
+		var player = ConsoleSystem.Caller.Pawn as LobbyPawn;
 
 		if ( player == null || player.Client.Id != plyID )
 			return;

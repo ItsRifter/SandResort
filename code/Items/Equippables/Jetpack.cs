@@ -36,7 +36,7 @@ public partial class Jetpack : PHUsableItemBase
 				JetFuel = 50.0f;
 		}
 
-		if (Input.Down(InputButton.Jump) && JetFuel > 0 && (Parent as PHPawn).Controller is not NoclipController)
+		if (Input.Down(InputButton.Jump) && JetFuel > 0 && (Parent as LobbyPawn).Controller is not NoclipController)
 		{
 			Parent.Velocity += Vector3.Up * 15f;
 

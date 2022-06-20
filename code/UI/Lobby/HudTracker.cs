@@ -38,13 +38,12 @@ public partial class HudTracker : Panel
 	{
 		base.Tick();
 
-		var player = Local.Pawn as PHPawn;
+		var player = Local.Pawn as LobbyPawn;
 
 		if ( player == null ) 
 			return;
 
 		CoinLbl.Text = string.Format($"{player.PlayCoins:C0}");
-		//CoinLbl.SetText( $"{player.PlayCoins}" );
 
 		Username.SetText( Local.Client.Name );
 

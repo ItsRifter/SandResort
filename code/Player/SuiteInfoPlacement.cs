@@ -21,7 +21,7 @@ public class SuitePropInfo : ISuiteProp
 	public Rotation Rot { get; set; }
 }
 
-public partial class PHPawn
+public partial class LobbyPawn
 {
 	[Net]
 	public PHSuiteProps PreviewProp { get; set; }
@@ -149,7 +149,7 @@ public partial class PHPawn
 
 			foreach ( var item in FindInBox( PreviewProp.WorldSpaceBounds ) )
 			{
-				if(item is PHPawn)
+				if(item is LobbyPawn)
 				{
 					inPlayer = true;
 					break;
@@ -169,7 +169,7 @@ public partial class PHPawn
 
 			foreach ( var ownerSuite in FindInBox( CurSuite.WorldSpaceBounds ) )
 			{
-				if ( ownerSuite is PHPawn player && player == CurSuite.SuiteOwner )
+				if ( ownerSuite is LobbyPawn player && player == CurSuite.SuiteOwner )
 					isInSuiteArea = true;
 			}
 

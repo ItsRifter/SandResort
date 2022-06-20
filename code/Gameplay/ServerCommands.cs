@@ -12,7 +12,7 @@ public partial class PHGame
 	{
 		Host.AssertServer();
 
-		var buyer = ConsoleSystem.Caller.Pawn as PHPawn;
+		var buyer = ConsoleSystem.Caller.Pawn as LobbyPawn;
 
 		if ( buyer == null )
 			return;
@@ -54,7 +54,7 @@ public partial class PHGame
 	[ConCmd.Server( "ph_drag_item" )]
 	public static void DragItem( string dragName, string dragClass )
 	{
-		var dragger = ConsoleSystem.Caller.Pawn as PHPawn;
+		var dragger = ConsoleSystem.Caller.Pawn as LobbyPawn;
 
 		if ( dragger == null )
 			return;
@@ -72,7 +72,7 @@ public partial class PHGame
 	[ConCmd.Server( "ph_select_item" )]
 	public static void SetItem(string prop)
 	{
-		var setter = ConsoleSystem.Caller.Pawn as PHPawn;
+		var setter = ConsoleSystem.Caller.Pawn as LobbyPawn;
 
 		if ( setter == null )
 			return;
@@ -92,7 +92,7 @@ public partial class PHGame
 	[ConCmd.Server("ph_qmenu_clear")]
 	public static void CleanUpQMenu()
 	{
-		var player = ConsoleSystem.Caller.Pawn as PHPawn;
+		var player = ConsoleSystem.Caller.Pawn as LobbyPawn;
 
 		if ( player == null )
 			return;
@@ -107,7 +107,7 @@ public partial class PHGame
 	[ConCmd.Server( "ph_qmenu_reset" )]
 	public static void ResetQMenu()
 	{
-		var player = ConsoleSystem.Caller.Pawn as PHPawn;
+		var player = ConsoleSystem.Caller.Pawn as LobbyPawn;
 
 		if ( player == null )
 			return;

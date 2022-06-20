@@ -11,7 +11,7 @@ public partial class PHGame
 	//Creates a new player save
 	public void NewPlayer(Client cl)
 	{
-		var pawn = cl.Pawn as PHPawn;
+		var pawn = cl.Pawn as LobbyPawn;
 
 		pawn.SetCoins( 500 );
 
@@ -43,7 +43,7 @@ public partial class PHGame
 		if ( cl.IsBot )
 			return false;
 
-		var pawn = cl.Pawn as PHPawn;
+		var pawn = cl.Pawn as LobbyPawn;
 
 		if ( pawn == null )
 			return false;
@@ -113,7 +113,7 @@ public partial class PHGame
 		if ( data.SuiteProps == null )
 			return false;
 
-		if ( cl.Pawn is not PHPawn pawn )
+		if ( cl.Pawn is not LobbyPawn pawn )
 			return false;
 
 		foreach( SuitePropInfo item in data.SuiteProps.ToArray() )
@@ -141,7 +141,7 @@ public partial class PHGame
 		if ( data == null )
 			return false;
 
-		var pawn = cl.Pawn as PHPawn;
+		var pawn = cl.Pawn as LobbyPawn;
 
 		if ( pawn == null )
 			return false;

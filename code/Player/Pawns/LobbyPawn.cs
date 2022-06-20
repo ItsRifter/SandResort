@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 
-public partial class PHPawn : Player
+public partial class LobbyPawn : Player
 {
 	[Net, Predicted]
 	public IList<Entity> ActiveChildren { get; set; }
@@ -32,7 +32,7 @@ public partial class PHPawn : Player
 
 	DamageInfo lastDMGInfo;
 
-	public PHPawn()
+	public LobbyPawn()
 	{
 		PHInventory = new PHInventorySystem(this);
 		CreateClientInventory();
@@ -260,7 +260,7 @@ public partial class PHPawn : Player
 
 	public override void TakeDamage( DamageInfo info )
 	{
-		if ( info.Attacker is PHPawn )
+		if ( info.Attacker is LobbyPawn )
 			return;
 
 		lastDMGInfo = info;

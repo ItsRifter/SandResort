@@ -9,7 +9,7 @@ public partial class FurnitureShop : ShopKeeperBase
 {
 	public override string NPCName => "Solid Furniture Store";
 
-	public override void InteractWith( PHPawn player )
+	public override void InteractWith( LobbyPawn player )
 	{
 		base.InteractWith( player );
 	}

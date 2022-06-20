@@ -13,7 +13,7 @@ public partial class Moonshine : PHSuiteProps
 	public override int SuiteItemCost => 50;
 	public override ShopType ShopSeller => ShopType.Bar;
 
-	public override void Interact( PHPawn player )
+	public override void Interact( LobbyPawn player )
 	{
 		base.Interact( player );
 

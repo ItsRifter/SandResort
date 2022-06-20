@@ -31,7 +31,7 @@ public partial class Shop : Panel
 		ShopItems = shop.Add.Panel( "shop-items" );
 	}
 
-	public void OpenShop( PHPawn player, Type shopType )
+	public void OpenShop( LobbyPawn player, Type shopType )
 	{
 		if ( hasOpened )
 			return;
@@ -71,7 +71,7 @@ public partial class Shop : Panel
 			Panel itemPnl = ShopItems.Add.Panel( "shop-item" );
 			
 			Panel info = itemPnl.Add.Panel( "shop-info" );
-			info.Add.Label( $"{item.Item1} - ${item.Item3}", "shop-item-title" );
+			info.Add.Label( $"{item.Item1} - {item.Item3:C0}", "shop-item-title" );
 			info.Add.Label( item.Item2, "shop-item-description" );
 			
 			itemPnl.AddEventListener( "onclick", () =>
@@ -97,7 +97,7 @@ public partial class Shop : Panel
 	{
 		base.Tick();
 
-		if ( Local.Pawn is not PHPawn player )
+		if ( Local.Pawn is not LobbyPawn player )
 			return;
 
 		if ( player.InteractNPC == null )

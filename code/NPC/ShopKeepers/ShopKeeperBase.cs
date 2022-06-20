@@ -27,7 +27,7 @@ public partial class ShopKeeperBase : AnimatedEntity
 	}
 
 
-	public virtual void InteractWith(PHPawn player)
+	public virtual void InteractWith(LobbyPawn player)
 	{
 		
 	}

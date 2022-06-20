@@ -16,7 +16,7 @@ public partial class DiscoBall : PHSuiteProps
 
 	Sound playingSound;
 
-	public override void Interact( PHPawn player )
+	public override void Interact( LobbyPawn player )
 	{
 		base.Interact( player );
 

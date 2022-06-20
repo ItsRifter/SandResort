@@ -20,7 +20,7 @@ public partial class SuiteAutoChecker : TriggerMultiple
 
 	public override void OnTouchStart( Entity other )
 	{
-		if(other is PHPawn player && player.CurSuite != null)
+		if(other is LobbyPawn player && player.CurSuite != null)
 		{
 			player.CurSuite.RevokeSuite( player );
 			Log.Info( $"{player.Client.Name} was automatically checked out by leaving" );

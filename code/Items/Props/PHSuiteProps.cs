@@ -13,7 +13,7 @@ public partial class PHSuiteProps : ModelEntity
 	public virtual Model WorldModel => null;
 
 	[Net]
-	public PHPawn PropOwner { get; set; }
+	public LobbyPawn PropOwner { get; set; }
 
 	[Net]
 	public bool IsPreview { get; set; } = false;
@@ -56,7 +56,7 @@ public partial class PHSuiteProps : ModelEntity
 			return;
 	}
 
-	public virtual void Interact( PHPawn player )
+	public virtual void Interact( LobbyPawn player )
 	{
 		//Do interactive stuff
 	}

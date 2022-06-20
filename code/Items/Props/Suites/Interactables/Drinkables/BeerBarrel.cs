@@ -15,7 +15,7 @@ public partial class BeerBarrel : PHSuiteProps
 
 	int limitedUses = 20;
 
-	public override void Interact( PHPawn player )
+	public override void Interact( LobbyPawn player )
 	{
 		base.Interact( player );
 

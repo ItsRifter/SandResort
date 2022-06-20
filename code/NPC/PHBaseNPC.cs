@@ -97,14 +97,14 @@ public partial class PHBaseNPC : AnimatedEntity
 
 	public override void TakeDamage( DamageInfo info )
 	{
-		if ( info.Attacker is PHPawn )
+		if ( info.Attacker is LobbyPawn )
 			return;
 
 		lastDMG = info;
 		base.TakeDamage( info );
 	}
 
-	public virtual void InteractWith(PHPawn player)
+	public virtual void InteractWith(LobbyPawn player)
 	{
 		//Do interaction stuff
 	}
