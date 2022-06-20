@@ -44,6 +44,40 @@ public partial class PHPawn
 		return false;
 	}
 
+	public void AdjustSurfaceRotation( Vector3 surface )
+	{	
+		if(surface.x == 1)
+		{
+			PreviewProp.Rotation = Rotation.FromPitch( 90 ) * Rotation.FromYaw( scrollRot );
+			return;
+		} 
+		else if (surface.x == -1)
+		{
+			PreviewProp.Rotation = Rotation.FromPitch( -90 ) * Rotation.FromYaw( scrollRot );
+			return;
+		}
+
+		if ( surface.y == 1 )
+		{
+			PreviewProp.Rotation = Rotation.FromRoll( -90 ) * Rotation.FromYaw( scrollRot );
+			return;
+		}
+		else if ( surface.y == -1 )
+		{
+			PreviewProp.Rotation = Rotation.FromRoll( 90 ) * Rotation.FromYaw( scrollRot );
+			return;
+		}
+
+		if ( surface.z == -1 )
+		{
+			PreviewProp.Rotation = Rotation.FromRoll( -180 ) * Rotation.FromYaw( scrollRot );
+			return;
+		}
+		
+		PreviewProp.Rotation = Rotation.From(0, 0, 0) * Rotation.FromYaw( scrollRot );
+
+	}
+
 	public void ShowSittingAngle()
 	{
 		if ( IsClient )
@@ -92,7 +126,8 @@ public partial class PHPawn
 			scrollRot += Input.MouseWheel * 5;
 
 			PreviewProp.Position = mouseTrace.EndPosition;
-			PreviewProp.Rotation = Rotation.FromYaw( scrollRot );
+
+			AdjustSurfaceRotation( mouseTrace.Normal );
 
 			if ( CurSuite == null )
 				PreviewProp.RenderColor = new Color( 165, 0, 0, 0.5f );
@@ -110,7 +145,18 @@ public partial class PHPawn
 			if ( timeToWaitPlacing <= 0.5f )
 				return;
 
-			if ( FindInBox( PreviewProp.WorldSpaceBounds ).Count() > 0 )
+			bool inPlayer = false;
+
+			foreach ( var item in FindInBox( PreviewProp.WorldSpaceBounds ) )
+			{
+				if(item is PHPawn)
+				{
+					inPlayer = true;
+					break;
+				}
+			}
+
+			if ( inPlayer )
 				return;
 
 			if ( !CheckPlacementSurface( mouseTrace.Normal ) )

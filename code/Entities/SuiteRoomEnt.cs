@@ -13,28 +13,39 @@ using SandboxEditor;
 [SupportsSolid]
 public partial class SuiteRoomEnt : BaseTrigger
 {
-	public PHPawn SuiteOwner;
+	[Net]
+	public PHPawn SuiteOwner { get; set; }
+
+	public bool IsLocked = false;
+	public bool ClaimedSuite = false;
 
 	[Property, FGDType( "target_destination" )]
 	public string SuiteKickerDestination { get; set; } = "";
 
 	public TeleDest SuiteKickedDest;
 
+	[Property, FGDType( "target_destination" )]
+	public string SuiteTeleporterEntity { get; set; } = "";
+
+	public PHTriggerTeleport SuiteTeleporter;
+
 	public override void Spawn()
 	{
 		base.Spawn();
+
+		Transmit = TransmitType.Default;
 	}
 
 	[Event.Tick.Server]
 	public void FindSuiteTeleport()
 	{
 		if ( SuiteKickedDest == null && !string.IsNullOrEmpty( SuiteKickerDestination ) )
+			SuiteKickedDest = Entity.FindByName( SuiteKickerDestination ) as TeleDest;
+
+		if ( SuiteTeleporter == null && !string.IsNullOrEmpty( SuiteTeleporterEntity ) )
 		{
-			foreach ( var tele in All.OfType<TeleDest>() )
-			{
-				if ( tele.Name.Contains( SuiteKickerDestination ) )
-					SuiteKickedDest = tele;
-			}
+			SuiteTeleporter = Entity.FindByName( SuiteTeleporterEntity ) as PHTriggerTeleport;
+			SuiteTeleporter.Disable();
 		}
 	}
 
@@ -48,6 +59,7 @@ public partial class SuiteRoomEnt : BaseTrigger
 		player.CurSuite.KickGuest();
 		player.CurSuite.SuiteOwner = null;
 		player.CurSuite = null;
+		SuiteTeleporter.Disable();
 
 		PHGame.Instance.CommitSave( player.Client, SaveSuite() );
 	}

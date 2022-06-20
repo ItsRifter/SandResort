@@ -33,7 +33,7 @@
 				[
 					{
 						_class = "PhysicsShapeBox"
-						parent_bone = ""
+						parent_bone = "origin"
 						surface_prop = "plastic"
 						collision_group = ""
 						collision_interact_as = ""
@@ -58,7 +58,7 @@
 						align_origin_x_type = "None"
 						align_origin_y_type = "None"
 						align_origin_z_type = "None"
-						parent_bone = ""
+						parent_bone = "origin"
 						import_filter = 
 						{
 							exclude_by_default = false
@@ -99,6 +99,29 @@
 							parent_bodygroup_name = ""
 							parent_bodygroup_value = 0
 						}
+					},
+				]
+			},
+			{
+				_class = "Skeleton"
+				children = 
+				[
+					{
+						_class = "Bone"
+						name = "ROOT"
+						children = 
+						[
+							{
+								_class = "Bone"
+								name = "origin"
+								origin = [ 0.0, 0.0, 22.5 ]
+								angles = [ 0.0, 0.0, 0.0 ]
+								do_not_discard = true
+							},
+						]
+						origin = [ 0.0, 0.0, 0.0 ]
+						angles = [ 0.0, 0.0, 0.0 ]
+						do_not_discard = true
 					},
 				]
 			},

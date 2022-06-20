@@ -18,8 +18,6 @@ namespace ComplexUI
         {
             StyleSheet.Load("UI/Styles/libraries/ComplexUI.scss");
 
-            Log.Info( "render tabs" );
-
 			TabItems = new List<Panel>();
 			TabItems.Add( Add.Panel( "tabs tabsSide" ) );
 		}
@@ -37,8 +35,6 @@ namespace ComplexUI
             {
                 newTab.SetClass("activeTab", true);
             }
-
-			Log.Info( $"redner button {itemNumber}" );
 
             newTab.AddEventListener("onClick", () =>
             {

@@ -215,4 +215,16 @@ public partial class PHGame : Game
 				base.DoPlayerSuicide( cl );
 		}
 	}
+
+	public IList<SuiteRoomEnt> GrabAllSuites()
+	{
+		IList<SuiteRoomEnt> totalSuites = new List<SuiteRoomEnt>();
+
+		foreach ( var suite in All.OfType<SuiteRoomEnt>() )
+		{
+			totalSuites.Add( suite );
+		}
+
+		return totalSuites;
+	}
 }

@@ -10,6 +10,26 @@
         pointer-events: all
     }
 
+    .titlePanel {
+        margin: 18px 12px;
+
+        .title {
+            color: white;
+            font-size: 32px;
+            font-weight: 700;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+    }
+
+    .seperator {
+        width: 100%;
+        background-color: #2CA9C2;
+        height: 6px;
+        margin-left: 0px;
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+    }
+
     .mainSuitesPanel {
         //background-color: red;
         max-width: 1200px;
@@ -31,71 +51,137 @@
             transform: translateX(0%);
             pointer-events: all;
         }
+    }
 
-        .titlePanel {
-            margin: 18px 12px;
+    .suites {
+        display: flex;
+        overflow: scroll;
+        width: 100%;
+        flex-wrap: wrap;
 
-            .title {
-                color: white;
-                font-size: 24px;
-                font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-            }
-        }
+        .suite {
+            flex-direction: column;
 
-        .suites {
-            overflow: scroll;
-            width: 100%;
-            flex-wrap: wrap;
+            .suiteinner {
+                transition: box-shadow 0.2s ease, transform 0.1s ease;
+                box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.4);
+                transform: translateY(0px);
+                flex-direction: column;
 
-            .suite {
-                .suiteinner {
-                    transition: box-shadow 0.2s ease, transform 0.1s ease;
-                    box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.4);
-                    transform: translateY(0px);
-                    flex-direction: column;
-
-                    &:hover {
-                        transform: translateY(-2px);
-                        box-shadow: 0px 2px 5px 0px #2BA3C8;
-                    }
-
-
-                    .suiteimage {
-                        border-top-left-radius: 11px;
-                        border-top-right-radius: 11px;
-                        height: 100%;
-                        background-color: blue;
-                        background-image: url(ui/ph_suiteicon_vacant.jpg);
-                        background-position: center;
-                        background-size: cover;
-                    }
-
-                    .status {
-                        border-top: 1px solid #2CA9C2;
-                        //margin: 12px;
-                        padding: 0px 12px;
-                        padding-top: 6px;
-                        padding-bottom: 32px;
-                        font-size: 26px;
-                        flex-direction: column;
-                        color: white;
-
-                        .title {
-                            min-height: 26px;
-                        }
-                    }
-                    //padding: 24px;
-                    //margin: 12px;
-                    min-width: 349px;
-                    min-height: 229px;
-                    max-width: 349px;
-                    max-height: 22px;
-                    background-color: #396E82;
-                    border: 1px solid #2CA9C2;
-                    border-radius: 12px;
+                &:hover {
+                    transform: translateY(-2px);
+                    box-shadow: 0px 2px 5px 0px #2BA3C8;
                 }
 
-                margin: 12px;
+
+                .suiteimage {
+                    border-top-left-radius: 11px;
+                    border-top-right-radius: 11px;
+                    height: 100%;
+                    background-color: blue;
+                    background-image: url(ui/ph_suiteicon_vacant.jpg);
+                    background-position: center;
+                    background-size: cover;
+                }
+
+                .status {
+                    border-top: 1px solid #2CA9C2;
+                    //margin: 12px;
+                    padding: 0px 12px;
+                    padding-top: 6px;
+                    padding-bottom: 32px;
+                    font-size: 26px;
+                    flex-direction: column;
+                    color: white;
+
+                    .title {
+                        min-height: 26px;
+                    }
+                }
+                //padding: 24px;
+                //margin: 12px;
+                min-width: 349px;
+                min-height: 229px;
+                max-width: 349px;
+                max-height: 22px;
+                background-color: #396E82;
+                border: 1px solid #2CA9C2;
+                border-radius: 12px;
+            }
+
+            margin: 12px;
+        }
+    }
+
+    .checkinSuites {
+        flex-direction: column;
+    }
+
+    .tabuserSuite {
+        flex-direction: column;
+
+        .suite-container {
+            margin: 24px 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            .suite {
+                color: white;
+                background-color: #007CAC;
+                overflow: hidden;
+                position: relative;
+                border: 1px solid #2CA9C2;
+                padding: 24px 28px;
+                width: 100%;
+                max-width: 1000px;
+                border-radius: 12px;
+                box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+            }
+
+            .suite-inner {
+                position: relative;
+                display: flex;
+
+                .suite-img {
+                    border-radius: 12px;
+                    width: 347px;
+                    height: 198px;
+                    border: 1px solid #2CA9C2;
+                    background-position: center;
+                    background-size: cover;
+                    background-repeat: no-repeat;
+                    background-image: url(ui/alex.jpg);
+                    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+                }
+
+                .suite-info {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    padding-left: 24px;
+
+                    .suite-title {
+                        font-size: 41px;
+                        margin-bottom: 8px;
+                    }
+
+                    .value {
+                        font-size: 24px;
+                    }
+                }
+            }
+
+            .checkout {
+                font-size: 24px;
+                color: white;
+                background: #398243;
+                border: 1px solid #1D5B25;
+                padding: 2px;
+                padding-right: 64px;
+                border-radius: 4px;
+                box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+                transition: transform 0.1s ease, box-shadow 0.1s ease;
             }
         }
     }

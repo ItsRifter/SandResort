@@ -11,52 +11,75 @@ using ComplexUI;
 public partial class SuiteReceptionUI : Panel
 {
 	bool isOpen = false;
-	private Panel rootSuitesPanel;
-	public Panel Tab1;
-	public Panel Tab2;
-
-	public Label ReceptionistTitle;
+	Panel rootSuitesPanel;
 	public Panel Suites;
 
 	SideTabUI TabsUi;
+	Panel checkInSuite;
+	Panel userSuite;
 
+	public Label suiteName;
+	public Label suiteValue;
+	public Button Checkout;
 
 	public SuiteReceptionUI()
     {
-		Tab1 = Add.Panel( "tabPanel" );
-		Tab2 = Add.Panel( "tabPanel" );
-		Tab1.Style.Set( "display: flex;" );
-		Tab2.Style.Set( "display: none;" );
+		StyleSheet.Load( "UI/Styles/Lobby/SuiteReceptionUI.scss" );
 
 		TabsUi = new SideTabUI();
 
 		TabsUi.AddTabItem("Check in", () =>
 		{
-			Suites.Style.Set( "display: flex;" );
-			Tab2.Style.Set( "display: none;" );
+			checkInSuite.Style.Set( "display: flex;" );
+			userSuite.Style.Set( "display: none;" );
 		});
 		
 		TabsUi.AddTabItem("Suite Layout", () =>
 		{
-			Suites.Style.Set( "display: none;" );
-			Tab2.Style.Set( "display: flex;" );
+			checkInSuite.Style.Set( "display: none;" );
+			userSuite.Style.Set( "display: flex;" );
 		});
 
+		// UI
 
-		StyleSheet.Load( "UI/Styles/Lobby/SuiteReceptionUI.scss" );
 		rootSuitesPanel = Add.Panel( "mainSuitesPanel" );
 		rootSuitesPanel.AddChild( TabsUi );
 
-		Panel titlePanel = rootSuitesPanel.Add.Panel( "titlePanel" );
-		ReceptionistTitle = titlePanel.Add.Label( "Suite Receptionist", "title" );
-		Suites = rootSuitesPanel.Add.Panel( "suites" );
+		// root
+		checkInSuite = rootSuitesPanel.Add.Panel("checkinSuites");
+		userSuite = rootSuitesPanel.Add.Panel("tabuserSuite");
+		//
+		// // check in // //
+		Panel titlePanel = checkInSuite.Add.Panel( "titlePanel" );
+		titlePanel.Add.Label( "Suite Receptionist", "title" );
+		checkInSuite.Add.Panel("seperator");
+		Suites = checkInSuite.Add.Panel( "suites" );
+		//
+		// // user suite // //
+		Panel titlePanel_usersuite = userSuite.Add.Panel("titlePanel");
+		titlePanel_usersuite.Add.Label("Your suite", "title");
+		userSuite.Add.Panel("seperator");
+		//
+		Panel SuiteContainer =		userSuite.Add.Panel("suite-container");
+		Panel MainSuite =			SuiteContainer.Add.Panel("suite");
+		Panel MainSuite_inner =		MainSuite.Add.Panel( "suite-inner" );   // inner container
+		Panel suiteImage =			MainSuite_inner.Add.Panel("suite-img"); // image of the suite
+		Panel suiteInfoContainer =	MainSuite_inner.Add.Panel("suite-info");// info about the suite
+																			//
 
-		Panel TestTabPanel = Tab2.Add.Panel("testPanel");
-		TestTabPanel.Add.Label( "lokgpkgkfspgjirwmviorew" );
+		suiteInfoContainer.Add.Label( "No suite", "suite-title" );
+		suiteInfoContainer.Add.Label( "Value: $69420" , "value");
+		suiteInfoContainer.Add.Button("No suite to check out", "checkout");
+
+		userSuite.Add.Panel("seperator");
+
+		// Tab final styling
+		checkInSuite.Style.Set("display: flex;");
+		userSuite.Style.Set("display: none;");
 	}
 
 	public void ClaimSuitePanel( int index )
-	{	
+	{
 		ConsoleSystem.Run( "ph_claim_suite", index, Local.Client.Id );
 		CloseSuiteMenu();
 	}
@@ -83,6 +106,8 @@ public partial class SuiteReceptionUI : Panel
 
 		foreach ( int i in suiteIndex )
 		{
+			var newSuite = PHGame.Instance.GrabAllSuites()[i];
+
 			Panel suite = Suites.Add.Panel( "suite" );
 			Panel suiteinner = suite.Add.Panel( "suiteinner" );
 
@@ -90,8 +115,12 @@ public partial class SuiteReceptionUI : Panel
 			suiteinner.Add.Panel( "suiteimage" );
 
 			Panel suiteStatus = suiteinner.Add.Panel( "status" );
-			suiteStatus.Add.Label( $"Suite {i + 1}", "title" );
-			suiteStatus.Add.Label( "Vacant or not", "ownership" );
+			suiteStatus.Add.Label( $"Suite {i+1}", "title" );
+
+			if( newSuite.SuiteOwner != null )
+				suiteStatus.Add.Label( $"{newSuite.SuiteOwner.PlayerName}'s Suite", "ownership" );
+			else
+				suiteStatus.Add.Label( "Vacant", "ownership" );
 
 			suite.AddEventListener( "onclick", () =>
 			{

@@ -12,10 +12,6 @@ using SandboxEditor;
 [HammerEntity]
 public partial class PHTriggerTeleport : TriggerTeleport
 {
-	public bool IsLocked = false;
-
-	public bool ClaimedSuite = false;
-
 	public override void Spawn()
 	{
 		base.Spawn();
@@ -41,18 +37,9 @@ public partial class PHTriggerTeleport : TriggerTeleport
 			// Fire the output, before actual teleportation so entity IO can do things like disable a trigger_teleport we are teleporting this entity into
 			OnTriggered.Fire( other );
 
-			if ( other is PHPawn guestPlayer )
-			{
-				using ( Prediction.Off() )
-				{
-					guestPlayer.Position = Targetent.Position;
-					guestPlayer.Rotation = Targetent.Rotation;
-				}
-			}
-
 			other.Transform = Targetent.Transform;
 			other.Rotation = Targetent.Rotation;
-			//other.Position += offset;
+			other.Position += offset;
 		}
 	}
 }

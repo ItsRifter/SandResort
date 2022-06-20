@@ -46,32 +46,6 @@ public partial class SuiteReceptionist : PHBaseNPC
 			ConsoleSystem.Run( "ph_server_say", "There are no suites available at this time", player.Client.Id );*/
 	}
 
-	//Checks the player in (if there is a suite available)
-	public bool CheckIn( PHPawn player )
-	{
-		var curSuites = All.OfType<SuiteRoomEnt>().ToArray();
-
-		SuiteRoomEnt randomSuite = null;
-
-		randomSuite = curSuites.OrderBy( x => Guid.NewGuid() ).FirstOrDefault( x => x.SuiteOwner == null );
-
-		//If there is no suite available, return false
-		if ( randomSuite == null )
-			return false;
-
-		if(IsServer)
-			ConsoleSystem.Run( "ph_server_say", $"You have checked into suite {randomSuite.Name.Substring( 6 )}", player.Client.Id );
-
-		Log.Info( $"{player.Client.Name} checked into {randomSuite.Name}" );
-
-		player.CurSuite = randomSuite;
-		player.CurSuite.SuiteOwner = player;
-
-		PHGame.Instance.LoadSuiteSave( player.Client );
-
-		return true;
-	}
-
 	[ConCmd.Server("ph_claim_suite")]
 	public static void ClaimSuiteStatic(int suiteIndex, int plyID)
 	{
@@ -99,19 +73,9 @@ public partial class SuiteReceptionist : PHBaseNPC
 
 		player.CurSuite = randomSuite;
 		player.CurSuite.SuiteOwner = player;
+		player.CurSuite.SuiteTeleporter.Enable();
 
 		PHGame.Instance.LoadSuiteSave( player.Client );
-	}
-
-	//Check the player out of the suite
-	public void CheckOut( PHPawn player )
-	{
-		player.CurSuite.RevokeSuite( player );
-
-		if ( IsServer )
-			ConsoleSystem.Run( "ph_server_say", "You have checked out of your suite", player.Client.Id );
-
-		Log.Info( $"{player.Client.Name} checked out" );
 	}
 
 	//Other NPC stuff
