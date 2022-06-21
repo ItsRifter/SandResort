@@ -27,7 +27,7 @@ public partial class PHHud : RootPanel
 		AddChild<HudTracker>();
 
 		//TEMPORARY, We should create our own chatbox with message storing n stuff
-		AddChild<PHChatBox>();
+		AddChild<ChatBox>();
 
 		AddChild<SuiteReceptionUI>();
 		AddChild<Shop>();

@@ -16,14 +16,21 @@ SideTabUI {
         border: 0px solid #2CA9C2;
 
         .tabText {
-            padding: 12px;
+            padding: 8px 12px;
         }
 
         &:hover {
+            .tabText {
+                padding: 12px;
+            }
             border: 1px solid #2CA9C2;
         }
 
         &.activeTab {
+            .tabText {
+                padding: 12px;
+            }
+
             margin: 12px 0px;
             border: 1px solid #2CA9C2;
             border-right: none;

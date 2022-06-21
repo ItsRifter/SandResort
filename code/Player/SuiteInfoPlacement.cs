@@ -26,7 +26,16 @@ public partial class LobbyPawn
 	[Net]
 	public PHSuiteProps PreviewProp { get; set; }
 
-	public SuiteRoomEnt CurSuite;
+	[Net]
+	public IList<LobbyPawn> CurPlayers { get; set; }
+
+	[Net]
+	public IList<LobbyPawn> BlacklistedPlayers { get; set; }
+
+	[Net]
+	public SuiteRoomEnt CurSuite { get; set; }
+
+	public TimeSince timeToWaitPlacing;
 
 	float scrollRot = 0;
 
@@ -86,8 +95,6 @@ public partial class LobbyPawn
 		DebugOverlay.Line( PreviewProp.Position + Vector3.Up * 16, PreviewProp.Position + Vector3.Up * 16 + PreviewProp.Rotation.Forward * 35 );
 		
 	}
-
-	public TimeSince timeToWaitPlacing;
 
 	public void SimulatePropPlacement()
 	{
@@ -218,6 +225,88 @@ public partial class LobbyPawn
 				PreviewProp = null;
 			}
 		}
+	}
+
+	public SuiteRoomEnt GrabSpecificSuite( int index )
+	{
+		var suite = All.OfType<SuiteRoomEnt>().ElementAt( index );
+
+		if ( suite == null )
+			return null;
+
+		return suite;
+	}
+
+	public void AddToBlacklist(string playerName)
+	{
+		LobbyPawn pawn = null;
+		foreach ( Client cl in Client.All )
+		{
+			if ( cl.Name == playerName )
+			{
+				pawn = cl.Pawn as LobbyPawn;
+				break;
+			}
+		}
+
+		if ( pawn == null )
+			return;
+
+		BlacklistedPlayers.Add( pawn );
+	}
+
+	public void RemoveFromBlacklist( string playerName )
+	{
+		LobbyPawn pawn = null;
+		foreach ( Client cl in Client.All )
+		{
+			if ( cl.Name == playerName )
+			{
+				pawn = cl.Pawn as LobbyPawn;
+				break;
+			}
+		}
+
+		if ( pawn == null )
+			return;
+
+		BlacklistedPlayers.Remove( pawn );
+	}
+
+	public IList<LobbyPawn> GetSuiteBlacklist()
+	{
+		if ( CurSuite == null )
+			return null;
+
+		return BlacklistedPlayers;
+	}
+
+	public IList<LobbyPawn> GetPawnsInSuite()
+	{
+		if ( CurSuite == null )
+			return null;
+
+		CurPlayers.Clear();
+
+		foreach ( var pawn in FindInBox( CurSuite.WorldSpaceBounds ) )
+		{
+			if ( pawn is LobbyPawn player && player != this)
+				CurPlayers.Add( player );
+		}
+
+		return CurPlayers;
+	}
+
+	public IList<SuiteRoomEnt> GrabAllSuites()
+	{
+		IList<SuiteRoomEnt> totalSuites = new List<SuiteRoomEnt>();
+
+		foreach ( var suite in All.OfType<SuiteRoomEnt>() )
+		{
+			totalSuites.Add( suite );
+		}
+
+		return totalSuites;
 	}
 }
 

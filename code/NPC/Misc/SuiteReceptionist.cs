@@ -63,11 +63,11 @@ public partial class SuiteReceptionist : PHBaseNPC
 
 		randomSuite = curSuites[suiteIndex];
 
-		//If there is no suite available, return false
-		if ( randomSuite == null )
+		//If there is no suite available or suite is already claimed, stop here
+		if ( randomSuite == null || randomSuite.SuiteOwner != null )
 			return;
 
-		ConsoleSystem.Run( "ph_server_say", $"You have checked into suite {randomSuite.Name.Substring( 6 )}", player.Client.Id );
+		//ConsoleSystem.Run( "ph_server_say", $"You have checked into suite {randomSuite.Name.Substring( 6 )}", player.Client.Id );
 
 		Log.Info( $"{player.Client.Name} checked into {randomSuite.Name}" );
 

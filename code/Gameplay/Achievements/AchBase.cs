@@ -53,7 +53,7 @@ public partial class AchBase
 
 		player.AchChecker.Remove( this );
 
-		ConsoleSystem.Run( "say", $"{player.Client.Name} has earned the achievement: {AchName}", true );
+		//ConsoleSystem.Run( "say", $"{player.Client.Name} has earned the achievement: {AchName}", true );
 
 		Log.Info( $"{player.Client.Name} has earned the achievement {AchName}" );
 	}

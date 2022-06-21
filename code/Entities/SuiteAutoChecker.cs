@@ -25,8 +25,8 @@ public partial class SuiteAutoChecker : TriggerMultiple
 			player.CurSuite.RevokeSuite( player );
 			Log.Info( $"{player.Client.Name} was automatically checked out by leaving" );
 
-			if ( IsServer )
-				ConsoleSystem.Run( "ph_server_say", "You were automatically checked out of your suite", player.Client.Id );
+			//if ( IsServer )
+			//	ConsoleSystem.Run( "ph_server_say", "You were automatically checked out of your suite", player.Client.Id );
 		}
 
 		base.OnTouchStart( other );

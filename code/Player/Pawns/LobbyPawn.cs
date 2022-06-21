@@ -36,6 +36,7 @@ public partial class LobbyPawn : Player
 	{
 		PHInventory = new PHInventorySystem(this);
 		CreateClientInventory();
+		CurPlayers = new List<LobbyPawn>();
 	}
 
 	public override void Spawn()
@@ -281,8 +282,8 @@ public partial class LobbyPawn : Player
 		{
 			CurSuite.RevokeSuite( this );
 
-			if ( IsServer )
-				ConsoleSystem.Run( "ph_server_say", "You were automatically checked out of your suite", Client.Id );
+			//if ( IsServer )
+				//ConsoleSystem.Run( "ph_server_say", "You were automatically checked out of your suite", Client.Id );
 		}
 
 		//We should make a first person death camera in the future

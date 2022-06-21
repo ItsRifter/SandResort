@@ -5,7 +5,7 @@ using System;
 
 public partial class PHChatBox : Panel
 {
-	public static PHChatBox Current;
+	/*public static PHChatBox Current;
 
 	public Panel Canvas { get; protected set; }
 	public TextEntry Input { get; protected set; }
@@ -114,16 +114,16 @@ public partial class PHChatBox : Panel
 
 		Log.Info( $"{ConsoleSystem.Caller}: {message}" );
 		AddChatEntry( To.Everyone, ConsoleSystem.Caller.Name, message, $"avatar:{ConsoleSystem.Caller.PlayerId}" );
-	}
+	}*/
 }
 
 public static partial class Chat
 {
-	public static event Action OnOpenChat;
+	/*public static event Action OnOpenChat;
 
 	[ConCmd.Client( "openchat" )]
 	internal static void MessageMode()
 	{
 		OnOpenChat?.Invoke();
-	}
+	}*/
 }

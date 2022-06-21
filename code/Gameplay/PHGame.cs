@@ -209,22 +209,10 @@ public partial class PHGame : Game
 
 	public override void DoPlayerSuicide( Client cl )
 	{
-		if(cl.Pawn is LobbyPawn player)
+		if ( cl.Pawn is LobbyPawn player )
 		{
-			if( player.timeLastRespawn >= 3.0f)
+			if ( player.timeLastRespawn >= 3.0f )
 				base.DoPlayerSuicide( cl );
 		}
-	}
-
-	public IList<SuiteRoomEnt> GrabAllSuites()
-	{
-		IList<SuiteRoomEnt> totalSuites = new List<SuiteRoomEnt>();
-
-		foreach ( var suite in All.OfType<SuiteRoomEnt>() )
-		{
-			totalSuites.Add( suite );
-		}
-
-		return totalSuites;
 	}
 }

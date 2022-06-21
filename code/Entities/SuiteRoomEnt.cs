@@ -36,6 +36,29 @@ public partial class SuiteRoomEnt : BaseTrigger
 		Transmit = TransmitType.Default;
 	}
 
+	public override void Touch( Entity other )
+	{
+		//base.Touch( other );
+	}
+	public override void EndTouch( Entity other )
+	{
+		//base.EndTouch( other );
+	}
+
+	public override void StartTouch( Entity other )
+	{
+		if ( other is not LobbyPawn player )
+			return;
+
+		if ( SuiteOwner.BlacklistedPlayers.Contains( player ) )
+		{
+			KickGuest( player );
+			return;
+		}
+
+		base.StartTouch( other );
+	}
+
 	[Event.Tick.Server]
 	public void FindSuiteTeleport()
 	{
@@ -60,6 +83,8 @@ public partial class SuiteRoomEnt : BaseTrigger
 		player.CurSuite.SuiteOwner = null;
 		player.CurSuite = null;
 		SuiteTeleporter.Disable();
+
+		player.CurPlayers.Clear();
 
 		PHGame.Instance.CommitSave( player.Client, SaveSuite() );
 	}
@@ -87,6 +112,8 @@ public partial class SuiteRoomEnt : BaseTrigger
 				player.Position = SuiteKickedDest.Position;
 				player.Rotation = SuiteKickedDest.Rotation;
 			}
+
+			SuiteOwner.CurPlayers.Remove(player);
 		}
 	}
 

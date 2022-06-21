@@ -52,8 +52,6 @@ public class SubGameEnt : BaseTrigger
 
 		foreach ( var entity in FindInBox( WorldSpaceBounds ) )
 		{
-			Log.Info(entity);
-
 			if ( entity is SubGameSpawnpoint spawn )
 				Spawnpoints.Add( spawn );
 

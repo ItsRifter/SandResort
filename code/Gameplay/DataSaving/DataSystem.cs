@@ -11,7 +11,11 @@ public partial class PHGame
 	//Creates a new player save
 	public void NewPlayer(Client cl)
 	{
+		if ( cl.IsBot )
+			return;
+
 		var pawn = cl.Pawn as LobbyPawn;
+
 
 		pawn.SetCoins( 500 );
 
@@ -29,7 +33,7 @@ public partial class PHGame
 		pawn.PlaySound( autoAch.AchUnlockSound );
 		pawn.AchList.Add( autoAch );
 
-		ConsoleSystem.Run( "say", $"{pawn.Client.Name} has earned the achievement: {autoAch.AchName}", true );
+		//ConsoleSystem.Run( "say", $"{pawn.Client.Name} has earned the achievement: {autoAch.AchName}", true );
 
 		autoAch = null;
 

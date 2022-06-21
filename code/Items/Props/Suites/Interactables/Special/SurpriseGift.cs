@@ -21,6 +21,8 @@ public partial class SurpriseGift : PHSuiteProps
 		if ( IsClient )
 			return;
 
+		Particles.Create( "particles/confetti/confetti_splash.vpcf", Position );
+
 		player.CheckOrUpdateAchievement( "Gift Unwrapper", "GiftUnwrapper" );
 
 		Sound.FromWorld( "gift_reveal", Position);

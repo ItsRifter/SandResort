@@ -116,6 +116,51 @@ public partial class PHGame
 			player.CreateClientInventory();
 		else
 			player.PHInventory.ClientInventory.Clear();
+	}
 
+	[ConCmd.Server( "ph_suite_kick" )]
+	public static void KickPlayerFromSuite(string userToKick)
+	{
+		var player = ConsoleSystem.Caller.Pawn as LobbyPawn;
+
+		if ( player == null )
+			return;
+
+		LobbyPawn kicked = null;
+
+		foreach ( Client cl in Client.All )
+		{
+			if(cl.Name == userToKick )
+			{
+				kicked = cl.Pawn as LobbyPawn;
+			}
+		}
+
+		if ( kicked == null )
+			return;
+
+		player.CurSuite.KickGuest( kicked );
+	}
+
+	[ConCmd.Server( "ph_suite_blacklist_add" )]
+	public static void AddToBlacklistCMD( string userToAdd )
+	{
+		var player = ConsoleSystem.Caller.Pawn as LobbyPawn;
+
+		if ( player == null )
+			return;
+
+		player.AddToBlacklist( userToAdd );
+	}
+
+	[ConCmd.Server( "ph_suite_blacklist_remove" )]
+	public static void RemoveFromBlacklistCMD( string userToRemove )
+	{
+		var player = ConsoleSystem.Caller.Pawn as LobbyPawn;
+
+		if ( player == null )
+			return;
+
+		player.RemoveFromBlacklist( userToRemove );
 	}
 }
