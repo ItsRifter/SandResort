@@ -23,32 +23,10 @@ public partial class PHTriggerTeleport : TriggerTeleport
 	{
 		if ( !Enabled ) return;
 
-		//Figure out why the lobbypawn isn't facing towards
-		var Targetent = FindByName( TargetEntity );
-
-		if ( Targetent != null )
-		{
-			Vector3 offset = Vector3.Zero;
-
-			if ( TeleportRelative )
-			{
-				offset = other.Position - Position;
-			}
-
-			if ( !KeepVelocity ) other.Velocity = Vector3.Zero;
-
-			// Fire the output, before actual teleportation so entity IO can do things like disable a trigger_teleport we are teleporting this entity into
-			OnTriggered.Fire( other );
-
-			other.Transform = Targetent.Transform;
-			other.Rotation = Targetent.Rotation;
-			other.Position += offset;
-
-			if(other is LobbyPawn player)
-			{
-				player.SetViewAngles( To.Single(player), Targetent.Rotation.Angles() );
-			}
-		}
+		base.OnTouchStart(other);
+		
+		if ( other is LobbyPawn player )
+			player.SetViewAngles( To.Single( player ), FindByName(TargetEntity).Rotation.Angles() );
 	}
 }
 
