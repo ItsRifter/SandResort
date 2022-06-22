@@ -8,7 +8,7 @@ using Sandbox;
 using SandboxEditor;
 
 [Library("ph_suite_room")]
-[Title("Suite Room"), Description("Defines a suite room for saving and loading player owner items")]
+[Title("Suite Room"), Category( "Suites" ), Description("Defines a suite room for saving and loading player owner items")]
 [HammerEntity]
 [SupportsSolid]
 public partial class SuiteRoomEnt : BaseTrigger
@@ -47,6 +47,9 @@ public partial class SuiteRoomEnt : BaseTrigger
 
 	public override void StartTouch( Entity other )
 	{
+		if ( SuiteOwner == null )
+			return;
+		
 		if ( other is not LobbyPawn player )
 			return;
 

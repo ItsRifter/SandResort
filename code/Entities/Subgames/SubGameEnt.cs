@@ -7,7 +7,7 @@ using Sandbox;
 using SandboxEditor;
 
 [Library( "ph_subgame_area" )]
-[Title( "Subgame Area" ), Description( "Defines the area for this specific sub-game" )]
+[Title( "Subgame Area" ), Category( "Sub-Games" ), Description( "Defines the area for this specific sub-game" )]
 [SupportsSolid]
 [HammerEntity]
 
@@ -19,7 +19,7 @@ public class SubGameEnt : BaseTrigger
 	public List<ModelEntity> Models;
 	public List<BrushEntity> BaseArea;
 
-	bool isActive = false;
+	//bool isActive = false;
 	bool hasSpawned = false;
 
 	public enum SubGameArea

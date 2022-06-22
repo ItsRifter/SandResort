@@ -7,7 +7,7 @@ using Sandbox;
 using SandboxEditor;
 
 [Library("ph_subgame_panel")]
-[Title("Sub-Game Panel"), Description("The sub-game panel, displays info about this sub-game")]
+[Title("Sub-Game Panel"), Category( "Sub-Games" ), Description("The sub-game panel, displays info about this sub-game")]
 [HammerEntity]
 public class SubGamePanel : Entity
 {

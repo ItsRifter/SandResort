@@ -7,7 +7,7 @@ using Sandbox;
 using SandboxEditor;
 
 [Library( "ph_suite_checker" )]
-[Title("Suite Checker"), Description( "Checks if the player is in a suite, if so check them out" )]
+[Title("Suite Checker"), Category( "Suites" ), Description( "Checks if the player is in a suite, if so check them out" )]
 [SupportsSolid]
 [HammerEntity]
 public partial class SuiteAutoChecker : TriggerMultiple

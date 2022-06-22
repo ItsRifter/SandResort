@@ -9,10 +9,11 @@ public partial class PHSittableProp : PHSuiteProps
 	[Net]
 	public LobbyPawn sittingPlayer { get; private set; }
 
-	bool isSittingDown = false;
 	public ChairCam camera;
+	public bool CanDirectlyInteract = true;
 
 	TimeSince timeLastSat;
+	bool isSittingDown = false;
 
 	public override void Spawn()
 	{
@@ -34,14 +35,14 @@ public partial class PHSittableProp : PHSuiteProps
 	{
 		if ( !sittingPlayer.IsValid() ) return;
 
-		if ( IsServer && Input.Pressed( InputButton.Use ) && timeLastSat >= 1.0f )
+		if ( IsServer && Input.Pressed( InputButton.Use ) && timeLastSat >= 1.0f && CanDirectlyInteract )
 		{
 			StandUp();
 			return;
 		}
 
 		sittingPlayer.SetAnimParameter( "b_grounded", true );
-		sittingPlayer.SetAnimParameter( "b_sit", true );
+		sittingPlayer.SetAnimParameter( "sit", 1 );
 
 		var aimRotation = Input.Rotation.Clamp( sittingPlayer.Rotation, 90 );
 
@@ -82,9 +83,31 @@ public partial class PHSittableProp : PHSuiteProps
 
 	}
 
+	public void SitDown( LobbyPawn player )
+	{
+		camera.SetSitter( player );
+
+		player.SitProp = this;
+
+		player.Parent = this;
+		player.LocalPosition = Vector3.Up * 5;
+		player.LocalRotation = Rotation.Identity;
+		player.LocalScale = 1;
+		player.PhysicsBody.Enabled = false;
+
+		sittingPlayer = player;
+
+		player.Client.Pawn = this;
+
+		isSittingDown = true;
+	}
+
 	public override void Interact( LobbyPawn player )
 	{
 		base.Interact( player );
+
+		if ( !CanDirectlyInteract )
+			return;
 
 		if ( timeLastSat <= 1.0f )
 			return;
@@ -92,23 +115,7 @@ public partial class PHSittableProp : PHSuiteProps
 		timeLastSat = 0;
 
 		if ( !isSittingDown )
-		{
-			camera.SetSitter( player );
-
-			player.SitProp = this;
-
-			player.Parent = this;
-			player.LocalPosition = Vector3.Up * 5;
-			player.LocalRotation = Rotation.Identity;
-			player.LocalScale = 1;
-			player.PhysicsBody.Enabled = false;
-
-			sittingPlayer = player;
-
-			player.Client.Pawn = this;
-
-			isSittingDown = true;
-		}
+			SitDown( player );
 	}
 }
 

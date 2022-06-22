@@ -32,11 +32,20 @@ public partial class LobbyPawn : Player
 
 	DamageInfo lastDMGInfo;
 
+	bool UpdateViewAngle;
+	Angles UpdatedViewAngle;
+
 	public LobbyPawn()
 	{
 		PHInventory = new PHInventorySystem(this);
 		CreateClientInventory();
 		CurPlayers = new List<LobbyPawn>();
+	}
+
+	public void Test(TeleDest test)
+	{
+		Transform = test.Transform;
+		EyePosition = test.Rotation.Forward;
 	}
 
 	public override void Spawn()
@@ -68,12 +77,31 @@ public partial class LobbyPawn : Player
 			AchChecker = new List<AchBase>();
 
 		//Use the base player respawn, NOT the respawn in this class
-		base.Respawn();
+		Host.AssertServer();
+
+		LifeState = LifeState.Alive;
+		Health = 100;
+		Velocity = Vector3.Zero;
+		WaterLevel = 0;
+
+		CreateHull();
+
+		PHGame.Instance?.MoveToSpawnpoint( this );
+		ResetInterpolation();
+
+		SetInteractsAs( CollisionLayer.Player );
+		SetInteractsExclude( CollisionLayer.Player );
+		SetInteractsWith( CollisionLayer.Trigger | CollisionLayer.Water | CollisionLayer.Solid );
 	}
 
 	public override void Respawn()
 	{
 		base.Respawn();
+
+		SetInteractsAs( CollisionLayer.Player );
+		SetInteractsExclude( CollisionLayer.Player );
+		SetInteractsWith( CollisionLayer.Trigger | CollisionLayer.Water | CollisionLayer.Solid );
+
 		CameraMode = new FirstPersonCamera();
 
 		EnableAllCollisions = true;
@@ -100,6 +128,33 @@ public partial class LobbyPawn : Player
 			ActiveChildren = new List<Entity>();
 	}
 
+	[ClientRpc]
+	public void SetMousePosition(Vector2 pos)
+	{
+
+		
+
+	}
+
+	//Thanks Crayz
+	[ClientRpc]
+	public void SetViewAngles( Angles angles )
+	{
+		UpdateViewAngle = true;
+		UpdatedViewAngle = angles;
+	}
+
+	public override void BuildInput( InputBuilder input )
+	{
+		base.BuildInput( input );
+
+		if ( UpdateViewAngle )
+		{
+			UpdateViewAngle = false;
+			input.ViewAngles = UpdatedViewAngle;
+		}
+	}
+
 	//Simulation on both server and client
 	public override void Simulate( Client cl )
 	{
@@ -119,7 +174,7 @@ public partial class LobbyPawn : Player
 			SimulateActions();
 		else if ( LifeState == LifeState.Dead )
 			SimulateActionsWhilstDead();
-		
+
 		foreach ( var child in ActiveChildren)
 		{
 			if(child.IsAuthority)
@@ -193,6 +248,14 @@ public partial class LobbyPawn : Player
 				Using = null;
 				return;
 			}
+
+			if(Using is Poker pokerTable)
+			{
+				pokerTable.Interact( this );
+				Using = null;
+				return;
+			}	
+
 			if ( !Input.Down( InputButton.Use ) )
 			{
 				StopUsing();
@@ -217,6 +280,9 @@ public partial class LobbyPawn : Player
 
 		if ( tr.Entity is PHSuiteProps prop )
 			return prop;
+
+		if ( tr.Entity is Poker poker )
+			return poker;
 
 		return base.FindUsable();
 	}

@@ -7,7 +7,7 @@ using Sandbox;
 using SandboxEditor;
 
 [Library("ph_subgame_spawnpoint")]
-[Title("Subgame Spawnpoint"), Description("A unique spawnpoint for subgames")]
+[Title("Subgame Spawnpoint"), Category( "Sub-Games" ), Description("A unique spawnpoint for subgames")]
 [EditorModel( "models/dev/playerstart_tint.vmdl" )]
 [RenderFields]
 [HammerEntity]
