@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Sandbox;
 
 public partial class MMPawn : BasePawn
@@ -21,11 +18,9 @@ public partial class MMPawn : BasePawn
 		if ( IsClient )
 			return;
 
-		var mondaySpawns = All.OfType<SubGameSpawnpoint>()
-			.OrderBy( x => Guid.NewGuid() )
-			.FirstOrDefault();
+		SubGameSpawnpoint mondaySpawns = All.OfType<SubGameSpawnpoint>().MinBy(_ => Guid.NewGuid());
 
-		if ( mondaySpawns.SubGameType == SubGameSpawnpoint.SubGameSpawn.Monday_Massacre && mondaySpawns.IsEnabled )
+		if ( mondaySpawns?.SubGameType == SubGameSpawnpoint.SubGameSpawn.Monday_Massacre && mondaySpawns.IsEnabled )
 		{
 			Transform = mondaySpawns.Transform;
 		}
@@ -68,11 +63,6 @@ public partial class MMPawn : BasePawn
 		DestroyCorpse( To.Everyone );
 
 		FindSpawnpoint();
-	}
-
-	public override void TakeDamage( DamageInfo info )
-	{
-		base.TakeDamage( info );
 	}
 
 	public override void OnKilled()

@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Sandbox;
 using SandboxEditor;
 
@@ -88,7 +85,6 @@ public class Poker : ModelEntity
 		{
 			pokerChairs.First( x => x.SittingPlayer == null ).SitDown(player);
 			CurPlayers.Add( player );
-			return;
 		}
 	}
 

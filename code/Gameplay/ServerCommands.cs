@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Sandbox;
+﻿using Sandbox;
 
 public partial class PHGame
 {
-	[ConCmd.Server("ph_buy_item")]
+	[ConCmd.ServerAttribute("ph_buy_item")]
 	public static void PurchaseItem(string item, int plyID)
 	{
 		Host.AssertServer();
@@ -51,7 +46,7 @@ public partial class PHGame
 		boughtItem.Delete();
 	}
 
-	[ConCmd.Server( "ph_drag_item" )]
+	[ConCmd.ServerAttribute( "ph_drag_item" )]
 	public static void DragItem( string dragName, string dragClass )
 	{
 		var dragger = ConsoleSystem.Caller.Pawn as LobbyPawn;
@@ -69,7 +64,7 @@ public partial class PHGame
 		dragger.timeToWaitPlacing = 0;
 	}
 
-	[ConCmd.Server( "ph_select_item" )]
+	[ConCmd.ServerAttribute( "ph_select_item" )]
 	public static void SetItem(string prop)
 	{
 		var setter = ConsoleSystem.Caller.Pawn as LobbyPawn;
@@ -89,7 +84,7 @@ public partial class PHGame
 		setter.PreviewProp.Spawn();
 	}
 
-	[ConCmd.Server("ph_qmenu_clear")]
+	[ConCmd.ServerAttribute("ph_qmenu_clear")]
 	public static void CleanUpQMenu()
 	{
 		var player = ConsoleSystem.Caller.Pawn as LobbyPawn;
@@ -104,7 +99,7 @@ public partial class PHGame
 		player.PreviewProp = null;
 	}
 
-	[ConCmd.Server( "ph_qmenu_reset" )]
+	[ConCmd.ServerAttribute( "ph_qmenu_reset" )]
 	public static void ResetQMenu()
 	{
 		var player = ConsoleSystem.Caller.Pawn as LobbyPawn;
@@ -118,7 +113,7 @@ public partial class PHGame
 			player.PHInventory.ClientInventory.Clear();
 	}
 
-	[ConCmd.Server( "ph_suite_kick" )]
+	[ConCmd.ServerAttribute( "ph_suite_kick" )]
 	public static void KickPlayerFromSuite(string userToKick)
 	{
 		var player = ConsoleSystem.Caller.Pawn as LobbyPawn;
@@ -142,7 +137,7 @@ public partial class PHGame
 		player.CurSuite.KickGuest( kicked );
 	}
 
-	[ConCmd.Server( "ph_suite_blacklist_add" )]
+	[ConCmd.ServerAttribute( "ph_suite_blacklist_add" )]
 	public static void AddToBlacklistCMD( string userToAdd )
 	{
 		var player = ConsoleSystem.Caller.Pawn as LobbyPawn;
@@ -153,7 +148,7 @@ public partial class PHGame
 		player.AddToBlacklist( userToAdd );
 	}
 
-	[ConCmd.Server( "ph_suite_blacklist_remove" )]
+	[ConCmd.ServerAttribute( "ph_suite_blacklist_remove" )]
 	public static void RemoveFromBlacklistCMD( string userToRemove )
 	{
 		var player = ConsoleSystem.Caller.Pawn as LobbyPawn;

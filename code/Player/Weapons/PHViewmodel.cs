@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Sandbox;
+using Sandbox.UI;
 
-partial class PHViewModel : BaseViewModel
+class PHViewModel : BaseViewModel
 {
-	float walkBob = 0;
+	float walkBob;
 
 	public override void PostCameraSetup( ref CameraSetup camSetup )
 	{
@@ -36,7 +33,7 @@ partial class PHViewModel : BaseViewModel
 		Position += up * MathF.Sin( walkBob ) * speed * -1;
 		Position += left * MathF.Sin( walkBob * 0.5f ) * speed * -0.5f;
 
-		var uitx = new Sandbox.UI.PanelTransform();
+		var uitx = new PanelTransform();
 		uitx.AddTranslateY( MathF.Sin( walkBob * 1.0f ) * speed * -4.0f );
 		uitx.AddTranslateX( MathF.Sin( walkBob * 0.5f ) * speed * -3.0f );
 	}

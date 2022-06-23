@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Sandbox;
 
-public partial class PHInventorySystem : IBaseInventory
+public class PHInventorySystem : IBaseInventory
 {
 	public Entity Owner { get; init; }
 

@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Sandbox;
 using Sandbox.UI;
 using Sandbox.UI.Construct;
 
-public partial class Shop : Panel
+public class Shop : Panel
 {
 	public Panel ShopMenu;
 
@@ -15,7 +12,7 @@ public partial class Shop : Panel
 	public Label ShopName;
 	public Panel ShopItems;
 
-	bool hasOpened = false;
+	bool hasOpened;
 
 	public Shop()
 	{
@@ -61,9 +58,9 @@ public partial class Shop : Panel
 
 			if ( shopType.FullName == "BarShop" && item.ShopSeller != PHSuiteProps.ShopType.Bar )
 				continue;
-			else if ( shopType.FullName == "FurnitureShop" && item.ShopSeller != PHSuiteProps.ShopType.Furniture )
+			if ( shopType.FullName == "FurnitureShop" && item.ShopSeller != PHSuiteProps.ShopType.Furniture )
 				continue;
-			else if ( shopType.FullName == "ElectricShop" && item.ShopSeller != PHSuiteProps.ShopType.Electric )
+			if ( shopType.FullName == "ElectricShop" && item.ShopSeller != PHSuiteProps.ShopType.Electric )
 				continue;
 
 			Panel itemPnl = ShopItems.Add.Panel( "shop-item" );
@@ -135,7 +132,7 @@ internal class ShopTagComponent : EntityComponent<ShopKeeperBase>
 		shopTag = null;
 	}
 
-	[Event.Frame]
+	[Event.FrameAttribute]
 	public void FrameUpdate()
 	{
 		var tx = Entity.GetAttachment( "hat" ) ?? Entity.Transform;
@@ -145,7 +142,7 @@ internal class ShopTagComponent : EntityComponent<ShopKeeperBase>
 		shopTag.Transform = tx;
 	}
 
-	[Event.Frame]
+	[Event.FrameAttribute]
 	public static void SystemUpdate()
 	{
 		foreach ( var shopKeeper in Sandbox.Entity.All.OfType<ShopKeeperBase>() )

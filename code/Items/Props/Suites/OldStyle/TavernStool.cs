@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Sandbox;
+﻿using Sandbox;
 
-public partial class TavernStool : PHSittableProp
+public class TavernStool : PHSittableProp
 {
 	public override Vector3 SitLocalPos => new Vector3( 0, 0, 7 );
 	public override string SuiteItemName => "Tavern Stool";

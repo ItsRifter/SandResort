@@ -1,8 +1,5 @@
-﻿using Sandbox;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
+﻿using System.Collections.Generic;
+using Sandbox;
 
 public partial class LobbyPawn : BasePawn
 {
@@ -34,12 +31,6 @@ public partial class LobbyPawn : BasePawn
 	{
 		Transform = test.Transform;
 		EyePosition = test.Rotation.Forward;
-	}
-
-	public override void Spawn()
-	{
-		base.Spawn();
-
 	}
 
 	public override void Respawn()
@@ -230,7 +221,7 @@ public partial class LobbyPawn : BasePawn
 	{
 		if ( shouldAdd )
 			PHInventory.ClientInventory.Add( newItem );
-		else if ( !shouldAdd )
+		else
 			PHInventory.ClientInventory.Remove(newItem);
 	}
 
@@ -264,10 +255,5 @@ public partial class LobbyPawn : BasePawn
 
 		timeLastDied = 0;
 	}
-
-	//Frame simulated on the client
-	public override void FrameSimulate( Client cl )
-	{
-		base.FrameSimulate( cl );
-	}
+	
 }

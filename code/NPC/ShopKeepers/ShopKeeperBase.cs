@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Sandbox;
+﻿using Sandbox;
 
-public partial class ShopKeeperBase : AnimatedEntity
+public class ShopKeeperBase : AnimatedEntity
 {
 	public virtual string NPCName => "Base Shop NPC";
 	public virtual string ModelPath => "models/citizen/citizen.vmdl";
@@ -34,7 +29,6 @@ public partial class ShopKeeperBase : AnimatedEntity
 
 	public override void TakeDamage( DamageInfo info )
 	{
-		return;
 	}
 	public override void OnKilled()
 	{

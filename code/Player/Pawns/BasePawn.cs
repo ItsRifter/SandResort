@@ -1,7 +1,6 @@
-﻿using Sandbox;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Sandbox;
 
 
 //Base of PlayHome's player pawns
@@ -20,10 +19,6 @@ public partial class BasePawn : Player
 
 	bool UpdateViewAngle;
 	Angles UpdatedViewAngle;
-
-	public BasePawn()
-	{
-	}
 
 	public void SetUpPlayer()
 	{

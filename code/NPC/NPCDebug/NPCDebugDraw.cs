@@ -1,5 +1,5 @@
-﻿using Sandbox;
-using System;
+﻿using System;
+using Sandbox;
 
 public struct NPCDebugDraw
 {

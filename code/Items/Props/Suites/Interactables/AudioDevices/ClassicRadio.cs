@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Sandbox;
+﻿using Sandbox;
 
-public partial class ClassicRadio : PHSuiteProps
+public class ClassicRadio : PHSuiteProps
 {
 	public override string SuiteItemName => "Classical Radio";
 	public override string SuiteItemDesc => "An old time radio, only has one channel still available";

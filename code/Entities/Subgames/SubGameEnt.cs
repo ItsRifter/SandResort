@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Sandbox;
 using SandboxEditor;
 
@@ -21,7 +17,7 @@ public class SubGameEnt : BaseTrigger
 	public List<BrushEntity> Brushes;
 
 	//bool isActive = false;
-	bool hasSpawned = false;
+	bool hasSpawned;
 
 	public enum SubGameArea
 	{
@@ -45,7 +41,7 @@ public class SubGameEnt : BaseTrigger
 		Boundaries = new List<SubGameBounds>();
 	}
 
-	[Event.Tick.Server]
+	[Event.Tick.ServerAttribute]
 	public void Test()
 	{
 		if ( hasSpawned )
@@ -84,7 +80,7 @@ public class SubGameEnt : BaseTrigger
 		hasSpawned = true;
 	}
 
-	[ConCmd.Server("ph_subgame_test")]
+	[ConCmd.ServerAttribute("ph_subgame_test")]
 	public static void LoadAreaTest(int testConduct)
 	{
 		switch(testConduct)

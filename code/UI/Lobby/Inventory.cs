@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Sandbox;
+﻿using Sandbox;
 using Sandbox.UI;
 using Sandbox.UI.Construct;
-using Sandbox.UI.Tests;
 
 [Library]
-public partial class Inventory : Panel
+public class Inventory : Panel
 {
 	public Panel InvPanel;
 
@@ -87,7 +81,7 @@ public partial class Inventory : Panel
 		}
 	}
 
-	[Event.BuildInput]
+	[Event.BuildInputAttribute]
 	public void BuildInput(InputBuilder inputBuild)
 	{
 		if ( Local.Pawn is not LobbyPawn player )

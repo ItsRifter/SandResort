@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Sandbox;
+﻿using Sandbox;
 
-public partial class DiscoBall : PHSuiteProps
+public class DiscoBall : PHSuiteProps
 {
 	public override string SuiteItemName => "Disco Ball";
 	public override string SuiteItemDesc => "A disco ball that can play music";

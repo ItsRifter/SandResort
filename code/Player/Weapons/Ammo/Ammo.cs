@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Sandbox;
 
 public partial class MMPawn
@@ -58,7 +56,7 @@ public partial class MMPawn
 	public bool Give( string weaponName )
 	{
 		// do we already have one?
-		var existing = Children.Where( x => x.ClassName == weaponName ).FirstOrDefault();
+		var existing = Children.FirstOrDefault( x => x.ClassName == weaponName );
 		if ( existing != null ) return false;
 
 		var weapon = CreateByName<PHBaseWep>( weaponName );

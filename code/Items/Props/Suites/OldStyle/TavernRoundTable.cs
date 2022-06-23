@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Sandbox;
+﻿using Sandbox;
 
-public partial class TavernRoundTable : PHSuiteProps
+public class TavernRoundTable : PHSuiteProps
 {
 	public override string SuiteItemName => "Tavern Round Table";
 	public override string SuiteItemDesc => "A round tavern table for serving drinks in the old times";

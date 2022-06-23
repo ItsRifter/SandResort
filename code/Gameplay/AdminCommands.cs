@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Sandbox;
+
 public partial class PHGame
 {
 	//Hardcoded for now until we can figure out an websocket admin way
@@ -13,7 +10,7 @@ public partial class PHGame
 
 	static readonly float eyeDist = 150.0f;
 
-	[ConCmd.Server( "ph_coins_give" )]
+	[ConCmd.ServerAttribute( "ph_coins_give" )]
 	public static void AdminGiveCoins( int amount, string target = "" )
 	{
 		if ( Instance.AdminList == null || !Instance.AdminList.Contains( ConsoleSystem.Caller.PlayerId ) )
@@ -51,10 +48,8 @@ public partial class PHGame
 						Log.Error( "There are multiple targets with this name, be more specific" );
 						return;
 					}
-					else
-					{
-						targetPlayer = client.Pawn as LobbyPawn;
-					}
+
+					targetPlayer = client.Pawn as LobbyPawn;
 				}
 			}
 
@@ -70,7 +65,7 @@ public partial class PHGame
 		}
 	}
 
-	[ConCmd.Server( "ph_coins_take" )]
+	[ConCmd.ServerAttribute( "ph_coins_take" )]
 	public static void AdminTakeCoins( int amount, string target = "" )
 	{
 		if ( amount <= 0 || amount >= 10000000 )
@@ -108,10 +103,8 @@ public partial class PHGame
 						Log.Error( "There are multiple targets with this name, be more specific" );
 						return;
 					}
-					else
-					{
-						targetPlayer = client.Pawn as LobbyPawn;
-					}
+
+					targetPlayer = client.Pawn as LobbyPawn;
 				}
 			}
 
@@ -127,7 +120,7 @@ public partial class PHGame
 		}
 	}
 
-	[ConCmd.Server( "ph_spawn_item_suite" )]
+	[ConCmd.ServerAttribute( "ph_spawn_item_suite" )]
 	public static void AdminSpawnItem( string itemSuiteName )
 	{
 		if ( Instance.AdminList == null || !Instance.AdminList.Contains( ConsoleSystem.Caller.PlayerId ) )
@@ -155,7 +148,7 @@ public partial class PHGame
 		itemSuite.Spawn();
 	}
 
-	[ConCmd.Server( "ph_spawn_npc" )]
+	[ConCmd.ServerAttribute( "ph_spawn_npc" )]
 	public static void AdminSpawnNPC( string npcName )
 	{
 		if ( Instance.AdminList == null || !Instance.AdminList.Contains( ConsoleSystem.Caller.PlayerId ) )
@@ -182,7 +175,7 @@ public partial class PHGame
 		npc.Spawn();
 	}
 
-	[ConCmd.Server( "ph_item_give" )]
+	[ConCmd.ServerAttribute( "ph_item_give" )]
 	public static void AdminGiveItem( string itemName, string target = "" )
 	{
 		if ( !Instance.AdminList.Contains( ConsoleSystem.Caller.PlayerId ) )
@@ -216,10 +209,8 @@ public partial class PHGame
 						Log.Error( "There are multiple targets with this name, be more specific" );
 						return;
 					}
-					else
-					{
-						targetPlayer = client.Pawn as LobbyPawn;
-					}
+
+					targetPlayer = client.Pawn as LobbyPawn;
 				}
 			}
 
@@ -235,7 +226,7 @@ public partial class PHGame
 		}
 	}
 
-	[ConCmd.Server( "ph_data_save" )]
+	[ConCmd.ServerAttribute( "ph_data_save" )]
 	public static void AdminSaveData( string target = "" )
 	{
 		var caller = ConsoleSystem.Caller;
@@ -260,10 +251,8 @@ public partial class PHGame
 						Log.Error( "There are multiple targets with this name, be more specific" );
 						return;
 					}
-					else
-					{
-						targetClient = client;
-					}
+
+					targetClient = client;
 				}
 			}
 
@@ -279,7 +268,7 @@ public partial class PHGame
 		}
 	}
 
-	[ConCmd.Server( "ph_data_load" )]
+	[ConCmd.ServerAttribute( "ph_data_load" )]
 	public static void AdminLoadData( string target = "" )
 	{
 		var caller = ConsoleSystem.Caller;
@@ -304,10 +293,8 @@ public partial class PHGame
 						Log.Error( "There are multiple targets with this name, be more specific" );
 						return;
 					}
-					else
-					{
-						targetClient = client;
-					}
+
+					targetClient = client;
 				}
 			}
 
@@ -323,7 +310,7 @@ public partial class PHGame
 		}
 	}
 
-	[ConCmd.Server( "ph_bringplayer" )]
+	[ConCmd.ServerAttribute( "ph_bringplayer" )]
 	public static void AdminBringPlayer( string target = "" )
 	{
 		var caller = ConsoleSystem.Caller;
@@ -335,52 +322,48 @@ public partial class PHGame
 		{
 			return;
 		}
-		else
+
+		LobbyPawn targetPlayer = null;
+
+		foreach ( var client in Client.All )
 		{
-			LobbyPawn targetPlayer = null;
-
-			foreach ( var client in Client.All )
+			if ( client.Name.ToLower().Contains( target ) )
 			{
-				if ( client.Name.ToLower().Contains( target ) )
+				if ( targetPlayer != null )
 				{
-					if ( targetPlayer != null )
-					{
-						Log.Error( "There are multiple targets with this name, be more specific" );
-						return;
-					}
-					else
-					{
-						targetPlayer = client.Pawn as LobbyPawn;
-					}
-				}
-			}
-
-			if ( targetPlayer != null )
-			{
-				if ( targetPlayer.LifeState == LifeState.Dead )
-				{
-					Log.Error( "that player is dead" );
+					Log.Error( "There are multiple targets with this name, be more specific" );
 					return;
 				}
 
-				var tr = Trace.Ray( caller.Pawn.EyePosition, caller.Pawn.EyePosition + caller.Pawn.EyeRotation.Forward * 999 )
-					.WorldAndEntities()
-					.Ignore( caller.Pawn )
-					.Run();
-
-				using ( Prediction.Off() )
-					targetPlayer.Position = tr.EndPosition;
-
-				Log.Info( $"{caller.Name} brought {targetPlayer.Client.Name} to them" );
+				targetPlayer = client.Pawn as LobbyPawn;
 			}
-			else
+		}
+
+		if ( targetPlayer != null )
+		{
+			if ( targetPlayer.LifeState == LifeState.Dead )
 			{
-				Log.Error( "No target found" );
+				Log.Error( "that player is dead" );
+				return;
 			}
+
+			var tr = Trace.Ray( caller.Pawn.EyePosition, caller.Pawn.EyePosition + caller.Pawn.EyeRotation.Forward * 999 )
+				.WorldAndEntities()
+				.Ignore( caller.Pawn )
+				.Run();
+
+			using ( Prediction.Off() )
+				targetPlayer.Position = tr.EndPosition;
+
+			Log.Info( $"{caller.Name} brought {targetPlayer.Client.Name} to them" );
+		}
+		else
+		{
+			Log.Error( "No target found" );
 		}
 	}
 
-	[ConCmd.Server( "ph_test_setpawn" )]
+	[ConCmd.ServerAttribute( "ph_test_setpawn" )]
 	public static void AdminSetPawn( string pawnType )
 	{
 		if ( Instance.AdminList == null || !Instance.AdminList.Contains( ConsoleSystem.Caller.PlayerId ) )

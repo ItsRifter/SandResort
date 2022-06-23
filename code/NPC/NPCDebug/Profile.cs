@@ -1,10 +1,8 @@
-﻿using Sandbox;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
+using Sandbox;
 
 public static class Profile
 {
@@ -82,13 +80,13 @@ public static class Profile
 		return scope;
 	}
 
-	[Event.Hotload]
+	[Event.HotloadAttribute]
 	public static void Hotloaded()
 	{
 		Root = new Entry();
 	}
 
-	[Event.Tick]
+	[Event.TickAttribute]
 	static void Frame()
 	{
 		if ( timeSince >= 0.5f )
@@ -101,7 +99,7 @@ public static class Profile
 		Root.Wipe();
 	}
 
-	internal struct ProfileScope : System.IDisposable
+	internal struct ProfileScope : IDisposable
 	{
 		internal Entry Parent;
 		internal Entry Me;
@@ -109,17 +107,17 @@ public static class Profile
 
 		public ProfileScope( string name )
 		{
-			Parent = Profile.Root;
+			Parent = Root;
 
 			Me = Parent.GetOrCreateChild( name );
 			StartTime = sw.Elapsed.TotalMilliseconds;
-			Profile.Root = Me;
+			Root = Me;
 		}
 
 		public void Dispose()
 		{
 			Me.Add( sw.Elapsed.TotalMilliseconds - StartTime );
-			Profile.Root = Parent;
+			Root = Parent;
 		}
 	}
 }

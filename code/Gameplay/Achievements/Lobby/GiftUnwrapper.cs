@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Sandbox;
-public partial class GiftUnwrapper : AchBase
+﻿public class GiftUnwrapper : AchBase
 {
 	public override string AchName => "Gift Unwrapper";
 	public override string AchDesc => "Unwrap 50 gifts";

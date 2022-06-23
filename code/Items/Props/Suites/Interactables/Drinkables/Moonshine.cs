@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Sandbox;
-public partial class Moonshine : PHSuiteProps
+﻿using Sandbox;
+
+public class Moonshine : PHSuiteProps
 {
 	public override string SuiteItemName => "Moonshine Bottle";
 	public override string SuiteItemDesc => "A rather big bottle containing alcohol, seriously drink very responibly";

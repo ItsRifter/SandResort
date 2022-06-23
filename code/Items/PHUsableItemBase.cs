@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Sandbox;
 
-public partial class PHUsableItemBase : BaseCarriable
+public class PHUsableItemBase : BaseCarriable
 {
 	public virtual string ItemName => "Usable Base Item";
 	public virtual string ItemDesc => "A base item for other usable items to derive from";

@@ -1,21 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Sandbox;
 
-public partial class PHBaseNPC : AnimatedEntity
+public class PHBaseNPC : AnimatedEntity
 {
 	public virtual string NPCName => "Base NPC";
 	public virtual string ModelPath => "models/citizen/citizen.vmdl";
 
 	DamageInfo lastDMG;
 
-	[ConVar.Replicated]
+	[ConVar.ReplicatedAttribute]
 	public static bool ph_nav_drawpath { get; set; }
 
-	[ConCmd.Admin( "ph_npc_clear" )]
+	[ConCmd.AdminAttribute( "ph_npc_clear" )]
 	public static void ClearAllNPCs()
 	{
 		foreach ( var npc in All.OfType<PHBaseNPC>().ToArray() )
@@ -49,7 +45,7 @@ public partial class PHBaseNPC : AnimatedEntity
 
 	//Vector3 LookDir;
 
-	[Event.Tick.Server]
+	[Event.Tick.ServerAttribute]
 	public void Tick()
 	{
 		//using var _a = Profile.Scope( "NpcTest::Tick" );

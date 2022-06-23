@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Sandbox;
 
-public partial class AchBase 
+public class AchBase 
 {
 	public virtual string AchName => "Base Achievement";
 	public virtual string AchDesc => "The base of all achievements";
@@ -15,7 +11,7 @@ public partial class AchBase
 	public virtual int AchProgressMax => 1;
 	public virtual int AchCoinsReward => 1;
 
-	public bool HasCompleted = false;
+	public bool HasCompleted;
 
 	public enum AchType
 	{
@@ -25,13 +21,13 @@ public partial class AchBase
 
 	public virtual AchType AchievementType => AchType.Lobby;
 
-	public virtual List<Entity> AchItemRewards => new List<Entity>()
+	public virtual List<Entity> AchItemRewards => new List<Entity>
 	{
 		//Add class items here
 		//Example: new Jetpack();
 	};
 
-	public virtual int AchProgress { get; set; } = 0;
+	public virtual int AchProgress { get; set; }
 
 	//Updates the achievement
 	public void UpdateAchievement(BasePawn player, int updateProgress = 1)

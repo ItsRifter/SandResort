@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Sandbox;
 
-public partial class SuiteReceptionist : PHBaseNPC
+public class SuiteReceptionist : PHBaseNPC
 {
 	public override string NPCName => "Suite Receptionist";
 	public override string ModelPath => "models/citizen/citizen.vmdl";
@@ -46,7 +42,7 @@ public partial class SuiteReceptionist : PHBaseNPC
 			ConsoleSystem.Run( "ph_server_say", "There are no suites available at this time", player.Client.Id );*/
 	}
 
-	[ConCmd.Server("ph_claim_suite")]
+	[ConCmd.ServerAttribute("ph_claim_suite")]
 	public static void ClaimSuiteStatic(int suiteIndex, int plyID)
 	{
 		var player = ConsoleSystem.Caller.Pawn as LobbyPawn;
@@ -81,7 +77,6 @@ public partial class SuiteReceptionist : PHBaseNPC
 	//Other NPC stuff
 	public override void TakeDamage( DamageInfo info )
 	{
-		return;
 	}
 
 	public override void OnKilled()

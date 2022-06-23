@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Sandbox;
+﻿using Sandbox;
 
 public class RagdollCamera : CameraMode
 {
@@ -17,7 +12,7 @@ public class RagdollCamera : CameraMode
 
 	}
 
-	public RagdollCamera(bool enableThirdPerson = true, bool enableFirstPerson = false) : base()
+	public RagdollCamera(bool enableThirdPerson = true, bool enableFirstPerson = false)
 	{
 		thirdPerson = enableThirdPerson;
 		firstPerson = enableFirstPerson;

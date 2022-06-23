@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Sandbox;
 
 public partial class PHGame
@@ -19,7 +15,7 @@ public partial class PHGame
 
 		pawn.SetCoins( 500 );
 
-		var saveData = new PlayerData()
+		var saveData = new PlayerData
 		{
 			PlayerName = cl.Name,
 			PlayCoins = pawn.PlayCoins,
@@ -73,7 +69,7 @@ public partial class PHGame
 		{
 			foreach ( var prop in props )
 			{
-				SuitePropInfo suite = new SuitePropInfo()
+				SuitePropInfo suite = new SuitePropInfo
 				{
 					PropName = prop.ClassName,
 					Model = prop.Model,
@@ -92,7 +88,7 @@ public partial class PHGame
 			dataProps = FileSystem.Data.ReadJson<PlayerData>( $"{cl.PlayerId}.json" ).SuiteProps;
 		}
 
-		var saveData = new PlayerData()
+		var saveData = new PlayerData
 		{
 			PlayerName = cl.Name,
 			PlayCoins = pawn.PlayCoins,

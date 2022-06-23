@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Sandbox;
+﻿using Sandbox;
 
-public partial class TavernTable : PHSuiteProps
+public class TavernTable : PHSuiteProps
 {
 	public override string SuiteItemName => "Tavern Table";
 	public override string SuiteItemDesc => "A tavern table for serving drinks in the old times";

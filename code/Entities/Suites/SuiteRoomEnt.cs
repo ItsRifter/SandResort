@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Sandbox;
 using SandboxEditor;
 
@@ -62,15 +57,15 @@ public partial class SuiteRoomEnt : BaseTrigger
 		base.StartTouch( other );
 	}
 
-	[Event.Tick.Server]
+	[Event.Tick.ServerAttribute]
 	public void FindSuiteTeleport()
 	{
 		if ( SuiteKickedDest == null && !string.IsNullOrEmpty( SuiteKickerDestination ) )
-			SuiteKickedDest = Entity.FindByName( SuiteKickerDestination ) as TeleDest;
+			SuiteKickedDest = FindByName( SuiteKickerDestination ) as TeleDest;
 
 		if ( SuiteTeleporter == null && !string.IsNullOrEmpty( SuiteTeleporterEntity ) )
 		{
-			SuiteTeleporter = Entity.FindByName( SuiteTeleporterEntity ) as PHTriggerTeleport;
+			SuiteTeleporter = FindByName( SuiteTeleporterEntity ) as PHTriggerTeleport;
 			SuiteTeleporter.Disable();
 		}
 	}

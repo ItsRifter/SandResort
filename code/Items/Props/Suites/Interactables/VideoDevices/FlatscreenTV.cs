@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Sandbox;
+﻿using Sandbox;
 
-public partial class FlatscreenTV : PHSuiteProps
+public class FlatscreenTV : PHSuiteProps
 {
 	public override string SuiteItemName => "Small Flatscreen TV";
 	public override string SuiteItemDesc => "A small flatscreen TV to play whatever video you like";

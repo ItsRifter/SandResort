@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ComplexUI;
 using Sandbox;
 using Sandbox.UI;
 using Sandbox.UI.Construct;
-using ComplexUI;
 
-public partial class SuiteReceptionUI : Panel
+public class SuiteReceptionUI : Panel
 {
-	bool isOpen = false;
+	bool isOpen;
 	Panel rootSuitesPanel;
 	public Panel Suites;
 
@@ -34,14 +29,14 @@ public partial class SuiteReceptionUI : Panel
 
 		TabsUi.AddTabItem("Check in", () =>
 		{
-			checkInSuite.Style.Set( "display: flex;" );
-			userSuite.Style.Set( "display: none;" );
+			checkInSuite?.Style.Set( "display: flex;" );
+			userSuite?.Style.Set( "display: none;" );
 		});
 		
 		TabsUi.AddTabItem("Suite Settings", () =>
 		{
-			checkInSuite.Style.Set( "display: none;" );
-			userSuite.Style.Set( "display: flex;" );
+			checkInSuite?.Style.Set( "display: none;" );
+			userSuite?.Style.Set( "display: flex;" );
 		});
 
 		//UI
@@ -122,8 +117,7 @@ public partial class SuiteReceptionUI : Panel
 
 		Style.ZIndex = 5;
 
-		int[] suiteIndex = new int[4]
-		{
+		int[] suiteIndex = {
 			0, 1, 2, 3
 		};
 

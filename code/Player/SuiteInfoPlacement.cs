@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Sandbox;
 
 public interface ISuiteProp
@@ -23,6 +21,9 @@ public class SuitePropInfo : ISuiteProp
 
 public partial class LobbyPawn
 {
+	const float EPSILON = float.Epsilon; // Stop checking if floating point outright equal numbers equal floating point numbers!
+	
+	
 	[Net]
 	public PHSuiteProps PreviewProp { get; set; }
 
@@ -37,17 +38,17 @@ public partial class LobbyPawn
 
 	public TimeSince timeToWaitPlacing;
 
-	float scrollRot = 0;
+	float scrollRot;
 
 	public bool CheckPlacementSurface(Vector3 surface)
 	{
-		if ( surface.x == 1 || surface.x == -1 )
+		if ( Math.Abs(surface.x - 1) < EPSILON  || Math.Abs(surface.x - (-1)) < EPSILON  )
 			return true;
 
-		if ( surface.y == 1 || surface.y == -1 )
+		if ( Math.Abs(surface.y - 1) < EPSILON  || Math.Abs(surface.y - (-1)) < EPSILON  )
 			return true;
 
-		if ( surface.z == 1 || surface.z == -1 )
+		if ( Math.Abs(surface.z - 1) < EPSILON  || Math.Abs(surface.z - (-1)) < EPSILON  )
 			return true;
 
 		return false;
@@ -55,29 +56,31 @@ public partial class LobbyPawn
 
 	public void AdjustSurfaceRotation( Vector3 surface )
 	{	
-		if(surface.x == 1)
+		if(Math.Abs(surface.x - 1) < EPSILON )
 		{
 			PreviewProp.Rotation = Rotation.FromPitch( 90 ) * Rotation.FromYaw( scrollRot );
 			return;
-		} 
-		else if (surface.x == -1)
+		}
+
+		if (Math.Abs(surface.x - (-1)) < EPSILON )
 		{
 			PreviewProp.Rotation = Rotation.FromPitch( -90 ) * Rotation.FromYaw( scrollRot );
 			return;
 		}
 
-		if ( surface.y == 1 )
+		if ( Math.Abs(surface.y - 1) < EPSILON  )
 		{
 			PreviewProp.Rotation = Rotation.FromRoll( -90 ) * Rotation.FromYaw( scrollRot );
 			return;
 		}
-		else if ( surface.y == -1 )
+
+		if ( Math.Abs(surface.y - (-1)) < EPSILON  )
 		{
 			PreviewProp.Rotation = Rotation.FromRoll( 90 ) * Rotation.FromYaw( scrollRot );
 			return;
 		}
 
-		if ( surface.z == -1 )
+		if ( Math.Abs(surface.z - (-1)) < EPSILON )
 		{
 			PreviewProp.Rotation = Rotation.FromRoll( -180 ) * Rotation.FromYaw( scrollRot );
 			return;
@@ -106,14 +109,15 @@ public partial class LobbyPawn
 			PHInventory.InventoryList.Add( PreviewProp );
 			UpdateClientInventory( PreviewProp.ClassName );
 
-			All.OfType<PHSuiteProps>().FirstOrDefault( x => x.Name == PreviewProp.Name ).Delete();
+			All.OfType<PHSuiteProps>().FirstOrDefault( x => x.Name == PreviewProp.Name )?.Delete();
 
 			PreviewProp.Delete();
 			PreviewProp = null;
 
 			return;
-		} 
-		else if (!PreviewProp.IsMovingFrom && Input.Pressed( InputButton.SecondaryAttack ) && IsServer )
+		}
+
+		if (!PreviewProp.IsMovingFrom && Input.Pressed( InputButton.SecondaryAttack ) && IsServer )
 		{
 			PreviewProp.Delete();
 			PreviewProp = null;
@@ -139,7 +143,7 @@ public partial class LobbyPawn
 
 			if ( CurSuite == null )
 				PreviewProp.RenderColor = new Color( 165, 0, 0, 0.5f );
-			else if ( FindInBox( PreviewProp.WorldSpaceBounds ).Count() > 0 )
+			else if ( FindInBox( PreviewProp.WorldSpaceBounds ).Any() )
 				PreviewProp.RenderColor = new Color( 165, 0, 0, 0.5f );
 			else if ( !CheckPlacementSurface( mouseTrace.Normal ) )
 				PreviewProp.RenderColor = new Color( 165, 0, 0, 0.5f );
@@ -200,7 +204,7 @@ public partial class LobbyPawn
 
 				foreach ( var item in PHInventory.InventoryList.ToArray() )
 				{
-					if ( (item as PHSuiteProps).SuiteItemName == PreviewProp.SuiteItemName )
+					if ( (item as PHSuiteProps)?.SuiteItemName == PreviewProp.SuiteItemName )
 					{
 						PHInventory.InventoryList.Remove( item );
 
@@ -213,9 +217,12 @@ public partial class LobbyPawn
 			} 
 			else if ( PreviewProp.IsMovingFrom )
 			{
-				var movedProp = All.OfType<PHSuiteProps>().FirstOrDefault( x => x.Name == PreviewProp.Name );
-				movedProp.Position = PreviewProp.Position;
-				movedProp.Rotation = PreviewProp.Rotation;
+				PHSuiteProps movedProp = All.OfType<PHSuiteProps>().FirstOrDefault( x => x.Name == PreviewProp.Name );
+				if ( movedProp != null )
+				{
+					movedProp.Position = PreviewProp.Position;
+					movedProp.Rotation = PreviewProp.Rotation;
+				}
 
 				CheckOrUpdateAchievement( "Suite OCD", "OCD" );
 			}
@@ -230,11 +237,7 @@ public partial class LobbyPawn
 
 	public SuiteRoomEnt GrabSpecificSuite( int index )
 	{
-		var suite = All.OfType<SuiteRoomEnt>().ElementAt( index );
-
-		if ( suite == null )
-			return null;
-
+		SuiteRoomEnt suite = All.OfType<SuiteRoomEnt>().ElementAt( index );
 		return suite;
 	}
 

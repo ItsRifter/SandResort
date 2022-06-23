@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Sandbox;
-
+﻿using Sandbox;
 
 public partial class PHBaseWep : BaseWeapon
 {
@@ -76,7 +70,7 @@ public partial class PHBaseWep : BaseWeapon
 
 		IsReloading = true;
 
-		(Owner as AnimatedEntity).SetAnimParameter( "b_reload", true );
+		(Owner as AnimatedEntity)?.SetAnimParameter( "b_reload", true );
 
 		StartReloadEffects();
 	}
@@ -206,7 +200,7 @@ public partial class PHBaseWep : BaseWeapon
 
 	public override void CreateHudElements()
 	{
-		if ( Local.Hud == null ) return;
+		//if ( Local.Hud == null ) return;
 	}
 
 	public bool IsUsable()
@@ -264,7 +258,7 @@ public partial class PHBaseWep : BaseWeapon
 
 	public virtual void RenderCrosshair( in Vector2 center, float lastAttack, float lastReload )
 	{
-		var draw = Render.Draw2D;
+		//var draw = Render.Draw2D;
 	}
 }
 

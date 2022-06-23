@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Sandbox;
 using Sandbox.UI;
 using Sandbox.UI.Construct;
 
-public partial class GameWorldPanel : WorldPanel
+public class GameWorldPanel : WorldPanel
 {
 	public bool Interacted;
 

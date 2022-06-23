@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Sandbox;
+﻿using Sandbox;
+
 public partial class PHSittableProp : PHSuiteProps
 {
 	//Probably should do this with bone transform but couldn't figure it out
@@ -24,7 +20,7 @@ public partial class PHSittableProp : PHSuiteProps
 	public bool CanDirectlyInteract = true;
 
 	TimeSince timeLastSat;
-	bool isSittingDown = false;
+	bool isSittingDown;
 
 	public override void Spawn()
 	{

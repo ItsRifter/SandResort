@@ -1,7 +1,7 @@
-﻿using Sandbox;
+﻿using System.Linq;
+using Sandbox;
 using Sandbox.UI;
 using Sandbox.UI.Construct;
-using System.Linq;
 
 /// <summary>
 /// When a player is within radius of the camera we add this to their entity.
@@ -25,7 +25,7 @@ internal class NameTagComponent : EntityComponent<LobbyPawn>
 	/// <summary>
 	/// Called for every tag, while it's active
 	/// </summary>
-	[Event.Frame]
+	[Event.FrameAttribute]
 	public void FrameUpdate()
 	{
 		var tx = Entity.GetAttachment( "hat" ) ?? Entity.Transform;
@@ -38,7 +38,7 @@ internal class NameTagComponent : EntityComponent<LobbyPawn>
 	/// <summary>
 	/// Called once per frame to manage component creation/deletion
 	/// </summary>
-	[Event.Frame]
+	[Event.FrameAttribute]
 	public static void SystemUpdate()
 	{
 		foreach ( var player in Sandbox.Entity.All.OfType<LobbyPawn>() )

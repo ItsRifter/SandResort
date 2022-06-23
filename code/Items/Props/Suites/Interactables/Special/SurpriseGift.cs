@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Sandbox;
+﻿using Sandbox;
 
-public partial class SurpriseGift : PHSuiteProps
+public class SurpriseGift : PHSuiteProps
 {
 	public override string SuiteItemName => "Surprise Gift";
 	public override string SuiteItemDesc => "A mysterious gift containing a random item, wonder what's inside";

@@ -1,13 +1,9 @@
 ﻿using Sandbox;
+
 public class NPCWander : NPCSteer
 {
 	public float MinRadius { get; set; } = 200;
 	public float MaxRadius { get; set; } = 500;
-
-	public NPCWander()
-	{
-
-	}
 
 	public override void Tick( Vector3 position )
 	{

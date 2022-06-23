@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Sandbox;
-public partial class BeerBottle : PHSuiteProps
+﻿using Sandbox;
+
+public class BeerBottle : PHSuiteProps
 {
 	public override string SuiteItemName => "Bottle of Beer";
 	public override string SuiteItemDesc => "A bottle containing alcohol, drink responsibly";

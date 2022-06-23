@@ -1,9 +1,6 @@
-﻿using Sandbox;
-using Sandbox.UI;
-using Sandbox.UI.Construct;
-using System;
+﻿using Sandbox.UI;
 
-public partial class PHChatBox : Panel
+public class PHChatBox : Panel
 {
 	/*public static PHChatBox Current;
 
@@ -117,7 +114,7 @@ public partial class PHChatBox : Panel
 	}*/
 }
 
-public static partial class Chat
+public static class Chat
 {
 	/*public static event Action OnOpenChat;
 

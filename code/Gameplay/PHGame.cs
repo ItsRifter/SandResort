@@ -1,11 +1,6 @@
 ﻿
-using Sandbox;
-using Sandbox.UI.Construct;
-using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
+using Sandbox;
 
 public partial class PHGame : Game
 {
@@ -22,7 +17,7 @@ public partial class PHGame : Game
 		{
 			AllSuiteProps = new List<string>();
 
-			AdminList = new List<long>()
+			AdminList = new List<long>
 			{
 				76561197972285500, // ItsRifter
 				76561198320469005, // RedHacker2 / Self Proclaimed God,
@@ -32,7 +27,7 @@ public partial class PHGame : Game
 				76561198142761957 // Lokiv
 			};
 
-			skipPropItems = new List<string>() 
+			skipPropItems = new List<string>
 			{
 				"PHSuiteProps",
 				"VideoAudioPlayer"
@@ -45,12 +40,12 @@ public partial class PHGame : Game
 			new PHHud();
 	}
 
-	[Event.Hotload]
+	[Event.HotloadAttribute]
 	public void Hotload()
 	{
 		if ( IsServer )
 		{
-			AdminList = new List<long>()
+			AdminList = new List<long>
 			{
 				76561197972285500, // ItsRifter
 				76561198320469005, // RedHacker2 / Self Proclaimed God,

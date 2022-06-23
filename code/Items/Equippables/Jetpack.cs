@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Sandbox;
-public partial class Jetpack : PHUsableItemBase
+﻿using Sandbox;
+
+public class Jetpack : PHUsableItemBase
 {
 	public override string ItemName => "Jetpack";
 	public override string ItemDesc => "A fun jetpack for you to jet across with limited fuel";
