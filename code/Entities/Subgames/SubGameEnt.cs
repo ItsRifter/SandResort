@@ -98,8 +98,7 @@ public class SubGameEnt : BaseTrigger
 			case 3:
 				Event.Run( "test3" );
 				break;
-		}
-		
+		}		
 	}
 
 

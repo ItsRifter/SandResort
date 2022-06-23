@@ -8,15 +8,22 @@ using SandboxEditor;
 
 [Library("ph_subgame_panel")]
 [Title("Sub-Game Panel"), Category( "Sub-Games" ), Description("The sub-game panel, displays info about this sub-game")]
+[BoundsHelper( "MinBounds", "MaxBounds")]
 [HammerEntity]
 public class SubGamePanel : Entity
 {
+	[Property]
+	public Vector3 MinBounds { get; set; }
 
+	[Property]
+	public Vector3 MaxBounds { get; set; }
+	
 	public enum SubGameType
 	{
 		Unspecified,
 		Monday_Massacre
 	}
+
 
 	[Property]
 	public SubGameType GameType { get; set; } = SubGameType.Unspecified;
@@ -36,8 +43,7 @@ public class SubGamePanel : Entity
 		gamePanel.Position = Position;
 		gamePanel.Rotation = Rotation;
 
-		//TEMPORARY, should be set by the SubGamePanel entity bounding box
-		gamePanel.TriggerBox = new BBox( gamePanel.Position / 1.01f, gamePanel.Position * 1.01f );
+		gamePanel.TriggerBox = new BBox( MinBounds, MaxBounds );
 	}
 }
 

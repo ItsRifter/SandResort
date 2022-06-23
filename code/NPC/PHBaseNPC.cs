@@ -31,7 +31,7 @@ public partial class PHBaseNPC : AnimatedEntity
 
 		SetModel( ModelPath );
 
-		EyePosition = Position + Vector3.Up * 64;
+		//EyePosition = Position + Vector3.Up * 64;
 		CollisionGroup = CollisionGroup.Player;
 		SetupPhysicsFromCapsule( PhysicsMotionType.Keyframed, Capsule.FromHeightAndRadius( 72, 8 ) );
 
@@ -49,9 +49,9 @@ public partial class PHBaseNPC : AnimatedEntity
 
 	//Vector3 LookDir;
 
-	[Event.Tick.Server]
-	public void Tick()
-	{
+	//[Event.Tick.Server]
+	//public void Tick()
+	//{
 		//using var _a = Profile.Scope( "NpcTest::Tick" );
 		/*
 		InputVelocity = 0;
@@ -93,7 +93,7 @@ public partial class PHBaseNPC : AnimatedEntity
 		animHelper.WithLookAt( EyePosition + LookDir );
 		animHelper.WithVelocity( Velocity );
 		animHelper.WithWishVelocity( InputVelocity );*/
-	}
+	//}
 
 	public override void TakeDamage( DamageInfo info )
 	{

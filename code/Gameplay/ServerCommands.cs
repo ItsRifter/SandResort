@@ -163,4 +163,16 @@ public partial class PHGame
 
 		player.RemoveFromBlacklist( userToRemove );
 	}
+
+	[ConCmd.Server( "ph_checkout_suite" )]
+	public static void CheckOutSuite( int plyID )
+	{	
+		var player = ConsoleSystem.Caller.Pawn as LobbyPawn;
+
+		if ( player == null )
+			return;
+
+		if ( player.CurSuite != null )
+			player.CurSuite.RevokeSuite( player );
+	}
 }

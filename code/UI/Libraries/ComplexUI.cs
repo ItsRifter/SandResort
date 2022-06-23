@@ -12,6 +12,12 @@ namespace ComplexUI
     public partial class SideTabUI : Panel
     {
         public List<Panel> TabItems;
+		int _defaultTab = 1;
+        public int defaultTab
+        {
+            get { return _defaultTab; }
+            set { _defaultTab = value; }
+        }
         public int activeTab = 1;
         public int nextActiveTab = 1;
         public SideTabUI()
@@ -22,7 +28,7 @@ namespace ComplexUI
 			TabItems.Add( Add.Panel( "tabs tabsSide" ) );
 		}
 
-        public void AddTabItem(string Text, Action onClick)
+        public void AddTabItem(string Text, Action onClick, bool SwitchTabs = true)
         {
             var itemNumber = nextActiveTab;
             nextActiveTab++;
@@ -31,16 +37,20 @@ namespace ComplexUI
 			newTab.Add.Label( Text, "tabText" );
 			newTab.Add.Panel( "lineOverlay" );
             
-			if ( itemNumber == 1 )
+			if ( itemNumber == defaultTab )
             {
                 newTab.SetClass("activeTab", true);
+                //onClick();
             }
 
             newTab.AddEventListener("onClick", () =>
             {
-                TabItems[activeTab].SetClass("activeTab", false);
-                activeTab = itemNumber;
-                newTab.SetClass("activeTab", true);
+                if ( SwitchTabs )
+                {
+                    TabItems[activeTab].SetClass("activeTab", false);
+                    activeTab = itemNumber;
+                    newTab.SetClass("activeTab", true);
+                }
                 onClick();
             });
 

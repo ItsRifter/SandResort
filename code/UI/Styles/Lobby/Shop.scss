@@ -4,9 +4,9 @@
     height: 100%;
     background-color: rgba(46, 84, 99, 0.5);
     opacity: 0;
-    pointer-events: all;
     transition: opacity 0.1s ease;
-
+    pointer-events: all;
+   
     &.openshop {
         opacity: 1;
     }

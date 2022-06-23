@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Sandbox;
 
 public partial class ShopKeeperBase : AnimatedEntity
 {
 	public virtual string NPCName => "Base Shop NPC";
 	public virtual string ModelPath => "models/citizen/citizen.vmdl";
+	public virtual List<string> ClothingModels => new List<string>
+	{
+		//Here should be clothing models for this shop keeper
+	};
 
 	public override void Spawn()
 	{
@@ -16,7 +16,6 @@ public partial class ShopKeeperBase : AnimatedEntity
 
 		SetModel( ModelPath );
 
-		EyePosition = Position + Vector3.Up * 64;
 		CollisionGroup = CollisionGroup.Player;
 		SetupPhysicsFromCapsule( PhysicsMotionType.Keyframed, Capsule.FromHeightAndRadius( 72, 8 ) );
 
@@ -24,6 +23,16 @@ public partial class ShopKeeperBase : AnimatedEntity
 		EnableLagCompensation = true;
 
 		SetBodyGroup( 1, 0 );
+
+		foreach ( var clothModel in ClothingModels )
+		{
+			var clothing = new ModelEntity();
+
+			clothing.SetModel( clothModel );
+			clothing.SetParent( this, true );
+
+			clothing.Spawn();
+		}
 	}
 
 

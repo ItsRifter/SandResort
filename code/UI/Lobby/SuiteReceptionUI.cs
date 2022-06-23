@@ -44,6 +44,12 @@ public partial class SuiteReceptionUI : Panel
 			userSuite.Style.Set( "display: flex;" );
 		});
 
+		TabsUi.AddTabItem( "Check Out", () =>
+		{
+			ConsoleSystem.Run( "ph_checkout_suite", Local.Client.Id );
+			CloseSuiteMenu();
+		}, false );
+
 		//UI
 
 		rootSuitesPanel = Add.Panel( "mainSuitesPanel" );
@@ -100,6 +106,8 @@ public partial class SuiteReceptionUI : Panel
 		// Tab final styling
 		checkInSuite.Style.Set("display: flex;");
 		userSuite.Style.Set("display: none;");
+
+		//TabsUi.SetTabItem(0, true);
 	}
 
 	public void ClaimSuitePanel( int index )

@@ -16,7 +16,6 @@ public partial class Shop : Panel
 	public Panel ShopItems;
 
 	bool hasOpened = false;
-
 	public Shop()
 	{
 		StyleSheet.Load( "UI/Styles/Lobby/Shop.scss" );
