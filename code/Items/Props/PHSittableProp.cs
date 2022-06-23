@@ -6,10 +6,21 @@ using System.Threading.Tasks;
 using Sandbox;
 public partial class PHSittableProp : PHSuiteProps
 {
-	[Net]
-	public LobbyPawn sittingPlayer { get; private set; }
+	//Probably should do this with bone transform but couldn't figure it out
+	public virtual Vector3 SitLocalPos => new Vector3( 0, 0, 0 );
 
-	public ChairCam camera;
+	//In case its not a single seated prop
+	public virtual bool MultiSeated => false;
+
+	public virtual Vector3[] SitMultiLocalPos => new Vector3[] 
+	{ 
+		//Here would be the different local positions
+	};
+
+	[Net]
+	public LobbyPawn SittingPlayer { get; private set; }
+
+	public ChairCam Camera;
 	public bool CanDirectlyInteract = true;
 
 	TimeSince timeLastSat;
@@ -20,7 +31,7 @@ public partial class PHSittableProp : PHSuiteProps
 		base.Spawn();
 
 		timeLastSat = 0;
-		camera = Components.Create<ChairCam>();
+		Camera = Components.Create<ChairCam>();
 		SetInteractsExclude( CollisionLayer.Player );
 	}
 
@@ -33,7 +44,7 @@ public partial class PHSittableProp : PHSuiteProps
 
 	void SimulateSitter()
 	{
-		if ( !sittingPlayer.IsValid() ) return;
+		if ( !SittingPlayer.IsValid() ) return;
 
 		if ( IsServer && Input.Pressed( InputButton.Use ) && timeLastSat >= 1.0f && CanDirectlyInteract )
 		{
@@ -41,25 +52,25 @@ public partial class PHSittableProp : PHSuiteProps
 			return;
 		}
 
-		sittingPlayer.SetAnimParameter( "b_grounded", true );
-		sittingPlayer.SetAnimParameter( "sit", 1 );
+		SittingPlayer.SetAnimParameter( "b_grounded", true );
+		SittingPlayer.SetAnimParameter( "sit", 1 );
 
-		var aimRotation = Input.Rotation.Clamp( sittingPlayer.Rotation, 90 );
+		var aimRotation = Input.Rotation.Clamp( SittingPlayer.Rotation, 75 );
 
-		var aimPos = sittingPlayer.EyePosition + aimRotation.Forward * 200;
-		var localPos = new Transform( sittingPlayer.EyePosition, sittingPlayer.Rotation ).PointToLocal( aimPos );
+		var aimPos = SittingPlayer.EyePosition + aimRotation.Forward * 200;
+		var localPos = new Transform( SittingPlayer.EyePosition, SittingPlayer.Rotation ).PointToLocal( aimPos );
 		
-		var duckControlFix = sittingPlayer.Controller as WalkController;
+		var duckControlFix = SittingPlayer.Controller as WalkController;
 
 		if ( duckControlFix.Duck.IsActive && IsServer )
 		{
-			sittingPlayer.EyeLocalPosition += Vector3.Up * 32;
+			SittingPlayer.EyeLocalPosition += Vector3.Up * 32;
 			duckControlFix.Duck.IsActive = false;
 		}
 
-		sittingPlayer.SetAnimParameter( "aim_eyes", localPos );
-		sittingPlayer.SetAnimParameter( "aim_head", localPos );
-		sittingPlayer.SetAnimParameter( "aim_body", localPos );
+		SittingPlayer.SetAnimParameter( "aim_eyes", localPos );
+		SittingPlayer.SetAnimParameter( "aim_head", localPos );
+		SittingPlayer.SetAnimParameter( "aim_body", localPos );
 	}
 
 	protected override void OnDestroy()
@@ -70,32 +81,34 @@ public partial class PHSittableProp : PHSuiteProps
 	public void StandUp()
 	{
 		timeLastSat = 0;
-		sittingPlayer.EnableHideInFirstPerson = true;
+		SittingPlayer.EnableHideInFirstPerson = true;
 
-		sittingPlayer.LocalPosition = Vector3.Up * 10 + LocalRotation.Forward * 35;
-		sittingPlayer.Parent = null;
-		sittingPlayer.PhysicsBody.Enabled = true;
+		SittingPlayer.SetAnimParameter( "sit", 0 );
 
-		sittingPlayer.Client.Pawn = sittingPlayer;
-		sittingPlayer.SitProp = null;
-		sittingPlayer = null;
+		SittingPlayer.LocalPosition = Vector3.Up * 10 + LocalRotation.Forward * 35;
+		SittingPlayer.Parent = null;
+		SittingPlayer.PhysicsBody.Enabled = true;
+
+		SittingPlayer.Client.Pawn = SittingPlayer;
+		SittingPlayer.SitProp = null;
+		SittingPlayer = null;
 		isSittingDown = false;
 
 	}
 
 	public void SitDown( LobbyPawn player )
 	{
-		camera.SetSitter( player );
+		Camera.SetSitter( player );
 
 		player.SitProp = this;
 
 		player.Parent = this;
-		player.LocalPosition = Vector3.Up * 5;
+		player.LocalPosition = SitLocalPos;
 		player.LocalRotation = Rotation.Identity;
 		player.LocalScale = 1;
 		player.PhysicsBody.Enabled = false;
 
-		sittingPlayer = player;
+		SittingPlayer = player;
 
 		player.Client.Pawn = this;
 

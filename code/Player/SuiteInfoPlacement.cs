@@ -102,6 +102,7 @@ public partial class LobbyPawn
 
 		if ( PreviewProp.IsMovingFrom && Input.Pressed(InputButton.SecondaryAttack) && IsServer )
 		{
+
 			PHInventory.InventoryList.Add( PreviewProp );
 			UpdateClientInventory( PreviewProp.ClassName );
 

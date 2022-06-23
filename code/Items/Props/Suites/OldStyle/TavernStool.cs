@@ -7,6 +7,7 @@ using Sandbox;
 
 public partial class TavernStool : PHSittableProp
 {
+	public override Vector3 SitLocalPos => new Vector3( 0, 0, 7 );
 	public override string SuiteItemName => "Tavern Stool";
 	public override string SuiteItemDesc => "A tavern stool for guests to sit";
 	public override string SuiteItemImage => "ui/ph_icon_tavernstool.png";

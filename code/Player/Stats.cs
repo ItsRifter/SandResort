@@ -31,7 +31,7 @@ public class PlayerData : IPlayerStat
 	public List<SuitePropInfo> SuiteProps { get; set; }
 }
 
-public partial class LobbyPawn
+public partial class BasePawn
 {
 	public string PlayerName { get => Client.Name; }
 

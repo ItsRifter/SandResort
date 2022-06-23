@@ -86,7 +86,7 @@ public class Poker : ModelEntity
  		//If this player is joining, seat them and let them play
 		if ( !CurPlayers.Contains(player) )
 		{
-			pokerChairs.First( x => x.sittingPlayer == null ).SitDown(player);
+			pokerChairs.First( x => x.SittingPlayer == null ).SitDown(player);
 			CurPlayers.Add( player );
 			return;
 		}

@@ -4,26 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 
 
-public partial class LobbyPawn : Player
+public partial class LobbyPawn : BasePawn
 {
-	[Net, Predicted]
-	public IList<Entity> ActiveChildren { get; set; }
-
 	[Net]
 	public Entity InteractNPC { get; set; }
-
-	public PHSittableProp SitProp;
-
-	public TimeSince timeLastRespawn;
-
-	public List<AchBase> AchList;
-
-	public PHInventorySystem PHInventory;
 
 	public float Drunkiness;
 	public TimeSince TimeLastDrank;
 
-	public List<AchBase> AchChecker;
+	public PHSittableProp SitProp;
+
+	public TimeSince timeLastRespawn;
 
 	TimeSince timeTillSober;
 
@@ -31,9 +22,6 @@ public partial class LobbyPawn : Player
 	TimeSince timeLastDied;
 
 	DamageInfo lastDMGInfo;
-
-	bool UpdateViewAngle;
-	Angles UpdatedViewAngle;
 
 	public LobbyPawn()
 	{
@@ -91,7 +79,6 @@ public partial class LobbyPawn : Player
 
 		SetInteractsAs( CollisionLayer.Player );
 		SetInteractsExclude( CollisionLayer.Player );
-		SetInteractsWith( CollisionLayer.Trigger | CollisionLayer.Water | CollisionLayer.Solid );
 	}
 
 	public override void Respawn()
@@ -100,7 +87,6 @@ public partial class LobbyPawn : Player
 
 		SetInteractsAs( CollisionLayer.Player );
 		SetInteractsExclude( CollisionLayer.Player );
-		SetInteractsWith( CollisionLayer.Trigger | CollisionLayer.Water | CollisionLayer.Solid );
 
 		CameraMode = new FirstPersonCamera();
 
@@ -126,33 +112,6 @@ public partial class LobbyPawn : Player
 
 		if ( ActiveChildren == null )
 			ActiveChildren = new List<Entity>();
-	}
-
-	[ClientRpc]
-	public void SetMousePosition(Vector2 pos)
-	{
-
-		
-
-	}
-
-	//Thanks Crayz
-	[ClientRpc]
-	public void SetViewAngles( Angles angles )
-	{
-		UpdateViewAngle = true;
-		UpdatedViewAngle = angles;
-	}
-
-	public override void BuildInput( InputBuilder input )
-	{
-		base.BuildInput( input );
-
-		if ( UpdateViewAngle )
-		{
-			UpdateViewAngle = false;
-			input.ViewAngles = UpdatedViewAngle;
-		}
 	}
 
 	//Simulation on both server and client
@@ -362,90 +321,5 @@ public partial class LobbyPawn : Player
 	public override void FrameSimulate( Client cl )
 	{
 		base.FrameSimulate( cl );
-	}
-
-	public void CheckOrUpdateAchievement(string achievement, string className)
-	{
-		if ( AchList.FirstOrDefault( x => x.AchName == achievement ) == null )
-		{
-			if ( AchChecker.FirstOrDefault( x => x.AchName == achievement ) == null )
-				AchChecker.Add( TypeLibrary.Create<AchBase>( className ) );
-		}
-
-		var achUpdate = AchChecker.FirstOrDefault( x => x.AchName == achievement ) ?? null;
-
-		if ( achUpdate != null && !achUpdate.HasCompleted )
-		{
-			AchChecker.First( x => x.AchName == achievement ).UpdateAchievement( this );
-		}
-	}
-
-	public override void OnAnimEventFootstep( Vector3 pos, int foot, float volume )
-	{
-		if(IsServer)
-		{
-			CheckOrUpdateAchievement( "Walk Marathon", "WalkMarathon" );
-		}
-
-		base.OnAnimEventFootstep( pos, foot, volume * 10 );
-	}
-
-	//Creates a player ragdoll with clothing (if any) at force with bone index
-	[ClientRpc]
-	public void CreatePlayerRagdoll( Vector3 force, int forceBone )
-	{
-		var ent = new ModelEntity();
-		ent.Position = Position;
-		ent.Rotation = Rotation;
-		ent.MoveType = MoveType.Physics;
-		ent.UsePhysicsCollision = true;
-		ent.SetInteractsAs( CollisionLayer.Debris );
-		ent.SetInteractsWith( CollisionLayer.WORLD_GEOMETRY );
-		ent.SetInteractsExclude( CollisionLayer.Player | CollisionLayer.Debris );
-
-		ent.CopyFrom( this );
-		ent.CopyBonesFrom( this );
-		ent.SetRagdollVelocityFrom( this );
-
-		// Copy the clothes over
-		foreach ( var child in Children )
-		{
-			if ( !child.Tags.Has( "clothes" ) )
-				continue;
-
-			if ( child is ModelEntity e )
-			{
-				var clothing = new ModelEntity();
-				clothing.CopyFrom( e );
-				clothing.SetParent( ent, true );
-			}
-		}
-
-		ent.PhysicsGroup.AddVelocity( force );
-
-		if ( forceBone >= 0 )
-		{
-			var body = ent.GetBonePhysicsBody( forceBone );
-			if ( body != null )
-			{
-				body.ApplyForce( force * 1000 );
-			}
-			else
-			{
-				ent.PhysicsGroup.AddVelocity( force );
-			}
-		}
-
-		Corpse = ent;
-	}
-
-	[ClientRpc]
-	public void DestroyCorpse()
-	{
-		if ( !Corpse.IsValid() )
-			return;
-
-		Corpse.Delete();
-		Corpse = null;
 	}
 }

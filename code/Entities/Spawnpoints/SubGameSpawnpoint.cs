@@ -11,7 +11,7 @@ using SandboxEditor;
 [EditorModel( "models/dev/playerstart_tint.vmdl" )]
 [RenderFields]
 [HammerEntity]
-public class SubGameSpawnpoint : Entity
+public class SubGameSpawnpoint : ModelEntity
 {
 	public enum SubGameSpawn
 	{
@@ -21,5 +21,13 @@ public class SubGameSpawnpoint : Entity
 
 	[Property]
 	public SubGameSpawn SubSpawn { get; set; } = SubGameSpawn.Unspecified;
+
+	public override void Spawn()
+	{
+		SetModel( "models/dev/playerstart_tint.vmdl" );
+
+		EnableDrawing = false;
+		SetInteractsExclude(CollisionLayer.Player | CollisionLayer.Solid | CollisionLayer.Debris);
+	}
 }
 

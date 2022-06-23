@@ -16,11 +16,14 @@ using SandboxEditor;
 public class SubGameEnt : BaseTrigger
 {
 	public List<SubGameSpawnpoint> Spawnpoints;
-	public List<ModelEntity> Models;
-	public List<BrushEntity> BaseArea;
+	public List<(string modelName, Vector3 pos, Rotation rot)> Models;
+	public List<SubGameBounds> Boundaries;
+	public List<BrushEntity> Brushes;
 
 	//bool isActive = false;
 	bool hasSpawned = false;
+
+	TimeSince timeSpawned;
 
 	public enum SubGameArea
 	{
@@ -31,37 +34,54 @@ public class SubGameEnt : BaseTrigger
 	[Property]
 	public SubGameArea SubGameArena { get; set; } = SubGameArea.Unspecified;
 
-	[Property, Description("Name of this area so this will be the one to be correctly loaded in")]
+	[Property, Description("Name of this area so this will be the one to be correctly loaded in after map selection")]
 	public string AreaName { get; set; } = "";
 
 	public override void Spawn()
 	{
 		base.Spawn();
 
+		timeSpawned = 0;
+
 		Spawnpoints = new List<SubGameSpawnpoint>();
-		Models = new List<ModelEntity>();
-		BaseArea = new List<BrushEntity>();
+		Models = new List<(string modelName, Vector3 pos, Rotation rot)>();
+		Brushes = new List<BrushEntity>();
+		Boundaries = new List<SubGameBounds>();
 	}
 
 	[Event.Tick.Server]
 	public void Test()
 	{
-		
+		if ( timeSpawned < 3.0f )
+			return;
+
 		if ( hasSpawned )
 			return;
 
 		foreach ( var entity in FindInBox( WorldSpaceBounds ) )
 		{
 			if ( entity is SubGameSpawnpoint spawn )
+			{
 				Spawnpoints.Add( spawn );
+				continue;
+			}
 
-			if ( entity is ModelEntity model && entity is not BrushEntity )
-				Models.Add( model );
+			if ( entity is Prop model )
+				Models.Add( (model.GetModelName(), model.Position, model.Rotation) );
+			
 
 			if ( entity is BrushEntity brush )
 			{
-				BaseArea.Add( brush );
+				Brushes.Add( brush );
 				brush.Enabled = false;
+				continue;
+			}
+
+			if(entity is SubGameBounds bounds)
+			{
+				Boundaries.Add( bounds );
+				bounds.EnableDrawing = false;
+				bounds.PhysicsClear();
 				continue;
 			}
 
@@ -71,8 +91,39 @@ public class SubGameEnt : BaseTrigger
 		hasSpawned = true;
 	}
 
+	[ConCmd.Server("ph_subgame_test")]
+	public static void LoadAreaTest(int testConduct)
+	{
+		switch(testConduct)
+		{
+			case 1:
+				Event.Run( "test" );
+				break;
+			case 2:
+				Event.Run( "test2" );
+				break;
+			case 3:
+				Event.Run( "test3" );
+				break;
+		}
+		
+	}
+
+
+	[Event("test")]
 	public void LoadArea()
 	{
+		foreach ( var bound in Boundaries )
+		{
+			bound.EnableDrawing = true;
+			bound.SetupPhysicsFromModel( PhysicsMotionType.Static );
+		}
+
+		foreach ( var brush in Brushes )
+		{
+			brush.Enabled = true;
+		}
+
 		foreach ( var spawn in Spawnpoints )
 		{
 			SubGameSpawnpoint newSpawn = new SubGameSpawnpoint();
@@ -83,41 +134,68 @@ public class SubGameEnt : BaseTrigger
 		foreach ( var model in Models )
 		{
 			ModelEntity newModel = new ModelEntity();
-			newModel.Position = model.Position;
-			newModel.Rotation = model.Rotation;
-			newModel.Model = model.Model;
+			newModel.SetModel( model.modelName );
+			newModel.Position = model.pos;
+			newModel.Rotation = model.rot;
 
-			Log.Info( model );
-		}
+			newModel.Spawn();
 
-		foreach ( var brush in BaseArea )
-		{
-
+			newModel.SetupPhysicsFromModel( PhysicsMotionType.Static );
 		}
 	}
 
+	[Event( "test2" )]
 	public void RestartArea()
 	{
+		foreach ( var oldProp in FindInBox( WorldSpaceBounds ) )
+		{
+			if ( oldProp is BasePawn || oldProp is BrushEntity || oldProp is SubGameBounds || oldProp is SubGameSpawnpoint)
+				continue;
+
+			Log.Info( oldProp );
+
+			if( oldProp is ModelEntity )
+			{
+				oldProp.Delete();
+			}
+		}
+
 		foreach ( var model in Models )
 		{
 			var replacement = new ModelEntity();
 
-			replacement.Position = model.Position;
-			replacement.Rotation = model.Rotation;
-			
+			replacement.SetModel( model.modelName );
+			replacement.Position = model.pos;
+			replacement.Rotation = model.rot;
+
 			replacement.Spawn();
 
-			model.Delete();
+			replacement.SetupPhysicsFromModel( PhysicsMotionType.Static );
 		}
 	}
 
+	[Event( "test3" )]
 	public void WipeAreaAndRemove()
 	{
-		foreach ( var spawn in Spawnpoints )
-			spawn.Delete();
-
-		foreach ( var brush in BaseArea )
+		foreach ( var brush in Brushes )
+		{
 			brush.Enabled = false;
+		}
+
+		foreach ( var ent in FindInBox(WorldSpaceBounds) )
+		{
+			if ( ent is BasePawn || ent is BrushEntity || ent is SubGameBounds || ent is SubGameSpawnpoint )
+				continue;
+
+			if (ent is ModelEntity model )
+				model.Delete();
+		}
+
+		foreach ( var bound in Boundaries )
+		{
+			bound.EnableDrawing = false;
+			bound.PhysicsClear();
+		}
 	}
 }
 
