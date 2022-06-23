@@ -39,6 +39,8 @@ public partial class HudTracker : Panel
 		base.Tick();
 
 		var player = Local.Pawn as LobbyPawn;
+	
+		SetClass( "active", player != null );
 
 		if ( player == null ) 
 			return;

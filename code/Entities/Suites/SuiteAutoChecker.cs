@@ -23,7 +23,6 @@ public partial class SuiteAutoChecker : TriggerMultiple
 		if(other is LobbyPawn player && player.CurSuite != null)
 		{
 			player.CurSuite.RevokeSuite( player );
-			Log.Info( $"{player.Client.Name} was automatically checked out by leaving" );
 
 			//if ( IsServer )
 			//	ConsoleSystem.Run( "ph_server_say", "You were automatically checked out of your suite", player.Client.Id );

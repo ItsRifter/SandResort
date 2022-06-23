@@ -54,26 +54,30 @@ public partial class Shop : Panel
 
 		foreach ( var buyableItem in PHGame.Instance.GetAllSuiteProps() )
 		{
-			var grabbingItem = PHGame.Instance.GrabSuiteItem( buyableItem );
+			var item = PHGame.Instance.GrabSuiteItem( buyableItem );
 			
-			if ( grabbingItem == null )
+			if ( item == null )
 				continue;
 
-			var item = grabbingItem.First();
-
-			if ( shopType.FullName == "BarShop" && item.Item4 != PHSuiteProps.ShopType.Bar )
+			if ( shopType.FullName == "BarShop" && item.ShopSeller != PHSuiteProps.ShopType.Bar )
 				continue;
-			else if ( shopType.FullName == "FurnitureShop" && item.Item4 != PHSuiteProps.ShopType.Furniture )
+			else if ( shopType.FullName == "FurnitureShop" && item.ShopSeller != PHSuiteProps.ShopType.Furniture )
 				continue;
-			else if ( shopType.FullName == "ElectricShop" && item.Item4 != PHSuiteProps.ShopType.Electric )
+			else if ( shopType.FullName == "ElectricShop" && item.ShopSeller != PHSuiteProps.ShopType.Electric )
 				continue;
 
 			Panel itemPnl = ShopItems.Add.Panel( "shop-item" );
-			
+
+			Panel itemImg = itemPnl.Add.Panel("shop-item-img");
+
+			itemImg.Style.SetBackgroundImage( item.SuiteItemImage );
+
 			Panel info = itemPnl.Add.Panel( "shop-info" );
-			info.Add.Label( $"{item.Item1} - {item.Item3:C0}", "shop-item-title" );
-			info.Add.Label( item.Item2, "shop-item-description" );
-			
+			info.Add.Label( $"{item.SuiteItemName} - {item.SuiteItemCost:C0}", "shop-item-title" );
+			info.Add.Label( item.SuiteItemDesc, "shop-item-description" );
+
+			item.Delete();
+
 			itemPnl.AddEventListener( "onclick", () =>
 			{
 				PurchaseItem(buyableItem);

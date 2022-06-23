@@ -75,19 +75,13 @@ public partial class PHGame : Game
 			new PHHud();
 	}
 
-	public List<(string, string, int, PHSuiteProps.ShopType)> GrabSuiteItem( string itemToGrab )
+	public PHSuiteProps GrabSuiteItem( string itemToGrab )
 	{
-		var grabbedItem = new List<(string, string, int, PHSuiteProps.ShopType)>();
 		var prop = TypeLibrary.Create<PHSuiteProps>( itemToGrab );
 
-		if ( prop == null )
-			return null;
+		prop.DeleteAsync(1.0f);
 
-		grabbedItem.Add((prop.SuiteItemName, prop.SuiteItemDesc, prop.SuiteItemCost, prop.ShopSeller));
-
-		prop.Delete();
-
-		return grabbedItem;
+		return prop;
 	}
 
 	public IList<string> GetAllSuiteProps()

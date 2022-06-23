@@ -17,6 +17,14 @@ public partial class AchBase
 
 	public bool HasCompleted = false;
 
+	public enum AchType
+	{
+		Lobby,
+		MondayMassacre
+	}
+
+	public virtual AchType AchievementType => AchType.Lobby;
+
 	public virtual List<Entity> AchItemRewards => new List<Entity>()
 	{
 		//Add class items here

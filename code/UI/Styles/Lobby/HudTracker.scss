@@ -11,6 +11,11 @@
     color: white;
     text-shadow: 2px, 4px, 0px, 0px, black;
     //background: linear-gradient(to right, #049DC4, #049DC400);
+    opacity: 0;
+
+    &.active {
+        opacity: 1;
+    }
 
     .gradiant-coins {
         padding: 20px;

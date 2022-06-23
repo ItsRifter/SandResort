@@ -25,10 +25,8 @@ public partial class BasePawn : Player
 	{
 	}
 
-	public override void Spawn()
+	public void SetUpPlayer()
 	{
-		base.Spawn();
-
 		SetModel( "models/citizen/citizen.vmdl" );
 
 		//Temporary, should have a custom camera
@@ -43,24 +41,21 @@ public partial class BasePawn : Player
 		EnableHideInFirstPerson = true;
 		EnableShadowInFirstPerson = true;
 
-		if( AchList == null )
+		if ( AchList == null )
 			AchList = new List<AchBase>();
 
 		if ( AchChecker == null )
 			AchChecker = new List<AchBase>();
+	}
+
+	public override void Spawn()
+	{
+		base.Spawn();
+
+		SetUpPlayer();
 
 		//Use the base player respawn, NOT the respawn in this class
-		Host.AssertServer();
-
-		LifeState = LifeState.Alive;
-		Health = 100;
-		Velocity = Vector3.Zero;
-		WaterLevel = 0;
-
-		CreateHull();
-
-		PHGame.Instance?.MoveToSpawnpoint( this );
-		ResetInterpolation();
+		base.Respawn();
 
 		SetInteractsAs( CollisionLayer.Player );
 		SetInteractsExclude( CollisionLayer.Player );
@@ -73,10 +68,7 @@ public partial class BasePawn : Player
 		SetInteractsAs( CollisionLayer.Player );
 		SetInteractsExclude( CollisionLayer.Player );
 
-		CameraMode = new FirstPersonCamera();
-
-		EnableAllCollisions = true;
-		EnableDrawing = true;
+		SetUpPlayer();
 
 		//Deletes the corpse if valid
 		DestroyCorpse(To.Everyone);
