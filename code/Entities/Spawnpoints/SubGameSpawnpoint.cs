@@ -13,6 +13,9 @@ using SandboxEditor;
 [HammerEntity]
 public class SubGameSpawnpoint : ModelEntity
 {
+	//If its enabled, allow players in the sub-game to spawn there
+	public bool IsEnabled;
+
 	public enum SubGameSpawn
 	{
 		Unspecified,
@@ -20,12 +23,13 @@ public class SubGameSpawnpoint : ModelEntity
 	}
 
 	[Property]
-	public SubGameSpawn SubSpawn { get; set; } = SubGameSpawn.Unspecified;
+	public SubGameSpawn SubGameType { get; set; } = SubGameSpawn.Unspecified;
 
 	public override void Spawn()
 	{
 		SetModel( "models/dev/playerstart_tint.vmdl" );
 
+		IsEnabled = false;
 		EnableDrawing = false;
 		SetInteractsExclude(CollisionLayer.Player | CollisionLayer.Solid | CollisionLayer.Debris);
 	}

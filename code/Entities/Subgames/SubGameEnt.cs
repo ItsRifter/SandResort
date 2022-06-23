@@ -23,8 +23,6 @@ public class SubGameEnt : BaseTrigger
 	//bool isActive = false;
 	bool hasSpawned = false;
 
-	TimeSince timeSpawned;
-
 	public enum SubGameArea
 	{
 		Unspecified,
@@ -41,8 +39,6 @@ public class SubGameEnt : BaseTrigger
 	{
 		base.Spawn();
 
-		timeSpawned = 0;
-
 		Spawnpoints = new List<SubGameSpawnpoint>();
 		Models = new List<(string modelName, Vector3 pos, Rotation rot)>();
 		Brushes = new List<BrushEntity>();
@@ -52,9 +48,6 @@ public class SubGameEnt : BaseTrigger
 	[Event.Tick.Server]
 	public void Test()
 	{
-		if ( timeSpawned < 3.0f )
-			return;
-
 		if ( hasSpawned )
 			return;
 
@@ -126,9 +119,7 @@ public class SubGameEnt : BaseTrigger
 
 		foreach ( var spawn in Spawnpoints )
 		{
-			SubGameSpawnpoint newSpawn = new SubGameSpawnpoint();
-			newSpawn.Position = spawn.Position;
-			newSpawn.Rotation = spawn.Rotation;
+			spawn.IsEnabled = true;
 		}
 
 		foreach ( var model in Models )
@@ -151,8 +142,6 @@ public class SubGameEnt : BaseTrigger
 		{
 			if ( oldProp is BasePawn || oldProp is BrushEntity || oldProp is SubGameBounds || oldProp is SubGameSpawnpoint)
 				continue;
-
-			Log.Info( oldProp );
 
 			if( oldProp is ModelEntity )
 			{
@@ -190,6 +179,9 @@ public class SubGameEnt : BaseTrigger
 			if (ent is ModelEntity model )
 				model.Delete();
 		}
+
+		foreach ( var spawn in Spawnpoints )
+			spawn.IsEnabled = false;
 
 		foreach ( var bound in Boundaries )
 		{

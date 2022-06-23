@@ -40,62 +40,12 @@ public partial class LobbyPawn : BasePawn
 	{
 		base.Spawn();
 
-		SetModel( "models/citizen/citizen.vmdl" );
-
-		//Temporary, should have a custom camera
-		CameraMode = new FirstPersonCamera();
-
-		Animator = new StandardPlayerAnimator();
-
-		//Should we have our own walk controller?
-		Controller = new WalkController();
-
-		EnableDrawing = true;
-		EnableHideInFirstPerson = true;
-		EnableShadowInFirstPerson = true;
-
-		Tags.Add( "PH_Player" );
-
-		Drunkiness = 0.0f;
-
-		if( AchList == null )
-			AchList = new List<AchBase>();
-
-		if ( AchChecker == null )
-			AchChecker = new List<AchBase>();
-
-		//Use the base player respawn, NOT the respawn in this class
-		Host.AssertServer();
-
-		LifeState = LifeState.Alive;
-		Health = 100;
-		Velocity = Vector3.Zero;
-		WaterLevel = 0;
-
-		CreateHull();
-
-		PHGame.Instance?.MoveToSpawnpoint( this );
-		ResetInterpolation();
-
-		SetInteractsAs( CollisionLayer.Player );
-		SetInteractsExclude( CollisionLayer.Player );
 	}
 
 	public override void Respawn()
 	{
 		base.Respawn();
 
-		SetInteractsAs( CollisionLayer.Player );
-		SetInteractsExclude( CollisionLayer.Player );
-
-		CameraMode = new FirstPersonCamera();
-
-		EnableAllCollisions = true;
-		EnableDrawing = true;
-
-		//Deletes the corpse if valid
-		DestroyCorpse(To.Everyone);
-		
 		//this is temporary, just to show off glasses to admins/devs
 		if( PHGame.Instance.AdminList.Contains(Client.PlayerId ) )
 		{
@@ -300,8 +250,6 @@ public partial class LobbyPawn : BasePawn
 
 		EnableAllCollisions = false;
 		EnableDrawing = false;
-
-		CreatePlayerRagdoll( lastDMGInfo.Force, lastDMGInfo.BoneIndex );
 
 		if(CurSuite != null)
 		{

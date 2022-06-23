@@ -11,7 +11,7 @@ public partial class PHGame
 	[Net]
 	public IList<long> AdminList { get; protected set; }
 
-	static float eyeDist = 150.0f;
+	static readonly float eyeDist = 150.0f;
 
 	[ConCmd.Server( "ph_coins_give" )]
 	public static void AdminGiveCoins( int amount, string target = "" )
@@ -243,7 +243,7 @@ public partial class PHGame
 		if ( caller == null )
 			return;
 
-		if (string.IsNullOrEmpty(target))
+		if ( string.IsNullOrEmpty( target ) )
 		{
 			Instance.CommitSave( caller );
 		}
@@ -323,7 +323,7 @@ public partial class PHGame
 		}
 	}
 
-	[ConCmd.Server("ph_bringplayer")]
+	[ConCmd.Server( "ph_bringplayer" )]
 	public static void AdminBringPlayer( string target = "" )
 	{
 		var caller = ConsoleSystem.Caller;
@@ -357,7 +357,7 @@ public partial class PHGame
 
 			if ( targetPlayer != null )
 			{
-				if( targetPlayer.LifeState == LifeState.Dead)
+				if ( targetPlayer.LifeState == LifeState.Dead )
 				{
 					Log.Error( "that player is dead" );
 					return;
@@ -368,7 +368,7 @@ public partial class PHGame
 					.Ignore( caller.Pawn )
 					.Run();
 
-				using (Prediction.Off())
+				using ( Prediction.Off() )
 					targetPlayer.Position = tr.EndPosition;
 
 				Log.Info( $"{caller.Name} brought {targetPlayer.Client.Name} to them" );
@@ -378,5 +378,41 @@ public partial class PHGame
 				Log.Error( "No target found" );
 			}
 		}
+	}
+
+	[ConCmd.Server( "ph_test_setpawn" )]
+	public static void AdminSetPawn( string pawnType )
+	{
+		if ( Instance.AdminList == null || !Instance.AdminList.Contains( ConsoleSystem.Caller.PlayerId ) )
+		{
+			Log.Error( "You do not have access to this command" );
+			return;
+		}
+
+		var caller = ConsoleSystem.Caller;
+
+		if ( caller == null )
+			return;
+
+		if ( pawnType.ToLower() == "lobbypawn" )
+		{
+			caller.Pawn.Delete();
+			caller.Pawn = null;
+			caller.Pawn = new LobbyPawn();
+			caller.Pawn.Spawn();
+
+			Log.Info( $"{caller.Name} set their pawn to Lobby" );
+		}
+
+		if (pawnType.ToLower() == "mmpawn")
+		{
+			caller.Pawn.Delete();
+			caller.Pawn = null;
+			caller.Pawn = new MMPawn();
+			caller.Pawn.Spawn();
+
+			Log.Info( $"{caller.Name} set their pawn to Monday Massacre" );
+		}
+
 	}
 }
