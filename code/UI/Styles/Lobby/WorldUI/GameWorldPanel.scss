@@ -1,7 +1,215 @@
 ﻿gameworldpanel {
     color: black;
-    background-color: white;
     font-size: 48px;
-    width: 150px;
-    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255,0,0,0.3);
+
+    .subgame {
+        min-height: 500px;
+        margin: auto;
+        flex-direction: column;
+
+        .subgame-header {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
+            min-width: 50px;
+            min-height: 100px;
+            margin-bottom: 15px;
+            overflow: hidden;
+
+            .subgame-img {
+                min-width: 400px;
+                background-image: url(ui/alex.jpg);
+                background-position: center;
+                background-size: cover;
+                align-items: center;
+                padding-left: 32px;
+                color: white;
+
+            }
+            .gametitle {
+                text-shadow: 4px 4px 1px rgba(0,0,0,0.6)
+            }
+
+            .starting-status {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                padding: 0px 32px;
+                position: relative;
+
+                .status {
+                    padding: 8px 24px;
+                    font-size: 32px;
+                    background-color: red;
+                    border-radius: 4px;
+                    margin-right: 12px;
+                    min-width: 170px;
+                    justify-content: center;
+                }
+
+                .statusCurrent {
+                    transform: translateY(24px);
+                    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+                }
+            }
+        }
+
+        .subgame-status {
+            font-size: 34px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .queue {
+            flex-direction: column;
+            border-radius: 8px;
+            margin-right: 25px;
+            box-shadow: 0px 4px 8px rgb(0 0 0 / 40%);
+            //width: fit-content;
+            min-width: 650px;
+            max-width: 650px;
+            padding: 12px;
+
+            .players-status {
+                display: flex;
+                background-color: red;
+                justify-content: space-between;
+                box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.4);
+                border-radius: 4px;
+                margin-bottom: 12px;
+                padding: 8px;
+            }
+
+            .players {
+                flex-direction: column;
+                flex-wrap: wrap;
+                align-items: stretch;
+
+                .player {
+                    padding: 12px;
+                    flex-direction: row;
+                    align-items: center;
+                    background-color: #2C5768;
+                    border: 2px solid #2CA9C2;
+                    border-radius: 4px;
+                    margin-bottom: 8px;
+                    font-size: 24px;
+                }
+
+                .pfp {
+                    border-radius: 36px;
+                    border: 2px solid #2CA9C2;
+                    width: 35px;
+                    height: 35px;
+                    background-position: center;
+                    background-size: cover;
+                    margin-right: 12px;
+                }
+            }
+        }
+
+        .gameStatus {
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            justify-items: stretch;
+            box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.4);
+            border-radius: 4px;
+            padding: 8px;
+            min-width: 600px;
+            max-width: 600px;
+
+
+            .gameInfo {
+                width: 100%;
+                padding: 12px;
+                flex-direction: column;
+            }
+
+            .inGame {
+                display: none;
+                width: 100%;
+                padding: 12px;
+                background-color: orange;
+            }
+        }
+    }
+    /* COLORS */
+    /* GREEN */
+    .colorsGreen {
+        .subgame-header {
+            background-color: #249752;
+
+            .starting-status {
+                background-color: #128540;
+                border-left: 3px solid #17733c;
+
+                .status {
+                    background-color: #26A559;
+                }
+
+                .statusCurrent {
+                    background-color: #2CC268;
+                }
+            }
+        }
+
+        .queue {
+            color: white;
+            background-color: #219C52;
+
+            .players-status {
+                background-color: #1E8F4B;
+                border: 2px solid #1C8747;
+            }
+        }
+
+        .gameStatus {
+            color: white;
+            background-color: #128540;
+        }
+    }
+    /* BLUE */
+    .colorsBlue {
+        .subgame-header {
+            background-color: #2C5768;
+
+            .starting-status {
+                background-color: #21424F;
+                border-left: 3px solid #12323e;
+                color: white;
+
+                .status {
+                    color: white;
+                    background-color: #21424F;
+                }
+
+                .statusCurrent {
+                    background-color: #2e6e87;
+                }
+            }
+
+            .queue {
+                color: white;
+                background-color: #2C5768;
+
+                .players-status {
+                    background-color: #2e6e87;
+                    border: 2px solid #2B5B6E;
+                }
+            }
+
+            .gameStatus {
+                color: white;
+                background-color: #21424F;
+            }
+        }
+    }
 }

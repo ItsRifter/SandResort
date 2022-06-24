@@ -43,13 +43,6 @@ public class SubGameEnt : BaseTrigger
 		Models = new List<(string modelName, Vector3 pos, Rotation rot)>();
 		Brushes = new List<BrushEntity>();
 		Boundaries = new List<SubGameBounds>();
-	}
-
-	[Event.Tick.Server]
-	public void Test()
-	{
-		if ( hasSpawned )
-			return;
 
 		foreach ( var entity in FindInBox( WorldSpaceBounds ) )
 		{
@@ -61,7 +54,6 @@ public class SubGameEnt : BaseTrigger
 
 			if ( entity is Prop model )
 				Models.Add( (model.GetModelName(), model.Position, model.Rotation) );
-			
 
 			if ( entity is BrushEntity brush )
 			{
@@ -70,7 +62,7 @@ public class SubGameEnt : BaseTrigger
 				continue;
 			}
 
-			if(entity is SubGameBounds bounds)
+			if ( entity is SubGameBounds bounds )
 			{
 				Boundaries.Add( bounds );
 				bounds.EnableDrawing = false;
@@ -80,10 +72,19 @@ public class SubGameEnt : BaseTrigger
 
 			entity.Delete();
 		}
+	}
+
+	[Event.Tick.Server]
+	public void GatherWithinBoundaries()
+	{
+		if ( hasSpawned )
+			return;
+
 
 		hasSpawned = true;
 	}
 
+	//TEMPORARY
 	[ConCmd.Server("ph_subgame_test")]
 	public static void LoadAreaTest(int testConduct)
 	{

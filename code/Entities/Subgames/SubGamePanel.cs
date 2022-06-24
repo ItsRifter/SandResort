@@ -40,6 +40,17 @@ public class SubGamePanel : Entity
 
 		gamePanel = new GameWorldPanel();
 
+		switch(GameType)
+		{
+			case SubGameType.Unspecified:
+				gamePanel.GameName = "Unknown Game, blame the map maker";
+				break;
+			case SubGameType.Monday_Massacre:
+				gamePanel.GameName = "Monday Massacre";
+				break;
+		}
+		
+
 		gamePanel.Position = Position;
 		gamePanel.Rotation = Rotation;
 
