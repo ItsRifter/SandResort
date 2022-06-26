@@ -98,7 +98,7 @@ public partial class PHGame
 			PlayCoins = pawn.PlayCoins,
 			InventoryItems = pawn.PHInventory.GetAllItemsString(),
 			Achievements = achDataList,
-			SuiteProps = dataProps
+			SuiteProps = dataProps ?? new List<SuitePropInfo>()
 		};
 
 		FileSystem.Data.WriteJson( $"{cl.PlayerId}.json", saveData );
@@ -114,7 +114,7 @@ public partial class PHGame
 		if ( data == null )
 			return false;
 
-		if ( data.SuiteProps == null )
+		if ( data.SuiteProps is null )
 			return false;
 
 		if ( cl.Pawn is not LobbyPawn pawn )

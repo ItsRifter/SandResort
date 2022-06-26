@@ -61,14 +61,6 @@ public partial class PHGame : Game
 			};
 
 			ResetSuitePropsList();
-
-			foreach ( Client cl in Client.All)
-			{
-				if ( cl.Pawn is LobbyPawn player )
-					player.CreateClientInventory();
-				
-				LoadSave( cl );	
-			}
 		}
 
 		if ( IsClient )
