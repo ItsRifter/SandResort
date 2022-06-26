@@ -9,15 +9,11 @@ using Sandbox.UI.Construct;
 
 public partial class GameWorldPanel : WorldPanel
 {
-	public bool Interacted;
-
 	public List<string> PlayerInQueue;
 
-	public List<Label> PlayerPanels;
-
-	public TraceResult RayResult;
-
-	public BBox TriggerBox;
+	public Ray Raycast;
+	public bool HasInteracted;
+	public Client PlayerClient;
 
 	public string GameName = "Missing Name";
 	public string GameDescription = "Missing Description";
@@ -33,15 +29,14 @@ public partial class GameWorldPanel : WorldPanel
 
 	public Panel GameStatus_Waiting;
 	public Panel GameStatus_InGame;
-
+	public Panel PlayerList;
 	public GameWorldPanel()
 	{
-		PanelBounds = new Rect(-500, -500, 5000, 3000);
+		PanelBounds = new Rect(-500, -500, 3500, 2000);
 
 		StyleSheet.Load( "UI/Styles/Lobby/WorldUI/GameWorldPanel.scss" );
 
 		PlayerInQueue = new List<string>();
-		PlayerPanels = new List<Label>();
 
 		SubGamePanel = Add.Panel("subgame");
 		SubGamePanel.SetClass( "colorsGreen", true );
@@ -70,9 +65,9 @@ public partial class GameWorldPanel : WorldPanel
 		Panel PlayersStatus = Queue.Add.Panel("players-status");
 		PlayersStatus.Add.Label( "Queue", "text" );
 		Label PlayersStatus_queuePlayerCount = PlayersStatus.Add.Label( "??/?? Players", "text" );
-		Panel PlayersList = Queue.Add.Panel("players");
+		PlayerList = Queue.Add.Panel("players");
 
-		for( int i = 0; i < 10; i++ )
+		/*for( int i = 0; i < 10; i++ )
 		{
 			Panel user = Add.Panel( "player" );
 			Panel pfp = user.Add.Panel( "pfp" );
@@ -81,47 +76,63 @@ public partial class GameWorldPanel : WorldPanel
 			pfp.Style.BackgroundImage = Texture.Load( "ui/alex.jpg" );
 
 			PlayersList.AddChild( user );
-		}
+		}*/
+
 		// GAME STATUS
 		Panel GameStatus = subGamePanelStatus.Add.Panel("gameStatus");
 
 		// NOT IN GAME STATUS
 		GameStatus_Waiting = GameStatus.Add.Panel("GameInfo");
-		GameStatus_Waiting.Add.Label("Description", "text");
-		GameStatus_Waiting.Add.Label( GameDescription , "text");
+		Panel panel_description = GameStatus_Waiting.Add.Panel( "desc" );
+		panel_description.Add.Label("Description", "text");
+		panel_description.Add.Label( GameDescription , "text");
+		Panel GameStatus_Waiting_player = GameStatus_Waiting.Add.Panel( "countdown" );
+		GameStatus_Waiting_player.Add.Panel( "bar" );
+		Label GameStatus_barText = GameStatus_Waiting_player.Add.Label("??? Players required to start", "barText");
 		// IN GAME STATUS
 		GameStatus_InGame = GameStatus.Add.Panel("inGame");
 
-		Interacted = false;
+		HasInteracted = false;
 	}
 
 	public override void Tick()
 	{
 		base.Tick();
 
+		if(HasInteracted && PlayerClient != null)
+		{
+			UpdateQueue( PlayerClient );
+		}
 	}
 
-	public void UpdateQueue(string playerName)
+	public void UpdateQueue(Client client)
 	{
-		if ( PlayerInQueue == null)
-			PlayerInQueue = new List<string>();
-
-		if( PlayerPanels == null )
-			PlayerPanels = new List<Label>();
-
-		if ( PlayerInQueue.Contains( playerName ) )
+		if ( PlayerInQueue.Contains( client.Name ) )
 		{
-			Label newPlayer = Add.Label( playerName );
+			PlayerInQueue.Remove( client.Name );
 
-			PlayerInQueue.Remove( playerName );
-
-			PlayerPanels.Add(newPlayer);
+			foreach ( var panel in PlayerList.Children )
+			{
+				if ( panel is Label label && label.Text.Contains(client.Name) )
+				{
+					Log.Info( $"{client.Name} removed from queue" );
+					panel.Delete();
+					break;
+				}
+			}
 		}
 		else
 		{
-			PlayerInQueue.Add( playerName );
-			PlayerPanels.Find(x => x.Text == playerName).Delete();
-		}
+			Panel player = Add.Panel( "player" );
+			Panel pfp = player.Add.Panel( "pfp" );
+			Label user = player.Add.Label( client.Name , "name" );
 
+			pfp.Style.BackgroundImage = Texture.Load( "ui/alex.jpg" );
+
+			PlayerList.AddChild( player );
+
+			PlayerInQueue.Add( client.Name );
+			Log.Info( $"{client.Name} added to queue" );
+		}
 	}
 }

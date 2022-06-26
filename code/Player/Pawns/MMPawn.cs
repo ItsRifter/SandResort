@@ -7,9 +7,10 @@ using Sandbox;
 
 public partial class MMPawn : BasePawn
 {
-	TimeSince timeDied;
 
 	public PHInventorySystem MMInventory;
+
+	TimeSince timeDied;
 
 	public MMPawn()
 	{

@@ -51,6 +51,37 @@ public partial class PHGame
 		boughtItem.Delete();
 	}
 
+	[ConCmd.Server( "ph_sell_item" )]
+	public static void SellItem( string item, int plyID )
+	{
+		Host.AssertServer();
+
+		var buyer = ConsoleSystem.Caller.Pawn as LobbyPawn;
+
+		if ( buyer == null )
+			return;
+
+		if ( buyer.Client.NetworkIdent != plyID )
+			return;
+
+		var sellingItem = buyer.PHInventory.InventoryList.Find( x => x.Name == item ) as PHSuiteProps;
+
+		if ( sellingItem == null )
+		{
+			Log.Error( $"Something went wrong selling -{item}-" );
+			return;
+		}
+
+		buyer.GiveCoins( MathX.CeilToInt(sellingItem.SuiteItemCost / 3) );
+
+		//We need a selling sound
+		buyer.PlaySound( "buy_item" );
+
+		buyer.PHInventory.InventoryList.Find( x => x.Name == item ).Delete();
+
+		sellingItem.Delete();
+	}
+
 	[ConCmd.Server( "ph_drag_item" )]
 	public static void DragItem( string dragName, string dragClass )
 	{

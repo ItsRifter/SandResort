@@ -70,18 +70,18 @@ public partial class Inventory : Panel
 	
 		int index = 0;
 		
-		foreach ( var item in player.PHInventory.ClientInventory )
+		foreach ( var itemName in player.PHInventory.ClientInventory )
 		{
-			var createItem = TypeLibrary.Create<PHSuiteProps>( item );
+			var item = TypeLibrary.Create<PHSuiteProps>( itemName );
 
-			MainBag.GetChild( index ).Style.SetBackgroundImage( createItem.SuiteItemImage );
+			MainBag.GetChild( index ).Style.SetBackgroundImage( item.SuiteItemImage );
 
 			MainBag.GetChild( index ).AddEventListener( "onclick", () =>
 			{
-				DragItem( createItem.ClassName );
+				DragItem( item.ClassName );
 			} );
 
-			createItem.Delete();
+			item.Delete();
 
 			index++;
 		}

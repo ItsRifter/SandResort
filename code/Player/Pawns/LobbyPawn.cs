@@ -23,6 +23,8 @@ public partial class LobbyPawn : BasePawn
 
 	DamageInfo lastDMGInfo;
 
+	GameWorldPanel subGameInput;
+
 	public LobbyPawn()
 	{
 		PHInventory = new PHInventorySystem(this);
@@ -30,16 +32,9 @@ public partial class LobbyPawn : BasePawn
 		CurPlayers = new List<LobbyPawn>();
 	}
 
-	public void Test(TeleDest test)
-	{
-		Transform = test.Transform;
-		EyePosition = test.Rotation.Forward;
-	}
-
 	public override void Spawn()
 	{
 		base.Spawn();
-
 	}
 
 	public override void Respawn()
@@ -265,9 +260,12 @@ public partial class LobbyPawn : BasePawn
 		timeLastDied = 0;
 	}
 
-	//Frame simulated on the client
-	public override void FrameSimulate( Client cl )
+	public override void BuildInput( InputBuilder input )
 	{
-		base.FrameSimulate( cl );
+		base.BuildInput( input );
+/*
+		subGameInput.Raycast = new Ray( EyePosition, EyeRotation.Forward );
+		subGameInput.HasInteracted = input.Pressed( InputButton.Use );
+		subGameInput.PlayerClient = Client ?? null;*/
 	}
 }
