@@ -17,6 +17,8 @@ public partial class GameWorldPanel : WorldPanel
 
 	public string GameName = "Missing Name";
 	public string GameDescription = "Missing Description";
+	public Label GameCurrentMapName;
+	public Panel GameCurrentMapIcon;
 
 	public Panel SubGamePanel;
 	public Panel SubGameBGImage;
@@ -32,6 +34,7 @@ public partial class GameWorldPanel : WorldPanel
 	public Panel PlayerList;
 	public GameWorldPanel()
 	{
+		// ! ALL UI WILL BE UPDATED IN THE FUTURE ! // INTERFACE ICELANDIC //
 		PanelBounds = new Rect(-500, -500, 3500, 2000);
 
 		StyleSheet.Load( "UI/Styles/Lobby/WorldUI/GameWorldPanel.scss" );
@@ -89,8 +92,31 @@ public partial class GameWorldPanel : WorldPanel
 		Panel GameStatus_Waiting_player = GameStatus_Waiting.Add.Panel( "countdown" );
 		GameStatus_Waiting_player.Add.Panel( "bar" );
 		Label GameStatus_barText = GameStatus_Waiting_player.Add.Label("??? Players required to start", "barText");
+		
 		// IN GAME STATUS
+
 		GameStatus_InGame = GameStatus.Add.Panel("inGame");
+		
+		// IN GAME STATUS / GAME STATUS
+
+		Panel panel_GameStatus = GameStatus_InGame.Add.Panel("gameStatusHeader");
+		panel_GameStatus.Add.Label("Game status", "text_gameStatus");
+		Label GameStatus_rounds = panel_GameStatus.Add.Label("Round ??/??","rounds");
+		
+		// IN GAME STATUS / MAP
+
+		Panel GameStatus_currentMap = GameStatus_InGame.Add.Panel("cMap");
+		GameStatus_currentMap.Add.Label("Current map", "currentMapText");
+		Panel GameStatus_currentMap_inner = GameStatus_currentMap.Add.Panel( "map" );
+		
+		// IN GAME STATUS / MAP / NAME
+
+		Panel GameStatus_currentMap_namePanel = GameStatus_currentMap_inner.Add.Panel( "mapName" );
+		GameCurrentMapName = GameStatus_currentMap_namePanel.Add.Label( "MAP NAME GOES HERE", "text" );
+		
+		// IN GAME STATUS / MAP / ICON
+
+		GameCurrentMapIcon = GameStatus_currentMap_inner.Add.Panel("icon");
 
 		HasInteracted = false;
 	}

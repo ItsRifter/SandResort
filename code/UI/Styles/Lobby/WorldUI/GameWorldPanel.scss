@@ -1,10 +1,12 @@
-﻿gameworldpanel {
+﻿$mapIconsize: 256px;
+
+gameworldpanel {
     color: black;
     font-size: 48px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 12px solid rgba(255,0,0,1);
+    //border: 12px solid rgba(255,0,0,0.2);
 
     .subgame {
         //border: 12px solid rgba(255,255,0,0.3);
@@ -17,7 +19,7 @@
             flex-direction: row;
             justify-content: space-between;
             border-radius: 8px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
+            box-shadow: 0px 4px 8px rgb(0 0 0 / 40%);
             min-width: 50px;
             min-height: 100px;
             margin-bottom: 15px;
@@ -37,6 +39,7 @@
 
             .gametitle {
                 text-shadow: 4px 4px 1px rgba(0,0,0,0.6);
+                font-weight: 600;
             }
 
             .starting-status {
@@ -51,7 +54,7 @@
                 .status {
                     padding: 8px 24px;
                     font-size: 32px;
-                    border-radius: 4px;
+                    border-radius: 8px;
                     margin-right: 12px;
                     min-width: 170px;
                     justify-content: center;
@@ -78,6 +81,7 @@
             margin-right: 25px;
             box-shadow: 0px 4px 8px rgb(0 0 0 / 40%);
             //width: fit-content;
+            font-weight: bold;
             min-width: 650px;
             max-width: 650px;
             padding: 12px;
@@ -124,8 +128,9 @@
             justify-content: center;
             //align-items: stretch;
             //justify-items: stretch;
-            box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.4);
-            border-radius: 4px;
+            box-shadow: 0px 4px 8px rgb(0 0 0 / 40%);
+            border-radius: 8px;
+            font-weight: bold;
             padding: 8px 0px;
             min-width: 620px;
             max-width: 620px;
@@ -137,12 +142,12 @@
                 flex-direction: column;
                 align-content: space-between;
                 justify-content: space-between;
+                display: none;
 
                 .desc {
                     padding: 12px;
                     flex-direction: column;
                 }
-
 
                 .countdown {
                     min-height: 75px;
@@ -167,9 +172,82 @@
 
             .inGame {
                 display: none;
+                flex-direction: column;
                 width: 100%;
-                padding: 12px;
-                background-color: orange;
+                //padding: 12px;
+                .text {
+                    font-size: 32px;
+                    font-weight: bold;
+                }
+
+                .gameStatusHeader {
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 12px;
+                    flex-direction: row;
+
+                    .rounds {
+                        padding-right: 6px;
+                        font-size: 25px;
+                        font-weight: 600;
+                    }
+
+                    .text_gameStatus {
+                        padding-left: 6px;
+                        font-size: 32px;
+                        font-weight: 600;
+                    }
+                }
+
+                .cMap {
+                    flex-direction: column;
+                    font-weight: 600;
+                    margin: 0px 24px;
+
+                    .currentMapText {
+                        font-size: 26px;
+                        font-weight: bold;
+                    }
+
+                    .map {
+                        border-radius: 6px;
+                        flex-direction: column;
+                        background-color: #316A81;
+                        justify-content: center;
+                        align-items: center;
+                        box-shadow: 0px 3px 8px 1px rgba(0,0,0,0.5);
+                        //border: 6px solid #2C5768;
+
+                        .mapName {
+                            width: 100%;
+                            background-color: #2B5B6E;
+                            border-top-left-radius: 6px;
+                            border-top-right-radius: 6px;
+                            justify-content: center;
+                            padding: 18px 0px;
+
+                            .text {
+                                text-align: center;
+                                font-size: 26px;
+                            }
+                        }
+
+                        .icon {
+                            margin: 12px;
+                            min-width: $mapIconsize;
+                            min-height: $mapIconsize;
+                            max-width: $mapIconsize;
+                            max-height: $mapIconsize;
+                            //border: 6px solid #2C5768;
+                            background-image: url(ui/alex.jpg);
+                            background-position: center;
+                            background-size: cover;
+                            background-repeat: no-repeat border: 2px solid #2C5768;
+                            border-radius: 8px;
+                            box-shadow: 0px 3px 8px 1px rgba(0,0,0,0.8);
+                        }
+                    }
+                }
             }
         }
     }
@@ -204,6 +282,14 @@
         }
 
         .gameStatus {
+            .gameInfo {
+                display: flex;
+            }
+
+            .inGame {
+                display: none;
+            }
+
             color: white;
             background-color: #128540;
 
@@ -217,7 +303,7 @@
         }
     }
     /* BLUE */
-    .colorsBlue { // Change back
+    .colorsBlue {
         .subgame-header {
             background-color: #2C5768;
 
@@ -228,7 +314,7 @@
 
                 .status {
                     color: white;
-                    background-color: #21424F;
+                    background-color: #2B5B6E;
                 }
 
                 .statusCurrent {
@@ -248,6 +334,14 @@
         }
 
         .gameStatus {
+            .gameInfo {
+                display: none;
+            }
+
+            .inGame {
+                display: flex;
+            }
+
             color: white;
             background-color: #21424F;
 

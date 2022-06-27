@@ -22,8 +22,6 @@ public class MMPanel : SubGamePanel
 	public override void ClientSpawn()
 	{
 		base.ClientSpawn();
-
-		gamePanel.GameName = "Monday Massacre";
 	}
 
 }

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Sandbox;
 
-public class SubGamePanel : Entity
+public partial class SubGamePanel : Entity
 {
 	public enum SubGameType
 	{
@@ -15,7 +15,7 @@ public class SubGamePanel : Entity
 
 	public virtual SubGameType GameType { get; set; } = SubGameType.Unspecified;
 
-	public GameWorldPanel gamePanel;
+	public GameWorldPanel gamePanel { get; set; }
 
 	public override void Spawn()
 	{
