@@ -46,12 +46,12 @@
 				[
 					{
 						_class = "DefaultMaterialGroup"
-						name = "1"
+						name = "blank"
 						remaps = 
 						[
 							{
 								from = "pokerchip.vmat"
-								to = "materials/gamemodes/poker/pokerchips/1/pokerchip_1.vmat"
+								to = "materials/gamemodes/poker/pokerchips/blank/pokerchip_blank.vmat"
 							},
 						]
 						use_global_default = false
@@ -59,11 +59,22 @@
 					},
 					{
 						_class = "MaterialGroup"
+						name = "1"
+						remaps = 
+						[
+							{
+								from = "materials/gamemodes/poker/pokerchips/blank/pokerchip_blank.vmat"
+								to = "materials/gamemodes/poker/pokerchips/1/pokerchip_1.vmat"
+							},
+						]
+					},
+					{
+						_class = "MaterialGroup"
 						name = "5"
 						remaps = 
 						[
 							{
-								from = "materials/gamemodes/poker/pokerchips/1/pokerchip_1.vmat"
+								from = "materials/gamemodes/poker/pokerchips/blank/pokerchip_blank.vmat"
 								to = "materials/gamemodes/poker/pokerchips/5/pokerchip_5.vmat"
 							},
 						]
@@ -74,7 +85,7 @@
 						remaps = 
 						[
 							{
-								from = "materials/gamemodes/poker/pokerchips/1/pokerchip_1.vmat"
+								from = "materials/gamemodes/poker/pokerchips/blank/pokerchip_blank.vmat"
 								to = "materials/gamemodes/poker/pokerchips/10/pokerchip_10.vmat"
 							},
 						]
@@ -85,7 +96,7 @@
 						remaps = 
 						[
 							{
-								from = "materials/gamemodes/poker/pokerchips/1/pokerchip_1.vmat"
+								from = "materials/gamemodes/poker/pokerchips/blank/pokerchip_blank.vmat"
 								to = "materials/gamemodes/poker/pokerchips/20/pokerchip_20.vmat"
 							},
 						]
@@ -96,7 +107,7 @@
 						remaps = 
 						[
 							{
-								from = "materials/gamemodes/poker/pokerchips/1/pokerchip_1.vmat"
+								from = "materials/gamemodes/poker/pokerchips/blank/pokerchip_blank.vmat"
 								to = "materials/gamemodes/poker/pokerchips/50/pokerchip_50.vmat"
 							},
 						]
@@ -107,7 +118,7 @@
 						remaps = 
 						[
 							{
-								from = "materials/gamemodes/poker/pokerchips/1/pokerchip_1.vmat"
+								from = "materials/gamemodes/poker/pokerchips/blank/pokerchip_blank.vmat"
 								to = "materials/gamemodes/poker/pokerchips/100/pokerchip_100.vmat"
 							},
 						]
@@ -118,7 +129,7 @@
 						remaps = 
 						[
 							{
-								from = "materials/gamemodes/poker/pokerchips/1/pokerchip_1.vmat"
+								from = "materials/gamemodes/poker/pokerchips/blank/pokerchip_blank.vmat"
 								to = "materials/gamemodes/poker/pokerchips/200/pokerchip_200.vmat"
 							},
 						]
@@ -129,7 +140,7 @@
 						remaps = 
 						[
 							{
-								from = "materials/gamemodes/poker/pokerchips/1/pokerchip_1.vmat"
+								from = "materials/gamemodes/poker/pokerchips/blank/pokerchip_blank.vmat"
 								to = "materials/gamemodes/poker/pokerchips/500/pokerchip_500.vmat"
 							},
 						]
@@ -140,7 +151,7 @@
 						remaps = 
 						[
 							{
-								from = "materials/gamemodes/poker/pokerchips/1/pokerchip_1.vmat"
+								from = "materials/gamemodes/poker/pokerchips/blank/pokerchip_blank.vmat"
 								to = "materials/gamemodes/poker/pokerchips/1000/pokerchip_1000.vmat"
 							},
 						]
@@ -151,7 +162,7 @@
 						remaps = 
 						[
 							{
-								from = "materials/gamemodes/poker/pokerchips/1/pokerchip_1.vmat"
+								from = "materials/gamemodes/poker/pokerchips/blank/pokerchip_blank.vmat"
 								to = "materials/gamemodes/poker/pokerchips/5000/pokerchip_5000.vmat"
 							},
 						]
@@ -171,8 +182,8 @@
 						collision_interact_with = ""
 						collision_interact_exclude = ""
 						radius = 0.784477
-						point0 = [ 0.0, 0.0, -0.07614 ]
-						point1 = [ 0.0, 0.0, 0.075441 ]
+						point0 = [ 0.0, 0.0, -0.003345 ]
+						point1 = [ 0.0, 0.0, 0.150672 ]
 					},
 				]
 			},
