@@ -49,7 +49,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/spades/ace/playingcards_spade_ace.vmat"
+										to = "materials/gamemodes/poker/playingcard/spades/playingcards_spade_ace.vmat"
 									},
 								]
 							},
@@ -60,7 +60,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/spades/2/playingcards_spade_2.vmat"
+										to = "materials/gamemodes/poker/playingcard/spades/playingcards_spade_2.vmat"
 									},
 								]
 							},
@@ -71,7 +71,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/spades/3/playingcards_spade_3.vmat"
+										to = "materials/gamemodes/poker/playingcard/spades/playingcards_spade_3.vmat"
 									},
 								]
 							},
@@ -82,7 +82,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/spades/4/playingcards_spade_4.vmat"
+										to = "materials/gamemodes/poker/playingcard/spades/playingcards_spade_4.vmat"
 									},
 								]
 							},
@@ -93,7 +93,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/spades/5/playingcards_spade_5.vmat"
+										to = "materials/gamemodes/poker/playingcard/spades/playingcards_spade_5.vmat"
 									},
 								]
 							},
@@ -104,7 +104,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/spades/6/playingcards_spade_6.vmat"
+										to = "materials/gamemodes/poker/playingcard/spades/playingcards_spade_6.vmat"
 									},
 								]
 							},
@@ -115,7 +115,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/spades/7/playingcards_spade_7.vmat"
+										to = "materials/gamemodes/poker/playingcard/spades/playingcards_spade_7.vmat"
 									},
 								]
 							},
@@ -126,7 +126,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/spades/8/playingcards_spade_8.vmat"
+										to = "materials/gamemodes/poker/playingcard/spades/playingcards_spade_8.vmat"
 									},
 								]
 							},
@@ -137,7 +137,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/spades/9/playingcards_spade_9.vmat"
+										to = "materials/gamemodes/poker/playingcard/spades/playingcards_spade_9.vmat"
 									},
 								]
 							},
@@ -148,7 +148,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/spades/10/playingcards_spade_10.vmat"
+										to = "materials/gamemodes/poker/playingcard/spades/playingcards_spade_10.vmat"
 									},
 								]
 							},
@@ -159,7 +159,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/spades/joker/playingcards_spade_joker.vmat"
+										to = "materials/gamemodes/poker/playingcard/spades/playingcards_spade_joker.vmat"
 									},
 								]
 							},
@@ -170,7 +170,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/spades/queen/playingcards_spade_queen.vmat"
+										to = "materials/gamemodes/poker/playingcard/spades/playingcards_spade_queen.vmat"
 									},
 								]
 							},
@@ -181,7 +181,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/spades/king/playingcards_spade_king.vmat"
+										to = "materials/gamemodes/poker/playingcard/spades/playingcards_spade_king.vmat"
 									},
 								]
 							},
@@ -199,7 +199,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/heart/ace/playingcards_heart_ace.vmat"
+										to = "materials/gamemodes/poker/playingcard/heart/playingcards_heart_ace.vmat"
 									},
 								]
 							},
@@ -210,7 +210,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/heart/2/playingcards_heart_2.vmat"
+										to = "materials/gamemodes/poker/playingcard/heart/playingcards_heart_2.vmat"
 									},
 								]
 							},
@@ -221,7 +221,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/heart/3/playingcards_heart_3.vmat"
+										to = "materials/gamemodes/poker/playingcard/heart/playingcards_heart_3.vmat"
 									},
 								]
 							},
@@ -232,7 +232,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/heart/4/playingcards_heart_4.vmat"
+										to = "materials/gamemodes/poker/playingcard/heart/playingcards_heart_4.vmat"
 									},
 								]
 							},
@@ -243,7 +243,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/heart/5/playingcards_heart_5.vmat"
+										to = "materials/gamemodes/poker/playingcard/heart/playingcards_heart_5.vmat"
 									},
 								]
 							},
@@ -254,7 +254,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/heart/6/playingcards_heart_6.vmat"
+										to = "materials/gamemodes/poker/playingcard/heart/playingcards_heart_6.vmat"
 									},
 								]
 							},
@@ -265,7 +265,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/heart/7/playingcards_heart_7.vmat"
+										to = "materials/gamemodes/poker/playingcard/heart/playingcards_heart_7.vmat"
 									},
 								]
 							},
@@ -276,7 +276,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/heart/8/playingcards_heart_8.vmat"
+										to = "materials/gamemodes/poker/playingcard/heart/playingcards_heart_8.vmat"
 									},
 								]
 							},
@@ -287,7 +287,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/heart/9/playingcards_heart_9.vmat"
+										to = "materials/gamemodes/poker/playingcard/heart/playingcards_heart_9.vmat"
 									},
 								]
 							},
@@ -298,7 +298,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/heart/10/playingcards_heart_10.vmat"
+										to = "materials/gamemodes/poker/playingcard/heart/playingcards_heart_10.vmat"
 									},
 								]
 							},
@@ -309,7 +309,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/heart/joker/playingcards_heart_joker.vmat"
+										to = "materials/gamemodes/poker/playingcard/heart/playingcards_heart_joker.vmat"
 									},
 								]
 							},
@@ -320,7 +320,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/heart/queen/playingcards_heart_queen.vmat"
+										to = "materials/gamemodes/poker/playingcard/heart/playingcards_heart_queen.vmat"
 									},
 								]
 							},
@@ -331,7 +331,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/heart/king/playingcards_heart_king.vmat"
+										to = "materials/gamemodes/poker/playingcard/heart/playingcards_heart_king.vmat"
 									},
 								]
 							},
@@ -349,7 +349,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/diamonds/ace/playingcards_diamond_ace.vmat"
+										to = "materials/gamemodes/poker/playingcard/diamonds/playingcards_diamond_ace.vmat"
 									},
 								]
 							},
@@ -360,7 +360,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/diamonds/2/playingcards_diamond_2.vmat"
+										to = "materials/gamemodes/poker/playingcard/diamonds/playingcards_diamond_2.vmat"
 									},
 								]
 							},
@@ -371,7 +371,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/diamonds/3/playingcards_diamond_3.vmat"
+										to = "materials/gamemodes/poker/playingcard/diamonds/playingcards_diamond_3.vmat"
 									},
 								]
 							},
@@ -382,7 +382,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/diamonds/4/playingcards_diamond_4.vmat"
+										to = "materials/gamemodes/poker/playingcard/diamonds/playingcards_diamond_4.vmat"
 									},
 								]
 							},
@@ -393,7 +393,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/diamonds/5/playingcards_diamond_5.vmat"
+										to = "materials/gamemodes/poker/playingcard/diamonds/playingcards_diamond_5.vmat"
 									},
 								]
 							},
@@ -404,7 +404,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/diamonds/6/playingcards_diamond_6.vmat"
+										to = "materials/gamemodes/poker/playingcard/diamonds/playingcards_diamond_6.vmat"
 									},
 								]
 							},
@@ -415,7 +415,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/diamonds/7/playingcards_diamond_7.vmat"
+										to = "materials/gamemodes/poker/playingcard/diamonds/playingcards_diamond_7.vmat"
 									},
 								]
 							},
@@ -426,7 +426,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/diamonds/8/playingcards_diamond_8.vmat"
+										to = "materials/gamemodes/poker/playingcard/diamonds/playingcards_diamond_8.vmat"
 									},
 								]
 							},
@@ -437,7 +437,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/diamonds/9/playingcards_diamond_9.vmat"
+										to = "materials/gamemodes/poker/playingcard/diamonds/playingcards_diamond_9.vmat"
 									},
 								]
 							},
@@ -448,7 +448,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/diamonds/10/playingcards_diamond_10.vmat"
+										to = "materials/gamemodes/poker/playingcard/diamonds/playingcards_diamond_10.vmat"
 									},
 								]
 							},
@@ -459,7 +459,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/diamonds/joker/playingcards_diamond_joker.vmat"
+										to = "materials/gamemodes/poker/playingcard/diamonds/playingcards_diamond_joker.vmat"
 									},
 								]
 							},
@@ -470,7 +470,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/diamonds/queen/playingcards_diamond_queen.vmat"
+										to = "materials/gamemodes/poker/playingcard/diamonds/playingcards_diamond_queen.vmat"
 									},
 								]
 							},
@@ -481,7 +481,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/diamonds/king/playingcards_diamond_king.vmat"
+										to = "materials/gamemodes/poker/playingcard/diamonds/playingcards_diamond_king.vmat"
 									},
 								]
 							},
@@ -499,7 +499,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/clubs/ace/playingcards_club_ace.vmat"
+										to = "materials/gamemodes/poker/playingcard/clubs/playingcards_club_ace.vmat"
 									},
 								]
 							},
@@ -510,7 +510,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/clubs/2/playingcards_club_2.vmat"
+										to = "materials/gamemodes/poker/playingcard/clubs/playingcards_club_2.vmat"
 									},
 								]
 							},
@@ -521,7 +521,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/clubs/3/playingcards_club_3.vmat"
+										to = "materials/gamemodes/poker/playingcard/clubs/playingcards_club_3.vmat"
 									},
 								]
 							},
@@ -532,7 +532,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/clubs/4/playingcards_club_4.vmat"
+										to = "materials/gamemodes/poker/playingcard/clubs/playingcards_club_4.vmat"
 									},
 								]
 							},
@@ -543,7 +543,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/clubs/5/playingcards_club_5.vmat"
+										to = "materials/gamemodes/poker/playingcard/clubs/playingcards_club_5.vmat"
 									},
 								]
 							},
@@ -554,7 +554,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/clubs/6/playingcards_club_6.vmat"
+										to = "materials/gamemodes/poker/playingcard/clubs/playingcards_club_6.vmat"
 									},
 								]
 							},
@@ -565,7 +565,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/clubs/7/playingcards_club_7.vmat"
+										to = "materials/gamemodes/poker/playingcard/clubs/playingcards_club_7.vmat"
 									},
 								]
 							},
@@ -576,7 +576,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/clubs/8/playingcards_club_8.vmat"
+										to = "materials/gamemodes/poker/playingcard/clubs/playingcards_club_8.vmat"
 									},
 								]
 							},
@@ -587,7 +587,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/clubs/9/playingcards_club_9.vmat"
+										to = "materials/gamemodes/poker/playingcard/clubs/playingcards_club_9.vmat"
 									},
 								]
 							},
@@ -598,7 +598,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/clubs/10/playingcards_club_10.vmat"
+										to = "materials/gamemodes/poker/playingcard/clubs/playingcards_club_10.vmat"
 									},
 								]
 							},
@@ -609,7 +609,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/clubs/joker/playingcards_club_joker.vmat"
+										to = "materials/gamemodes/poker/playingcard/clubs/playingcards_club_joker.vmat"
 									},
 								]
 							},
@@ -620,7 +620,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/clubs/queen/playingcards_club_queen.vmat"
+										to = "materials/gamemodes/poker/playingcard/clubs/playingcards_club_queen.vmat"
 									},
 								]
 							},
@@ -631,7 +631,7 @@
 								[
 									{
 										from = "materials/gamemodes/poker/playingcard/playingcards_empty.vmat"
-										to = "materials/gamemodes/poker/playingcard/clubs/king/playingcards_club_king.vmat"
+										to = "materials/gamemodes/poker/playingcard/clubs/playingcards_club_king.vmat"
 									},
 								]
 							},
