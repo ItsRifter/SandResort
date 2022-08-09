@@ -13,7 +13,7 @@ public partial class PHGame
 
 	static readonly float eyeDist = 150.0f;
 
-	[ConCmd.Server( "ph_coins_give" )]
+	[ConCmd.Server( "sc_coins_give" )]
 	public static void AdminGiveCoins( int amount, string target = "" )
 	{
 		if ( Instance.AdminList == null || !Instance.AdminList.Contains( ConsoleSystem.Caller.PlayerId ) )
@@ -70,7 +70,7 @@ public partial class PHGame
 		}
 	}
 
-	[ConCmd.Server( "ph_coins_take" )]
+	[ConCmd.Server( "sc_coins_take" )]
 	public static void AdminTakeCoins( int amount, string target = "" )
 	{
 		if ( amount <= 0 || amount >= 10000000 )
@@ -127,7 +127,7 @@ public partial class PHGame
 		}
 	}
 
-	[ConCmd.Server( "ph_spawn_item_suite" )]
+	[ConCmd.Server( "sc_spawn_item_suite" )]
 	public static void AdminSpawnItem( string itemSuiteName )
 	{
 		if ( Instance.AdminList == null || !Instance.AdminList.Contains( ConsoleSystem.Caller.PlayerId ) )
@@ -155,7 +155,7 @@ public partial class PHGame
 		itemSuite.Spawn();
 	}
 
-	[ConCmd.Server( "ph_spawn_npc" )]
+	[ConCmd.Server( "sc_spawn_npc" )]
 	public static void AdminSpawnNPC( string npcName )
 	{
 		if ( Instance.AdminList == null || !Instance.AdminList.Contains( ConsoleSystem.Caller.PlayerId ) )
@@ -182,7 +182,7 @@ public partial class PHGame
 		npc.Spawn();
 	}
 
-	[ConCmd.Server( "ph_item_give" )]
+	[ConCmd.Server( "sc_item_give" )]
 	public static void AdminGiveItem( string itemName, string target = "" )
 	{
 		if ( !Instance.AdminList.Contains( ConsoleSystem.Caller.PlayerId ) )
@@ -235,7 +235,7 @@ public partial class PHGame
 		}
 	}
 
-	[ConCmd.Server( "ph_data_save" )]
+	[ConCmd.Server( "sc_data_save" )]
 	public static void AdminSaveData( string target = "" )
 	{
 		var caller = ConsoleSystem.Caller;
@@ -279,7 +279,7 @@ public partial class PHGame
 		}
 	}
 
-	[ConCmd.Server( "ph_data_load" )]
+	[ConCmd.Server( "sc_data_load" )]
 	public static void AdminLoadData( string target = "" )
 	{
 		var caller = ConsoleSystem.Caller;
@@ -323,7 +323,7 @@ public partial class PHGame
 		}
 	}
 
-	[ConCmd.Server( "ph_bringplayer" )]
+	[ConCmd.Server( "sc_bringplayer" )]
 	public static void AdminBringPlayer( string target = "" )
 	{
 		var caller = ConsoleSystem.Caller;
@@ -380,7 +380,7 @@ public partial class PHGame
 		}
 	}
 
-	[ConCmd.Server( "ph_test_setpawn" )]
+	[ConCmd.Server( "sc_test_setpawn" )]
 	public static void AdminSetPawn( string pawnType )
 	{
 		if ( Instance.AdminList == null || !Instance.AdminList.Contains( ConsoleSystem.Caller.PlayerId ) )

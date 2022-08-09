@@ -31,7 +31,6 @@ public partial class PHHud : RootPanel
 		AddChild<PHChatBox>();
 
 		AddChild<SuiteReceptionUI>();
-		AddChild<Shop>();
 		AddChild<Inventory>();
 	}
 }

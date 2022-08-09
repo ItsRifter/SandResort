@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Sandbox;
 using SandboxEditor;
 
-[Library("ph_suite_room")]
+[Library("sc_suite_room")]
 [Title("Suite Room"), Category( "Suites" ), Description("Defines a suite room for saving and loading player owner items")]
 [HammerEntity]
 [SupportsSolid]

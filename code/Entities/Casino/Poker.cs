@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Sandbox;
 using SandboxEditor;
 
-[Library("ph_casino_poker")]
+[Library("sc_casino_poker")]
 [Title("Poker Table"), Category("Casino"), Description("The poker table for players to play poker")]
 [EditorModel( "models/citizen_props/crate01.vmdl" )]
 [HammerEntity]

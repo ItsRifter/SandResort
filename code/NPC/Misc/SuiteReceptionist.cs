@@ -43,10 +43,10 @@ public partial class SuiteReceptionist : PHBaseNPC
 		}
 
 		if(!CheckIn(player))
-			ConsoleSystem.Run( "ph_server_say", "There are no suites available at this time", player.Client.Id );*/
+			ConsoleSystem.Run( "sc_server_say", "There are no suites available at this time", player.Client.Id );*/
 	}
 
-	[ConCmd.Server("ph_claim_suite")]
+	[ConCmd.Server("sc_claim_suite")]
 	public static void ClaimSuiteStatic(int suiteIndex, int plyID)
 	{
 		var player = ConsoleSystem.Caller.Pawn as LobbyPawn;
@@ -67,7 +67,7 @@ public partial class SuiteReceptionist : PHBaseNPC
 		if ( randomSuite == null || randomSuite.SuiteOwner != null )
 			return;
 
-		//ConsoleSystem.Run( "ph_server_say", $"You have checked into suite {randomSuite.Name.Substring( 6 )}", player.Client.Id );
+		//ConsoleSystem.Run( "sc_server_say", $"You have checked into suite {randomSuite.Name.Substring( 6 )}", player.Client.Id );
 
 		Log.Info( $"{player.Client.Name} checked into {randomSuite.Name}" );
 

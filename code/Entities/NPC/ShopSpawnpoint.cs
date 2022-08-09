@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Sandbox;
 using SandboxEditor;
 
-[Library( "ph_shop_spawn" )]
+[Library( "sc_shop_spawn" )]
 [Title( "Shopkeeper" ), Category( "Shops" ), Description( "Indicates where shopkeepers should spawn at" )]
 [EditorModel( "models/citizen/citizen.vmdl" )]
 [HammerEntity]

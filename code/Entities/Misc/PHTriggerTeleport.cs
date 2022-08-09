@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Sandbox;
 using SandboxEditor;
 
-[Library( "ph_trigger_teleport" )]
+[Library( "sc_trigger_teleport" )]
 [Title("PlayHome Trigger Teleport"), Category("Misc"), Description( "A modified version of trigger teleport" )]
 [SupportsSolid]
 [HammerEntity]

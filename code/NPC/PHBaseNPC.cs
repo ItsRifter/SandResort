@@ -13,9 +13,9 @@ public partial class PHBaseNPC : AnimatedEntity
 	DamageInfo lastDMG;
 
 	[ConVar.Replicated]
-	public static bool ph_nav_drawpath { get; set; }
+	public static bool sc_nav_drawpath { get; set; }
 
-	[ConCmd.Admin( "ph_npc_clear" )]
+	[ConCmd.Admin( "sc_npc_clear" )]
 	public static void ClearAllNPCs()
 	{
 		foreach ( var npc in All.OfType<PHBaseNPC>().ToArray() )

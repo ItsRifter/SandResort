@@ -9,7 +9,7 @@ public partial class DiscoBall : PHSuiteProps
 {
 	public override string SuiteItemName => "Disco Ball";
 	public override string SuiteItemDesc => "A disco ball that can play music";
-	public override string SuiteItemImage => "ui/ph_icon_discoball.png";
+	public override string SuiteItemImage => "ui/sc_icon_discoball.png";
 	public override Model WorldModel => Model.Load( "models/clutter/discoball.vmdl" );
 	public override int SuiteItemCost => 5000;
 	public override ShopType ShopSeller => ShopType.Electric;

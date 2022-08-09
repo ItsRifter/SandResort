@@ -1,8 +1,8 @@
 {
-  "Title": "PlayHome",
+  "Title": "Sand Castle",
   "Type": "game",
   "Org": "rifter",
-  "Ident": "playhome",
+  "Ident": "sandcastle",
   "Schema": 1,
   "HasAssets": true,
   "AssetsPath": "",
@@ -18,10 +18,11 @@
     "GameNetworkType": "Multiplayer",
     "MapSelect": "Official",
     "MapList": [
-      "playchill.ph_lobby"
+      "rifter.sc_lobby"
     ],
     "RankType": "None",
     "PerMapRanking": false,
-    "LeaderboardType": "None"
+    "LeaderboardType": "None",
+    "GameCategory": "Social"
   }
 }

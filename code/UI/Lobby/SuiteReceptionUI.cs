@@ -47,7 +47,7 @@ public partial class SuiteReceptionUI : Panel
 
 		TabsUi.AddTabItem( "Check Out", () =>
 		{
-			ConsoleSystem.Run( "ph_checkout_suite", Local.Client.Id );
+			ConsoleSystem.Run( "sc_checkout_suite", Local.Client.Id );
 			CloseSuiteMenu();
 		}, false );
 
@@ -113,7 +113,7 @@ public partial class SuiteReceptionUI : Panel
 
 	public void ClaimSuitePanel( int index )
 	{
-		ConsoleSystem.Run( "ph_claim_suite", index, Local.Client.Id );
+		ConsoleSystem.Run( "sc_claim_suite", index, Local.Client.Id );
 		CloseSuiteMenu();
 	}
 
@@ -191,13 +191,13 @@ public partial class SuiteReceptionUI : Panel
 
 				kick.AddEventListener("onclick", () => 
 				{
-					ConsoleSystem.Run("ph_suite_kick", pawn.Client.Name);
+					ConsoleSystem.Run("sc_suite_kick", pawn.Client.Name);
 				});
 
 				blacklist.AddEventListener( "onclick", () =>
 				{
-					ConsoleSystem.Run( "ph_suite_blacklist_add", pawn.Client.Name );
-					ConsoleSystem.Run( "ph_suite_kick", pawn.Client.Name );
+					ConsoleSystem.Run( "sc_suite_blacklist_add", pawn.Client.Name );
+					ConsoleSystem.Run( "sc_suite_kick", pawn.Client.Name );
 
 				} );
 			}
@@ -218,7 +218,7 @@ public partial class SuiteReceptionUI : Panel
 
 				removeBtn.AddEventListener( "onclick", () =>
 				{
-					ConsoleSystem.Run( "ph_suite_blacklist_remove", pawn.Client.Name );
+					ConsoleSystem.Run( "sc_suite_blacklist_remove", pawn.Client.Name );
 				} );
 
 				userSuiteBlacklist.AddChild( Player );

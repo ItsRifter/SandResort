@@ -70,7 +70,7 @@ public partial class PHChatBox : Panel
 	}
 
 
-	[ConCmd.Client( "ph_chat_add", CanBeCalledFromServer = true )]
+	[ConCmd.Client( "sc_chat_add", CanBeCalledFromServer = true )]
 	public static void AddChatEntry( string name, string message, string avatar = null, string lobbyState = null )
 	{
 		Current?.AddEntry( name, message, avatar, lobbyState );
@@ -82,13 +82,13 @@ public partial class PHChatBox : Panel
 		}
 	}
 
-	[ConCmd.Client( "ph_chat_addinfo", CanBeCalledFromServer = true )]
+	[ConCmd.Client( "sc_chat_addinfo", CanBeCalledFromServer = true )]
 	public static void AddInformation( string message, string avatar = null )
 	{
 		Current?.AddEntry( null, message, avatar );
 	}
 
-	[ConCmd.Server("ph_server_say")]
+	[ConCmd.Server("sc_server_say")]
 	public static void ServerPrivateMessage( string message, int plyID )
 	{
 		if ( plyID != ConsoleSystem.Caller.Id )
@@ -97,7 +97,7 @@ public partial class PHChatBox : Panel
 		AddChatEntry(To.Single(ConsoleSystem.Caller), "Receptionist", message );
 	}
 
-	[ConCmd.Server( "ph_say" )]
+	[ConCmd.Server( "sc_say" )]
 	public static void Say( string message, bool isConsole = false )
 	{
 		if( isConsole )

@@ -7,6 +7,8 @@ using Sandbox;
 using Sandbox.UI;
 using Sandbox.UI.Construct;
 
+
+//THIS NEEDS A MAJOR REFACTOR
 public partial class Shop : Panel
 {
 	public Panel ShopMenu;
@@ -35,10 +37,11 @@ public partial class Shop : Panel
 		if ( hasOpened )
 			return;
 
-		Style.ZIndex = 5;
+		//Style.ZIndex = 5;
 
 		hasOpened = true;
 
+		/*
 		if ( shopType.FullName == "AdminNPC" && !PHGame.Instance.AdminList.Contains( player.Client.PlayerId ) )
 		{
 			CloseShop();
@@ -81,19 +84,19 @@ public partial class Shop : Panel
 			{
 				PurchaseItem(buyableItem);
 			} );
-		}
+		}*/
 	}
 
 	public void CloseShop()
 	{
 		hasOpened = false;
-		ShopItems.DeleteChildren();
-		Style.ZIndex = 0;
+		//ShopItems.DeleteChildren();
+		//Style.ZIndex = 0;
 	}
 
 	public void PurchaseItem(string itemToBuy)
 	{
-		ConsoleSystem.Run( "ph_buy_item", itemToBuy, Local.Client.NetworkIdent );
+		ConsoleSystem.Run( "sc_buy_item", itemToBuy, Local.Client.NetworkIdent );
 	}
 
 	public override void Tick()

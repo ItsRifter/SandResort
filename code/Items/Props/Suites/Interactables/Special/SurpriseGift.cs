@@ -9,7 +9,7 @@ public partial class SurpriseGift : PHSuiteProps
 {
 	public override string SuiteItemName => "Surprise Gift";
 	public override string SuiteItemDesc => "A mysterious gift containing a random item, wonder what's inside";
-	public override string SuiteItemImage => "ui/ph_icon_gift.png";
+	public override string SuiteItemImage => "ui/sc_icon_gift.png";
 	public override Model WorldModel => Model.Load( "models/special/gift/gift.vmdl" );
 	public override int SuiteItemCost => 100;
 	public override ShopType ShopSeller => ShopType.Bar;

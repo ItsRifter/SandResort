@@ -64,7 +64,7 @@ public partial class Inventory : Panel
 	{
 		if ( player.PHInventory.ClientInventory.Count < 0 )
 		{
-			ConsoleSystem.Run( "ph_qmenu_reset" );
+			ConsoleSystem.Run( "sc_qmenu_reset" );
 			ResetInventorySlots();
 		}
 	
@@ -113,7 +113,7 @@ public partial class Inventory : Panel
 		if ( mouseTR.Entity is PHSuiteProps hovering && player.PreviewProp == null && Input.Pressed( InputButton.PrimaryAttack ) && hovering.PropOwner == player )
 		{
 			ResetInventorySlots();
-			ConsoleSystem.Run( "ph_drag_item", hovering.GetType().FullName, hovering.Name );
+			ConsoleSystem.Run( "sc_drag_item", hovering.GetType().FullName, hovering.Name );
 			lastProp = hovering;
 		}	
 
@@ -121,7 +121,7 @@ public partial class Inventory : Panel
 
 	public void DragItem(string prop)
 	{
-		ConsoleSystem.Run( "ph_select_item", prop );
+		ConsoleSystem.Run( "sc_select_item", prop );
 	}
 
 	public override void Tick()
@@ -143,7 +143,7 @@ public partial class Inventory : Panel
 		}
 		else if (Input.Released(InputButton.Menu))
 		{
-			ConsoleSystem.Run( "ph_qmenu_clear" );
+			ConsoleSystem.Run( "sc_qmenu_clear" );
 
 			SetClass( "allowPointerEvents", false );
 			InventoryBar.SetClass( "allowPointerEvents", false );

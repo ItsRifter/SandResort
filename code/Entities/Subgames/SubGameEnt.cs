@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Sandbox;
 using SandboxEditor;
 
-[Library( "ph_subgame_area" )]
+[Library( "sc_subgame_area" )]
 [Title( "Subgame Area" ), Category( "Sub-Games" ), Description( "Defines the area for this specific sub-game" )]
 [SupportsSolid]
 [HammerEntity]
@@ -85,7 +85,7 @@ public class SubGameEnt : BaseTrigger
 	}
 
 	//TEMPORARY
-	[ConCmd.Server("ph_subgame_test")]
+	[ConCmd.Server("sc_subgame_test")]
 	public static void LoadAreaTest(int testConduct)
 	{
 		switch(testConduct)

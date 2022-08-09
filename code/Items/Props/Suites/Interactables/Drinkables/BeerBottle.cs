@@ -8,7 +8,7 @@ public partial class BeerBottle : PHSuiteProps
 {
 	public override string SuiteItemName => "Bottle of Beer";
 	public override string SuiteItemDesc => "A bottle containing alcohol, drink responsibly";
-	public override string SuiteItemImage => "ui/ph_icon_beerbottle.png";
+	public override string SuiteItemImage => "ui/sc_icon_beerbottle.png";
 	public override Model WorldModel => Model.Load( "models/clutter/glassbottle/glassbottle.vmdl" );
 	public override int SuiteItemCost => 25;
 	public override ShopType ShopSeller => ShopType.Bar;

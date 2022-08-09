@@ -244,7 +244,7 @@ public partial class LobbyPawn : BasePawn
 			CurSuite.RevokeSuite( this );
 
 			if ( IsServer )
-				ConsoleSystem.Run( "ph_server_say", "You were automatically checked out of your suite", Client.Id );
+				ConsoleSystem.Run( "sc_server_say", "You were automatically checked out of your suite", Client.Id );
 		}
 
 		//We should make a first person death camera in the future

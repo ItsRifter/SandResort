@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Sandbox;
 using SandboxEditor;
 
-[Library( "ph_suite_checker" )]
+[Library( "sc_suite_checker" )]
 [Title("Suite Checker"), Category( "Suites" ), Description( "Checks if the player is in a suite, if so check them out" )]
 [SupportsSolid]
 [HammerEntity]
@@ -25,7 +25,7 @@ public partial class SuiteAutoChecker : TriggerMultiple
 			player.CurSuite.RevokeSuite( player );
 
 			//if ( IsServer )
-			//	ConsoleSystem.Run( "ph_server_say", "You were automatically checked out of your suite", player.Client.Id );
+			//	ConsoleSystem.Run( "sc_server_say", "You were automatically checked out of your suite", player.Client.Id );
 		}
 
 		base.OnTouchStart( other );

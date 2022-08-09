@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Sandbox;
 using SandboxEditor;
 
-[Library("ph_subgame_spawnpoint")]
+[Library("sc_subgame_spawnpoint")]
 [Title("Subgame Spawnpoint"), Category( "Sub-Games" ), Description("A unique spawnpoint for subgames")]
 [EditorModel( "models/dev/playerstart_tint.vmdl" )]
 [RenderFields]

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Sandbox;
 using SandboxEditor;
 
-[Library( "ph_subgame_mm" )]
+[Library( "sc_subgame_mm" )]
 [Title( "Monday Massacre World Panel" ), Category( "Sub-Games" ), Description( "The Monday Massacre Panel" )]
 [HammerEntity]
 

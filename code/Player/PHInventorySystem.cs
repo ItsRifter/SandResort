@@ -69,9 +69,7 @@ public partial class PHInventorySystem : IBaseInventory
 
 		InventoryList.Add( ent );
 
-		if( ent is PHSuiteProps suiteItem )
-			player.UpdateClientInventory(ent.ClassName );
-		else if ( ent is PHUsableItemBase )
+		if( ent is PHSuiteProps || ent is PHUsableItemBase )
 			player.UpdateClientInventory(ent.ClassName );
 
 		return true;
