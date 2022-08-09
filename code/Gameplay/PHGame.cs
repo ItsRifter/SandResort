@@ -7,11 +7,11 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-public partial class PHGame : Game
+public partial class SCGame : Game
 {
-	public static PHGame Instance { get; private set; } = Current as PHGame;
+	public static SCGame Instance { get; private set; } = Current as SCGame;
 
-	public PHGame()
+	public SCGame()
 	{
 		if(IsServer)
 		{
@@ -20,14 +20,17 @@ public partial class PHGame : Game
 
 		if ( IsClient )
 		{
-
+			_ = new SCHud();
 		}
 	}
 
 	[Event.Hotload]
 	public void Hotload()
 	{
-		
+		if ( IsClient )
+		{
+			_ = new SCHud();
+		}
 	}
 
 	//Allow admins to use dev cam

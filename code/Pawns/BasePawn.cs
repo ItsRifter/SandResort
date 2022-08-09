@@ -9,8 +9,9 @@ public partial class BasePawn : Player
 {
 	DamageInfo lastDMGInfo;
 
-	bool UpdateViewAngle;
-	Angles UpdatedViewAngle;
+	bool updateViewAngle;
+	Angles updatedViewAngle;
+
 	public BasePawn()
 	{
 
@@ -66,18 +67,18 @@ public partial class BasePawn : Player
 	[ClientRpc]
 	public void SetViewAngles( Angles angles )
 	{
-		UpdateViewAngle = true;
-		UpdatedViewAngle = angles;
+		updateViewAngle = true;
+		updatedViewAngle = angles;
 	}
 
 	public override void BuildInput( InputBuilder input )
 	{
 		base.BuildInput( input );
 
-		if ( UpdateViewAngle )
+		if ( updateViewAngle )
 		{
-			UpdateViewAngle = false;
-			input.ViewAngles = UpdatedViewAngle;
+			updateViewAngle = false;
+			input.ViewAngles = updatedViewAngle;
 		}
 	}
 
