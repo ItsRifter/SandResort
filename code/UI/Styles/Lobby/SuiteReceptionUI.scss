@@ -128,7 +128,15 @@
     }
 
     .tabuserSuite {
-        flex-direction: column;
+        // flex-direction: column;
+        flex-wrap: wrap;
+        overflow: scroll;
+        height: 100%;
+        margin: 0px 12px;
+        // DEBUG BORDER - REMOVE LATER
+        // Panel {
+            // border: 1px solid red;
+        // }
 
         .suite-container {
             margin: 12px 0px;
@@ -140,19 +148,23 @@
             .suite {
                 color: white;
                 background-color: #007CAC;
+                // background-color: #3d3d3d;
                 overflow: hidden;
                 position: relative;
                 border: 1px solid #2CA9C2;
+                // border: 1px solid rgba(255, 255, 255, 0.3);
                 padding: 24px 28px;
                 width: 100%;
-                max-width: 1000px;
+                max-width: 9990px;
                 border-radius: 12px;
                 box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
             }
 
             .suite-inner {
+                width: 100%;
                 position: relative;
                 display: flex;
+                // flex-direction: column;
 
                 .suite-img {
                     border-radius: 12px;
@@ -201,8 +213,9 @@
                 color: white;
                 background-color: #398243;
                 border: 1px solid #1D5B25;
-                padding: 2px;
+                padding: 6px 12px;
                 padding-right: 64px;
+                margin-top: 12px;
                 border-radius: 4px;
                 box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.8);
                 transition: transform 0.1s ease, box-shadow 0.1s ease;
@@ -217,7 +230,7 @@
         .suitePlayerList {
             flex-wrap: wrap;
             flex-direction: row;
-            overflow: scroll;
+            // overflow: scroll;
             margin: 12px 0px;
             margin-top: 32px;
             width: 100%;
@@ -227,12 +240,14 @@
             font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 
             .list {
-                display: block;
+                // display: block;
                 margin-left: 12px;
                 margin-right: 12px;
                 flex-direction: column;
                 color: white;
-                overflow: scroll;
+                // border: 1px solid #a9a9a9;
+
+                // overflow: scroll;
 
                 .header {
                     margin: 0px 12px;
@@ -250,13 +265,14 @@
 
 
                 .Players {
-                    flex-wrap: nowrap;
                     display: flex;
                     min-width: 550px;
                     max-width: 600px;
-                    flex-direction: column;
-                    flex-flow: column;
-                    height: 1200px;
+                    flex-direction: row;
+                    flex-wrap: wrap;
+                    min-height: 100px;
+                    // flex-flow: column;
+                    // height: 1200px;
                     //justify-content: start;
                     //align-items: end;
                     //flex-direction: column;
@@ -264,6 +280,7 @@
                     overflow: scroll;
 
                     .Player {
+                        width: 100%;
                         display: flex;
                         min-height: 72px;
                         min-width: 300px;
@@ -297,11 +314,11 @@
                             align-items: center;
                         }
 
-                        .name {
-                        }
+                        // .name {
+                        // }
 
-                        .actions {
-                        }
+                        // .actions {
+                        // }
 
                         .action {
                             font-size: 20px;
