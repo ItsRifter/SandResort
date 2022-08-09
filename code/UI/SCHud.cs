@@ -20,6 +20,8 @@ public class SCHud : RootPanel
 		//TEMPORARY, we should make our own chatbox/scoreboard
 		AddChild<ChatBox>();
 		AddChild<Scoreboard<ScoreboardEntry>>();
+
+		AddChild<CondoRecept>();
 	}
 }
 
