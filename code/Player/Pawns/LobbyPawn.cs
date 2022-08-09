@@ -41,18 +41,11 @@ public partial class LobbyPawn : BasePawn
 	{
 		base.Respawn();
 
-		//this is temporary, just to show off glasses to admins/devs
-		if( PHGame.Instance.AdminList.Contains(Client.PlayerId ) )
-		{
-			var adminGlasses = new ModelEntity();
-			adminGlasses.SetModel( "models/cloth/dealwithitglass/dwi_glass.vmdl" );
-			adminGlasses.SetParent( this, true );
-			
-			adminGlasses.EnableHideInFirstPerson = true;
-		}
+		Log.Info( CollisionGroup );
+
+		Log.Info(this);
 
 		Drunkiness = 0.0f;
-
 		timeLastRespawn = 0;
 
 		if ( ActiveChildren == null )
@@ -250,8 +243,8 @@ public partial class LobbyPawn : BasePawn
 		{
 			CurSuite.RevokeSuite( this );
 
-			//if ( IsServer )
-				//ConsoleSystem.Run( "ph_server_say", "You were automatically checked out of your suite", Client.Id );
+			if ( IsServer )
+				ConsoleSystem.Run( "ph_server_say", "You were automatically checked out of your suite", Client.Id );
 		}
 
 		//We should make a first person death camera in the future

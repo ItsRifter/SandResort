@@ -28,6 +28,7 @@ public partial class SuiteReceptionUI : Panel
 
 	public SuiteReceptionUI()
     {
+		// ! ALL UI WILL BE UPDATED IN THE FUTURE ! // INTERFACE ICELANDIC //
 		StyleSheet.Load( "UI/Styles/Lobby/SuiteReceptionUI.scss" );
 
 		TabsUi = new SideTabUI();

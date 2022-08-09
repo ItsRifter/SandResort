@@ -23,10 +23,20 @@ public partial class BasePawn : Player
 
 	public BasePawn()
 	{
+
 	}
 
 	public void SetUpPlayer()
 	{
+		Host.AssertServer();
+
+		LifeState = LifeState.Alive;
+		Health = 100;
+		Velocity = Vector3.Zero;
+		WaterLevel = 0;
+
+		ResetInterpolation();
+
 		SetModel( "models/citizen/citizen.vmdl" );
 
 		//Temporary, should have a custom camera
@@ -65,24 +75,14 @@ public partial class BasePawn : Player
 	{
 		base.Respawn();
 
+		SetUpPlayer();
+
 		SetInteractsAs( CollisionLayer.Player );
 		SetInteractsExclude( CollisionLayer.Player );
-
-		SetUpPlayer();
 
 		//Deletes the corpse if valid
 		DestroyCorpse(To.Everyone);
 		
-		//this is temporary, just to show off glasses to admins/devs
-		if( PHGame.Instance.AdminList.Contains(Client.PlayerId ) )
-		{
-			var adminGlasses = new ModelEntity();
-			adminGlasses.SetModel( "models/cloth/dealwithitglass/dwi_glass.vmdl" );
-			adminGlasses.SetParent( this, true );
-			
-			adminGlasses.EnableHideInFirstPerson = true;
-		}
-
 		if ( ActiveChildren == null )
 			ActiveChildren = new List<Entity>();
 	}

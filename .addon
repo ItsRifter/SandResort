@@ -1,7 +1,7 @@
 {
   "Title": "PlayHome",
   "Type": "game",
-  "Org": "playchill",
+  "Org": "rifter",
   "Ident": "playhome",
   "Schema": 1,
   "HasAssets": true,
@@ -15,13 +15,13 @@
   "Metadata": {
     "MaxPlayers": 64,
     "MinPlayers": 1,
-    "GameNetworkType": 0,
-    "MapSelect": 3,
+    "GameNetworkType": "Multiplayer",
+    "MapSelect": "Official",
     "MapList": [
       "playchill.ph_lobby"
     ],
-    "RankType": 0,
+    "RankType": "None",
     "PerMapRanking": false,
-    "LeaderboardType": 0
+    "LeaderboardType": "None"
   }
 }

@@ -10,23 +10,24 @@ using SandboxEditor;
 [Title("PlayHome Trigger Teleport"), Category("Misc"), Description( "A modified version of trigger teleport" )]
 [SupportsSolid]
 [HammerEntity]
-public partial class PHTriggerTeleport : TriggerTeleport
+public class PHTriggerTeleport : TeleportVolumeEntity
 {
-
 	public override void Spawn()
 	{
 		base.Spawn();
 	}
-
 
 	public override void OnTouchStart( Entity other )
 	{
 		if ( !Enabled ) return;
 
 		base.OnTouchStart(other);
-		
-		if ( other is LobbyPawn player )
-			player.SetViewAngles( To.Single( player ), FindByName(TargetEntity).Rotation.Angles() );
+
+		if ( other is BasePawn player )
+		{
+			player.SetViewAngles( To.Single( player ), FindByName( TargetEntity.ToString() ).Rotation.Angles() );
+			player.ResetInterpolation();
+		}
 	}
 }
 

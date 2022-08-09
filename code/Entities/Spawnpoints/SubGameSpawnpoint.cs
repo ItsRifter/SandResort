@@ -31,7 +31,6 @@ public class SubGameSpawnpoint : ModelEntity
 
 		IsEnabled = false;
 		EnableDrawing = false;
-		SetInteractsExclude(CollisionLayer.Player | CollisionLayer.Solid | CollisionLayer.Debris);
 	}
 }
 

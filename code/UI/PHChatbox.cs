@@ -5,7 +5,7 @@ using System;
 
 public partial class PHChatBox : Panel
 {
-	/*public static PHChatBox Current;
+	public static PHChatBox Current;
 
 	public Panel Canvas { get; protected set; }
 	public TextEntry Input { get; protected set; }
@@ -70,7 +70,7 @@ public partial class PHChatBox : Panel
 	}
 
 
-	[ConCmd.Client( "chat_add", CanBeCalledFromServer = true )]
+	[ConCmd.Client( "ph_chat_add", CanBeCalledFromServer = true )]
 	public static void AddChatEntry( string name, string message, string avatar = null, string lobbyState = null )
 	{
 		Current?.AddEntry( name, message, avatar, lobbyState );
@@ -82,7 +82,7 @@ public partial class PHChatBox : Panel
 		}
 	}
 
-	[ConCmd.Client( "chat_addinfo", CanBeCalledFromServer = true )]
+	[ConCmd.Client( "ph_chat_addinfo", CanBeCalledFromServer = true )]
 	public static void AddInformation( string message, string avatar = null )
 	{
 		Current?.AddEntry( null, message, avatar );
@@ -97,7 +97,7 @@ public partial class PHChatBox : Panel
 		AddChatEntry(To.Single(ConsoleSystem.Caller), "Receptionist", message );
 	}
 
-	[ConCmd.Server( "say" )]
+	[ConCmd.Server( "ph_say" )]
 	public static void Say( string message, bool isConsole = false )
 	{
 		if( isConsole )
@@ -114,16 +114,16 @@ public partial class PHChatBox : Panel
 
 		Log.Info( $"{ConsoleSystem.Caller}: {message}" );
 		AddChatEntry( To.Everyone, ConsoleSystem.Caller.Name, message, $"avatar:{ConsoleSystem.Caller.PlayerId}" );
-	}*/
+	}
 }
 
 public static partial class Chat
 {
-	/*public static event Action OnOpenChat;
+	public static event Action OnOpenChat;
 
 	[ConCmd.Client( "openchat" )]
 	internal static void MessageMode()
 	{
 		OnOpenChat?.Invoke();
-	}*/
+	}
 }
