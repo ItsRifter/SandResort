@@ -7,14 +7,17 @@ using System.Linq;
 //Base of PlayHome's player pawns
 public partial class BasePawn : Player
 {
+	public AchTracker AchTracker { get; protected set; }
+
 	DamageInfo lastDMGInfo;
 
 	bool updateViewAngle;
 	Angles updatedViewAngle;
 
+
 	public BasePawn()
 	{
-
+		AchTracker = new AchTracker();
 	}
 
 	public void SetUpPlayer()
@@ -88,8 +91,10 @@ public partial class BasePawn : Player
 		//We won't call the base simulate since it automatically respawns the player on death in a few seconds
 		//but use the last 2 lines of it
 
-		var controller = GetActiveController();
-		controller?.Simulate( cl, this, GetActiveAnimator() );
+		base.Simulate( cl );
+
+		//var controller = GetActiveController();
+		//controller?.Simulate( cl, this, GetActiveAnimator() );
 
 		TickPlayerUse();
 
@@ -115,6 +120,8 @@ public partial class BasePawn : Player
 		EnableDrawing = false;
 
 		CreatePlayerRagdoll( lastDMGInfo.Force, lastDMGInfo.BoneIndex );
+
+		AchTracker.Update( this, "AfterLife" );
 	}
 
 	//Frame simulated on the client
@@ -126,6 +133,9 @@ public partial class BasePawn : Player
 	public override void OnAnimEventFootstep( Vector3 pos, int foot, float volume )
 	{
 		base.OnAnimEventFootstep( pos, foot, volume * 10 );
+
+		if(IsServer && LifeState == LifeState.Alive)
+			AchTracker.Update( this, "Walkathon" );
 	}
 
 	//Creates a player ragdoll with clothing (if any) at force with bone index

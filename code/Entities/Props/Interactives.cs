@@ -16,7 +16,8 @@ public class ClassicRadio : PropBase, IUse
 
 	public override void InteractProp( Entity user )
 	{
-		if(!sound.Finished)
+
+		if (!sound.Finished)
 		{
 			using ( Prediction.Off() )
 				sound.Stop();
