@@ -97,9 +97,9 @@
 						parent_bone = ""
 						surface_prop = "plastic"
 						collision_tags = "solid"
-						radius = 1.499951
-						point0 = [ 0.0, 0.0, 0.0 ]
-						point1 = [ 0.0, 0.0, 5.913599 ]
+						radius = 3.681242
+						point0 = [ 0.0, 0.0, 11.205932 ]
+						point1 = [ 0.0, 0.0, 15.033459 ]
 					},
 				]
 			},

@@ -33,30 +33,6 @@
 				[
 					{
 						_class = "PhysicsHullFile"
-						name = "flatscreen_tv_phy"
-						parent_bone = ""
-						surface_prop = "default"
-						collision_tags = "solid"
-						recenter_on_parent_bone = false
-						offset_origin = [ -5.55, 0.0, 24.5 ]
-						offset_angles = [ 90.0, 0.0, 0.0 ]
-						align_origin_x_type = "None"
-						align_origin_y_type = "None"
-						align_origin_z_type = "None"
-						filename = "models/television/flatscreen/flatscreen_tv_phy.fbx"
-						import_scale = 0.3937
-						faceMergeAngle = 10.0
-						maxHullVertices = 0
-						import_mode = "SingleHull"
-						optimization_algorithm = "QEM"
-						import_filter = 
-						{
-							exclude_by_default = false
-							exception_list = [  ]
-						}
-					},
-					{
-						_class = "PhysicsHullFile"
 						name = "flatscreen_tv_stand_phy"
 						parent_bone = ""
 						surface_prop = "default"
@@ -68,10 +44,34 @@
 						align_origin_y_type = "None"
 						align_origin_z_type = "None"
 						filename = "models/television/flatscreen/flatscreen_tv_stand_phy.fbx"
-						import_scale = 0.3937
+						import_scale = 1.0
 						faceMergeAngle = 10.0
 						maxHullVertices = 0
 						import_mode = "HullPerElement"
+						optimization_algorithm = "QEM"
+						import_filter = 
+						{
+							exclude_by_default = false
+							exception_list = [  ]
+						}
+					},
+					{
+						_class = "PhysicsHullFile"
+						name = "flatscreen_tv_phy1"
+						parent_bone = ""
+						surface_prop = "default"
+						collision_tags = "solid"
+						recenter_on_parent_bone = false
+						offset_origin = [ -5.55, 0.0, 24.5 ]
+						offset_angles = [ 90.0, 0.0, 0.0 ]
+						align_origin_x_type = "None"
+						align_origin_y_type = "None"
+						align_origin_z_type = "None"
+						filename = "models/television/flatscreen/flatscreen_tv_phy.fbx"
+						import_scale = 1.0
+						faceMergeAngle = 10.0
+						maxHullVertices = 0
+						import_mode = "SingleHull"
 						optimization_algorithm = "QEM"
 						import_filter = 
 						{

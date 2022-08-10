@@ -76,13 +76,10 @@
 						_class = "PhysicsShapeCylinder"
 						parent_bone = ""
 						surface_prop = "metal"
-						collision_group = ""
-						collision_interact_as = ""
-						collision_interact_with = ""
-						collision_interact_exclude = ""
-						radius = 1.743546
+						collision_tags = "solid"
+						radius = 3.520658
 						point0 = [ 0.0, 0.0, 0.0 ]
-						point1 = [ 0.0, 0.0, 5.998384 ]
+						point1 = [ 0.0, 0.0, 12.026943 ]
 					},
 				]
 			},
