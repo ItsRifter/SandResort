@@ -19,6 +19,7 @@ public class CondoRecept : Panel
 	{
 		SetClass("open", isOpen);
 		StyleSheet.Load( "UI/Styles/Lobby/CondoRecept.scss" );
+		StyleSheet.Load( "UI/Styles/Lobby/CSUIContruct.scss" );
 		ReceptRootPanel = Add.Panel("ReceptRootPanel");
 
 		TabContainer receiptionistTabs = new TabContainer();
@@ -74,18 +75,18 @@ public class CondoRecept : Panel
 		SetClass("open", false);
 	}
 
-	public override void Tick()
-	{
-		base.Tick();
+	// public override void Tick()
+	// {
+	// 	base.Tick();
 
-		if(lastOpen > 0.1 && Input.Pressed(InputButton.Menu))
-		{
-			lastOpen = 0;
-			isOpen = !isOpen;
-			SetClass("open", isOpen);
-			Log.Info( $"receiptionist menu open: {isOpen}" );
-		}
-	}
+	// 	if(lastOpen > 0.1 && Input.Pressed(InputButton.Menu))
+	// 	{
+	// 		lastOpen = 0;
+	// 		isOpen = !isOpen;
+	// 		SetClass("open", isOpen);
+	// 		Log.Info( $"receiptionist menu open: {isOpen}" );
+	// 	}
+	// }
 }
 
 namespace SC.UI.Construct
@@ -132,14 +133,6 @@ namespace SC.UI.Construct
 			RootPanel.AddChild(new HeaderPanel("Blacklist", false));
 			BlacklistList = RootPanel.Add.Panel("BlacklistList players");
 			BlacklistList.AddChild(new playersList());
-
-			// for (int i = 0; i < 25; i++)
-			// {
-			// 	Panel fakePlayer = Add.Panel("player");
-			// 	fakePlayer.Add.Label("Player " + (i+1), "playerName");
-				
-			// 	BlacklistList.AddChild(fakePlayer);
-			// }
 		}
 	}
 	public partial class plrInfo : Panel {
