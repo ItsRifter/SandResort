@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 public partial class SCGame : Game
 {
 	public static SCGame Instance { get; private set; } = Current as SCGame;
+	public SCHud Hud;
 
 	public SCGame()
 	{
@@ -20,7 +21,7 @@ public partial class SCGame : Game
 
 		if ( IsClient )
 		{
-			_ = new SCHud();
+			Hud = new SCHud();
 		}
 	}
 
@@ -29,7 +30,8 @@ public partial class SCGame : Game
 	{
 		if ( IsClient )
 		{
-			_ = new SCHud();
+			Hud.Delete();
+			Hud = new SCHud();
 		}
 	}
 
