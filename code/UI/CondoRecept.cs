@@ -13,6 +13,7 @@ public class CondoRecept : Panel
 	public bool isOpen = false;
 	public Panel ReceptRootPanel;
     public TimeSince lastOpen = 0;
+	public Panel BlacklistPanel;
 
 	public CondoRecept()
 	{
@@ -24,15 +25,22 @@ public class CondoRecept : Panel
 
 		// CHECK IN TAB
 		Panel checkInTab = Add.Panel("tabSheet tab-checkin");
-		checkInTab.AddChild(new HeaderPanel("Check in."));
+		Panel checkInTabScroll = checkInTab.Add.Panel("tabSheetScroll");
+		checkInTabScroll.AddChild(new HeaderPanel("Check in."));
 
 		receiptionistTabs.AddTab( checkInTab , "Check in");
 
 		// USER SUITE SETTINGS TAB
 		Panel userSuiteSettingsTab = Add.Panel("tabSheet tab-usersuitesettings");
-		userSuiteSettingsTab.AddChild(new HeaderPanel("Your Suite."));
-
+		Panel userSuiteSettingsTabScroll = userSuiteSettingsTab.Add.Panel("tabSheetScroll");
+		userSuiteSettingsTabScroll.AddChild(new ClientSuitePanel());
+		BlacklistPanel = userSuiteSettingsTabScroll.Add.Panel("blacklist");
+		BlacklistPanel.AddChild(new HeaderPanel("Blacklist", false));
+		BlacklistPanel.Add.Label("// TODO Make blacklist list", "blacklist-label");
+		// BlacklistPanel.AddChild(new BlacklistPanel());
+		// receiptionistTabs.AddTab( userSuiteSettingsTab , "Suite");
 		receiptionistTabs.AddTab( userSuiteSettingsTab , "Your Suite");
+		
 
 		// CHECK OUT TAB
 		Panel checkOutTab = Add.Panel("tabSheet tab-checkout");
@@ -53,6 +61,7 @@ public class CondoRecept : Panel
 		Log.Info( "Open receiptionist menu" );
 
 		isOpen = true;
+		SetClass("open", true);
 	}
 
 	public void CloseReceiptionMenu()
@@ -63,6 +72,7 @@ public class CondoRecept : Panel
 		Log.Info( "Close receiptionist menu" );
 
 		isOpen = false;
+		SetClass("open", false);
 	}
 
 	public override void Tick()
@@ -83,11 +93,35 @@ namespace SC.UI.Construct
 {
 	public class HeaderPanel : Panel
 	{
-		public HeaderPanel(String title)
+		public Label textLabel;
+		public HeaderPanel(String title, bool haveMarginTop = true)
 		{
 			Panel MainHeaderPanel = Add.Panel("HeaderPanel");
-			MainHeaderPanel.Add.Label(title, "headerTitle");
+			textLabel = MainHeaderPanel.Add.Label(title, "headerTitle");
 			MainHeaderPanel.Add.Panel("headerSeparator");
+
+			if (haveMarginTop) {
+				AddClass("addMarginTop");
+			}
+		}
+	}
+	public class ClientSuitePanel : Panel
+	{
+		public Label SuiteTitle;
+		public Panel SuiteBackground;
+		public Label suiteName;
+		public Button CheckoutBtn;
+		public ClientSuitePanel()
+		{
+			Panel RootPanel = Add.Panel("ClientSuitePanel");
+			SuiteBackground = RootPanel.Add.Panel("SuiteBackground");
+			RootPanel.AddChild(new HeaderPanel("Your Suite."));
+			Panel SuiteInfo = RootPanel.Add.Panel("SuiteInfo");
+			Panel SuiteInfoImage = SuiteInfo.Add.Panel("SuiteInfoImage");
+
+			Panel SuiteInfoStatus = SuiteInfo.Add.Panel("SuiteInfoStatus");
+			suiteName =  SuiteInfoStatus.Add.Label("No Name", "suiteText SuiteTitle");
+			CheckoutBtn = SuiteInfoStatus.Add.Button("Check out", "checkoutBtn");
 		}
 	}
 }
