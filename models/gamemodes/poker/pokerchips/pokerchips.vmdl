@@ -181,9 +181,9 @@
 						collision_interact_as = ""
 						collision_interact_with = ""
 						collision_interact_exclude = ""
-						radius = 0.784477
+						radius = 1.96458
 						point0 = [ 0.0, 0.0, -0.003345 ]
-						point1 = [ 0.0, 0.0, 0.150672 ]
+						point1 = [ 0.0, 0.0, 0.376692 ]
 					},
 				]
 			},

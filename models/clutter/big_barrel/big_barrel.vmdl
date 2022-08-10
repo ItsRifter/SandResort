@@ -32,10 +32,7 @@
 						name = "big_barrel_phy"
 						parent_bone = ""
 						surface_prop = "wood"
-						collision_group = ""
-						collision_interact_as = ""
-						collision_interact_with = ""
-						collision_interact_exclude = ""
+						collision_tags = "solid"
 						recenter_on_parent_bone = false
 						offset_origin = [ 0.0, 0.0, 0.0 ]
 						offset_angles = [ 0.0, 0.0, 0.0 ]
@@ -58,10 +55,7 @@
 						_class = "PhysicsShapeBox"
 						parent_bone = ""
 						surface_prop = "wood"
-						collision_group = ""
-						collision_interact_as = ""
-						collision_interact_with = ""
-						collision_interact_exclude = ""
+						collision_tags = "solid"
 						origin = [ 67.893265, -0.387633, 22.650236 ]
 						angles = [ 0.0, 0.0, 0.0 ]
 						dimensions = [ 10.203643, 5.101124, 10.076038 ]

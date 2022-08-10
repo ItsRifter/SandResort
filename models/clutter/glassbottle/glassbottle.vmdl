@@ -299,10 +299,7 @@
 						name = "glassbottle_phy"
 						parent_bone = ""
 						surface_prop = "default"
-						collision_group = ""
-						collision_interact_as = ""
-						collision_interact_with = ""
-						collision_interact_exclude = ""
+						collision_tags = "solid"
 						recenter_on_parent_bone = false
 						offset_origin = [ 0.0, 0.0, 0.0 ]
 						offset_angles = [ 0.0, 0.0, 0.0 ]
@@ -356,7 +353,6 @@
 						placement_bone = ""
 						placement_attach = ""
 						is_ragdoll = false
-						collision_group = "default"
 						offset = [ 0.0, 0.0, 0.0 ]
 						fadetime = 20.0
 						fade_min_dist = 0.0
@@ -364,6 +360,7 @@
 						name_mode = "none"
 						random_spawn_chance = 1.0
 						is_essential_piece = false
+						collision_tags = "solid"
 						manual_mode = false
 						surface_prop_override = ""
 					},
@@ -396,7 +393,6 @@
 						placement_bone = ""
 						placement_attach = ""
 						is_ragdoll = false
-						collision_group = "default"
 						offset = [ 0.0, 0.0, 0.0 ]
 						fadetime = 20.0
 						fade_min_dist = 0.0
@@ -404,6 +400,7 @@
 						name_mode = "none"
 						random_spawn_chance = 1.0
 						is_essential_piece = false
+						collision_tags = "solid"
 						manual_mode = false
 						surface_prop_override = ""
 					},
@@ -436,7 +433,6 @@
 						placement_bone = ""
 						placement_attach = ""
 						is_ragdoll = false
-						collision_group = "default"
 						offset = [ 0.0, 0.0, 0.0 ]
 						fadetime = 20.0
 						fade_min_dist = 0.0
@@ -444,6 +440,7 @@
 						name_mode = "none"
 						random_spawn_chance = 1.0
 						is_essential_piece = false
+						collision_tags = "solid"
 						manual_mode = false
 						surface_prop_override = ""
 					},
@@ -476,7 +473,6 @@
 						placement_bone = ""
 						placement_attach = ""
 						is_ragdoll = false
-						collision_group = "default"
 						offset = [ 0.0, 0.0, 0.0 ]
 						fadetime = 20.0
 						fade_min_dist = 0.0
@@ -484,6 +480,7 @@
 						name_mode = "none"
 						random_spawn_chance = 1.0
 						is_essential_piece = false
+						collision_tags = "solid"
 						manual_mode = false
 						surface_prop_override = ""
 					},
@@ -516,7 +513,6 @@
 						placement_bone = ""
 						placement_attach = ""
 						is_ragdoll = false
-						collision_group = "default"
 						offset = [ 0.0, 0.0, 0.0 ]
 						fadetime = 20.0
 						fade_min_dist = 0.0
@@ -524,6 +520,7 @@
 						name_mode = "none"
 						random_spawn_chance = 1.0
 						is_essential_piece = false
+						collision_tags = "solid"
 						manual_mode = false
 						surface_prop_override = ""
 					},
@@ -556,7 +553,6 @@
 						placement_bone = ""
 						placement_attach = ""
 						is_ragdoll = false
-						collision_group = "default"
 						offset = [ 0.0, 0.0, 0.0 ]
 						fadetime = 20.0
 						fade_min_dist = 0.0
@@ -564,6 +560,7 @@
 						name_mode = "none"
 						random_spawn_chance = 1.0
 						is_essential_piece = false
+						collision_tags = "solid"
 						manual_mode = false
 						surface_prop_override = ""
 					},
@@ -596,7 +593,6 @@
 						placement_bone = ""
 						placement_attach = ""
 						is_ragdoll = false
-						collision_group = "default"
 						offset = [ 0.0, 0.0, 0.0 ]
 						fadetime = 20.0
 						fade_min_dist = 0.0
@@ -604,6 +600,7 @@
 						name_mode = "none"
 						random_spawn_chance = 1.0
 						is_essential_piece = false
+						collision_tags = "solid"
 						manual_mode = false
 						surface_prop_override = ""
 					},
@@ -636,7 +633,6 @@
 						placement_bone = ""
 						placement_attach = ""
 						is_ragdoll = false
-						collision_group = "default"
 						offset = [ 0.0, 0.0, 0.0 ]
 						fadetime = 20.0
 						fade_min_dist = 0.0
@@ -644,6 +640,7 @@
 						name_mode = "none"
 						random_spawn_chance = 1.0
 						is_essential_piece = false
+						collision_tags = "solid"
 						manual_mode = false
 						surface_prop_override = ""
 					},

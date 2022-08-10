@@ -96,10 +96,7 @@
 						_class = "PhysicsShapeCylinder"
 						parent_bone = ""
 						surface_prop = "plastic"
-						collision_group = ""
-						collision_interact_as = ""
-						collision_interact_with = ""
-						collision_interact_exclude = ""
+						collision_tags = "solid"
 						radius = 1.499951
 						point0 = [ 0.0, 0.0, 0.0 ]
 						point1 = [ 0.0, 0.0, 5.913599 ]
@@ -182,7 +179,6 @@
 						placement_bone = ""
 						placement_attach = ""
 						is_ragdoll = false
-						collision_group = "default"
 						offset = [ 0.0, 0.0, 0.0 ]
 						fadetime = 20.0
 						fade_min_dist = 0.0
@@ -190,6 +186,7 @@
 						name_mode = "none"
 						random_spawn_chance = 1.0
 						is_essential_piece = false
+						collision_tags = "solid"
 						model = ""
 					},
 				]

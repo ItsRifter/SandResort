@@ -651,9 +651,9 @@
 						collision_interact_as = ""
 						collision_interact_with = ""
 						collision_interact_exclude = "player playerclip"
-						origin = [ -0.001372, -0.001425, 0.002789 ]
+						origin = [ -0.003708, -0.001329, 0.009309 ]
 						angles = [ 0.0, 0.0, 0.0 ]
-						dimensions = [ 3.529596, 2.328818, 0.01488 ]
+						dimensions = [ 8.9659, 5.909849, 0.058579 ]
 					},
 				]
 			},

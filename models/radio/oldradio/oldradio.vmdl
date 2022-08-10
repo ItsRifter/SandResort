@@ -19,7 +19,7 @@
 					},
 					{
 						_class = "LODGroup"
-						switch_threshold = 15.0
+						switch_threshold = 25.0
 						meshes = 
 						[
 							"lod_1",
@@ -27,7 +27,7 @@
 					},
 					{
 						_class = "LODGroup"
-						switch_threshold = 25.0
+						switch_threshold = 35.0
 						meshes = 
 						[
 							"lod_2",
@@ -70,10 +70,7 @@
 						name = "oldradio_phy"
 						parent_bone = ""
 						surface_prop = "wood.sheet"
-						collision_group = ""
-						collision_interact_as = ""
-						collision_interact_with = ""
-						collision_interact_exclude = ""
+						collision_tags = "solid"
 						recenter_on_parent_bone = false
 						offset_origin = [ 0.0, 0.0, 0.0 ]
 						offset_angles = [ 0.0, 0.0, 0.0 ]
