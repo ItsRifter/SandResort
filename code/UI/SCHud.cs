@@ -22,6 +22,8 @@ public class SCHud : RootPanel
 		AddChild<Scoreboard<ScoreboardEntry>>();
 
 		AddChild<CondoRecept>();
+
+		CurHud = this;
 	}
 }
 
