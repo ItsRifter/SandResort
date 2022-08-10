@@ -1,7 +1,7 @@
 {
   "Title": "Sand Castle",
   "Type": "game",
-  "Org": "rifter",
+  "Org": "dropkick",
   "Ident": "sandcastle",
   "Schema": 1,
   "HasAssets": true,
@@ -18,11 +18,14 @@
     "GameNetworkType": "Multiplayer",
     "MapSelect": "Official",
     "MapList": [
-      "rifter.sc_lobby"
+      "dropkick.sc_lobby"
     ],
     "RankType": "None",
     "PerMapRanking": false,
     "LeaderboardType": "None",
-    "GameCategory": "Social"
+    "GameCategory": "Social",
+    "ControlModes": {
+      "Keyboard": true
+    }
   }
 }
