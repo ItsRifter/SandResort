@@ -91,6 +91,8 @@ public partial class BasePawn : Player
 		var controller = GetActiveController();
 		controller?.Simulate( cl, this, GetActiveAnimator() );
 
+		TickPlayerUse();
+
 		if ( cl.GetClientData( "cl_showfps", false ) )
 		{
 			var fps = 1 / RealTime.Delta;

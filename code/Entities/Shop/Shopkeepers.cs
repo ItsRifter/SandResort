@@ -36,7 +36,7 @@ public class ShopKeeperBase : AnimatedEntity, IUse
 		if ( user is not BasePawn player )
 			return false;
 
-
+		Log.Info( "Hey" );
 
 		timeNextUse = 0;
 

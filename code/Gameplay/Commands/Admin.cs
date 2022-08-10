@@ -7,7 +7,7 @@ using Sandbox;
 
 public partial class SCGame
 {
-	[ConCmd.Admin("sc_ent_spawn")]
+	[ConCmd.Server("sc_ent_spawn")]
 	public static void EntitySpawnCMD(string entName)
 	{
 		var player = ConsoleSystem.Caller.Pawn as BasePawn;
@@ -16,11 +16,20 @@ public partial class SCGame
 			return;
 
 		Entity ent = null;
-		Log.Info( TypeLibrary.GetTypeByName( entName ) );
+
+		//Check if its a shop/npc
 		switch(TypeLibrary.GetTypeByName(entName).ToString())
 		{
 			case "ShopKeeperBase":
 				ent = TypeLibrary.Create<ShopKeeperBase>( entName );
+				break;
+		}
+
+		//if we didn't get an entity type, try again but with a basetype
+		switch ( TypeLibrary.GetTypeByName( entName ).BaseType.ToString() )
+		{
+			case "PropBase":
+				ent = TypeLibrary.Create<PropBase>( entName );
 				break;
 		}
 

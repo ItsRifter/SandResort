@@ -15,7 +15,7 @@ public partial class SCGame : Game
 	{
 		if(IsServer)
 		{
-			
+
 		}
 
 		if ( IsClient )
