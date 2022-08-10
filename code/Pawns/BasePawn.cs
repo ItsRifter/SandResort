@@ -138,6 +138,18 @@ public partial class BasePawn : Player
 			AchTracker.Update( this, "Walkathon" );
 	}
 
+	public IList<AchBase> GetAchievements()
+	{
+		IList<AchBase> finished = new List<AchBase>();
+
+		foreach ( AchBase ach in AchTracker.Tracked )
+		{
+			finished.Add( ach ); 
+		}
+
+		return finished;
+	}
+
 	//Creates a player ragdoll with clothing (if any) at force with bone index
 	[ClientRpc]
 	public void CreatePlayerRagdoll( Vector3 force, int forceBone )

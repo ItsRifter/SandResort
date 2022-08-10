@@ -45,4 +45,40 @@ public partial class SCGame
 
 		ent.Position = tr.EndPosition;
 	}
+
+	[ConCmd.Admin("sc_data_save")]
+	public static void SaveDataCMD(string targetName = "")
+	{
+		var player = ConsoleSystem.Caller.Pawn as BasePawn;
+
+		if ( player == null )
+			return;
+
+		if(string.IsNullOrEmpty( targetName ) )
+		{
+			Instance.SavePlayer( player );
+		} 
+		else
+		{
+			BasePawn target = null;
+		}
+	}
+
+	[ConCmd.Admin( "sc_data_load" )]
+	public static void LoadDataCMD( string targetName = "" )
+	{
+		var player = ConsoleSystem.Caller.Pawn as BasePawn;
+
+		if ( player == null )
+			return;
+
+		if ( string.IsNullOrEmpty( targetName ) )
+		{
+			Instance.LoadPlayer( player );
+		}
+		else
+		{
+			BasePawn target = null;
+		}
+	}
 }

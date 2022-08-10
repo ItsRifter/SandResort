@@ -30,6 +30,7 @@ public class AchTracker
 		//TODO: check if the player has completed the achievement already so we don't restart it
 
 		AchBase newAch = TypeLibrary.Create<AchBase>( achToStart );
+		newAch.IsCompleted = false;
 		newAch.Progress = 0;
 
 		Tracked.Add(newAch);
@@ -38,12 +39,12 @@ public class AchTracker
 	public void Update( BasePawn player, string achName, int updateProg = 1 )
 	{
 		if(!CheckAchievement(achName))
-		{
-			Log.Info( $"Achievement '{achName}' doesn't exist in tracker, starting" );
 			Start( achName );
-		}
 
 		AchBase ach = Tracked.FirstOrDefault( x => x.ToString() == achName );
+
+		if ( ach.IsCompleted )
+			return;
 
 		ach.Progress += updateProg;
 
@@ -60,8 +61,7 @@ public class AchTracker
 	}
 	public void GiveRewards(BasePawn player, AchBase ach)
 	{
-		Log.Info( "Yay" );
 		player.PlaySound( "ach_award" );
-		Tracked.Remove( ach );
+		ach.IsCompleted = true;
 	}
 }

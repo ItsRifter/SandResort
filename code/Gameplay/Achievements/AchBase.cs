@@ -14,7 +14,9 @@ public class AchBase
 	public virtual int AchGoal => 1;
 	public virtual int MoneyReward => 1;
 
-	public int Progress;
+	public int Progress { get; set; }
+
+	public bool IsCompleted { get; set; }
 
 	//TODO: Item rewards
 }
