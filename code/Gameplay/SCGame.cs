@@ -9,8 +9,7 @@ using System.Threading.Tasks;
 
 public partial class SCGame : Game
 {
-	public static SCGame Instance { get; private set; } = Current as SCGame;
-	public SCHud Hud;
+	public static SCGame Instance { get; protected set; } = Current as SCGame;
 
 	public SCGame()
 	{
@@ -21,7 +20,7 @@ public partial class SCGame : Game
 
 		if ( IsClient )
 		{
-			Hud = new SCHud();
+			_ = new SCHud();
 		}
 	}
 
@@ -30,12 +29,10 @@ public partial class SCGame : Game
 	{
 		if ( IsClient )
 		{
-			Hud.Delete();
-			Hud = new SCHud();
+			_ = new SCHud();
 		}
 	}
 
-	//Allow admins to use dev cam
 	public override void DoPlayerDevCam( Client client )
 	{
 		var camera = client.Components.Get<DevCamera>( true );
@@ -50,7 +47,6 @@ public partial class SCGame : Game
 		camera.Enabled = !camera.Enabled;
 	}
 
-	//Allow admins to toggle noclipping
 	public override void DoPlayerNoclip( Client player )
 	{
 		if ( player.Pawn is Player basePlayer )

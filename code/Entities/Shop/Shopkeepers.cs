@@ -15,6 +15,13 @@ public class ShopKeeperBase : AnimatedEntity, IUse
 		base.Spawn();
 
 		SetModel( "models/citizen/citizen.vmdl" );
+		EyePosition = Position + Vector3.Up * 64;
+
+		SetupPhysicsFromCapsule( PhysicsMotionType.Keyframed, Capsule.FromHeightAndRadius( 72, 8 ) );
+
+		Tags.Add( "shop" );
+
+		SetBodyGroup( 1, 0 );
 	}
 	public bool IsUsable( Entity user )
 	{
