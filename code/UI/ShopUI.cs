@@ -28,13 +28,17 @@ public class ShopUI : Panel
         for (int i = 0; i < 12; i++)
         {
             ShopItem item = new ShopItem();
-            item.Name = "Item number: none";
+            item.Name = "Item number: " + (i+1);
             item.Description = "This is a test";
-            item.Price = i;
+            item.Price = 250;
             item.iconImage = "ui/alex.jpg";
 
             shopItems.AddChild(item);
         }
+
+        Panel ShopItemInfo = ShopRootPanel.Add.Panel("itemShopInfo");
+        ShopItemInfo.AddChild(new HeaderPanel("Item Info"));
+        ShopItemInfo.Add.Label("// TODO Make Render Screne and info", "text itemName");
 
         // Panel ItemInfo = ShopRootPanel.Add.Panel("MainShop");
         // ItemInfo.AddChild(new HeaderPanel("Info"));
@@ -50,7 +54,7 @@ public class ShopUI : Panel
 			lastOpen = 0;
 			isOpen = !isOpen;
 			SetClass("open", isOpen);
-			Log.Info( $"receiptionist menu open: {isOpen}" );
+			Log.Info( $"shop menu open: {isOpen}" );
 		}
 	}
 }
@@ -63,7 +67,7 @@ public class ShopItem : Panel
     public Panel itemIcon;
     public Panel ShopItemPanel;
 
-    public ShopItem()
+    public ShopItem(Action onClick = null)
     {
         ShopItemPanel = Add.Panel("ShopItemPanel");
         itemIcon = ShopItemPanel.Add.Panel("itemImg");
@@ -71,6 +75,13 @@ public class ShopItem : Panel
         itemName = itemInfo.Add.Label("Missing Name", "itemName");
         itemDescription = itemInfo.Add.Label("Missing Description", "itemDescription");
         itemPrice = itemInfo.Add.Label("Free", "itemPrice");
+
+        ShopItemPanel.AddEventListener("onClick", () => {
+            if (onClick != null)
+            {
+                onClick();
+            }
+        });
     }
         
     public string Name { 

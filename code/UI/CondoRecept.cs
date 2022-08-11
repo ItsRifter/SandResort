@@ -104,6 +104,10 @@ namespace SC.UI.Construct
 				AddClass("addMarginTop");
 			}
 		}
+		public string Title {
+			get { return textLabel.Text; }
+			set { textLabel.Text = value; }
+		}
 	}
 	public class ClientSuitePanel : Panel
 	{
