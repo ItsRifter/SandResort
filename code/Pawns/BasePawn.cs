@@ -5,9 +5,13 @@ using System.Linq;
 
 
 //Base of PlayHome's player pawns
-public partial class BasePawn : Player
+public partial class BasePawn : Player, IPlayerData
 {
 	public AchTracker AchTracker { get; protected set; }
+
+	public string PlayerName => Client.Name;
+
+	public IList<AchBase> Achievements => GetAchievements();
 
 	DamageInfo lastDMGInfo;
 
@@ -142,7 +146,7 @@ public partial class BasePawn : Player
 	{
 		IList<AchBase> finished = new List<AchBase>();
 
-		foreach ( AchBase ach in AchTracker.Tracked )
+		foreach ( var ach in AchTracker.Tracked )
 		{
 			finished.Add( ach ); 
 		}
@@ -157,42 +161,28 @@ public partial class BasePawn : Player
 		var ent = new ModelEntity();
 		ent.Position = Position;
 		ent.Rotation = Rotation;
+		ent.Scale = Scale;
 		ent.UsePhysicsCollision = true;
+		ent.EnableAllCollisions = true;
 
-		ent.CopyFrom( this );
+		ent.SetModel( GetModelName() );
 		ent.CopyBonesFrom( this );
-		ent.SetRagdollVelocityFrom( this );
+		ent.CopyBodyGroups( this );
+		ent.CopyMaterialGroup( this );
+		ent.TakeDecalsFrom( this );
+		ent.CopyMaterialOverrides( this );
 
-		// Copy the clothes over
-		foreach ( var child in Children )
-		{
-			if ( !child.Tags.Has( "clothes" ) )
-				continue;
+		ent.EnableHitboxes = true;
+		ent.EnableAllCollisions = true;
+		ent.SurroundingBoundsMode = SurroundingBoundsType.Physics;
+		ent.RenderColor = RenderColor;
 
-			if ( child is ModelEntity e )
-			{
-				var clothing = new ModelEntity();
-				clothing.CopyFrom( e );
-				clothing.SetParent( ent, true );
-			}
-		}
-
-		ent.PhysicsGroup.AddVelocity( force );
-
-		if ( forceBone >= 0 )
-		{
-			var body = ent.GetBonePhysicsBody( forceBone );
-			if ( body != null )
-			{
-				body.ApplyForce( force * 1000 );
-			}
-			else
-			{
-				ent.PhysicsGroup.AddVelocity( force );
-			}
-		}
+		Tags.Clear();
+		Tags.Add( "solid" );
 
 		Corpse = ent;
+
+		ent.DeleteAsync( 10.0f );
 	}
 
 	[ClientRpc]

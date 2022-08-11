@@ -49,14 +49,14 @@ public partial class SCGame
 	[ConCmd.Admin("sc_data_save")]
 	public static void SaveDataCMD(string targetName = "")
 	{
-		var player = ConsoleSystem.Caller.Pawn as BasePawn;
+		var client = ConsoleSystem.Caller;
 
-		if ( player == null )
+		if ( client == null )
 			return;
 
 		if(string.IsNullOrEmpty( targetName ) )
 		{
-			Instance.SavePlayer( player );
+			Instance.SavePlayer( client );
 		} 
 		else
 		{
@@ -67,14 +67,14 @@ public partial class SCGame
 	[ConCmd.Admin( "sc_data_load" )]
 	public static void LoadDataCMD( string targetName = "" )
 	{
-		var player = ConsoleSystem.Caller.Pawn as BasePawn;
+		var client = ConsoleSystem.Caller;
 
-		if ( player == null )
+		if ( client == null )
 			return;
 
 		if ( string.IsNullOrEmpty( targetName ) )
 		{
-			Instance.LoadPlayer( player );
+			Instance.LoadPlayer( client );
 		}
 		else
 		{

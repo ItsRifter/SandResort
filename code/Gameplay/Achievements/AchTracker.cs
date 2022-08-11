@@ -59,6 +59,7 @@ public class AchTracker
 
 		return true;
 	}
+
 	public void GiveRewards(BasePawn player, AchBase ach)
 	{
 		player.PlaySound( "ach_award" );

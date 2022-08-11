@@ -74,17 +74,27 @@ public partial class SCGame : Game
 		base.ClientJoined( client );
 
 		var pawn = new BasePawn();
+
 		pawn.Spawn();
 
 		client.Pawn = pawn;
+
+		if ( !LoadPlayer( client ) )
+			SavePlayer( client );
+
 	}
 	public override void ClientDisconnect( Client cl, NetworkDisconnectionReason reason )
 	{
+		SavePlayer( cl );
+
 		base.ClientDisconnect( cl, reason );
 	}
 
 	public override void Shutdown()
-	{	
+	{
+		foreach ( Client cl in Client.All )
+			SavePlayer( cl );
+
 		base.Shutdown();
 	}
 

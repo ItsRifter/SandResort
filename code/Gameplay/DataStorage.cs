@@ -11,31 +11,45 @@ interface IPlayerData
 	IList<AchBase> Achievements { get; }
 }
 
-public partial class BasePawn : IPlayerData
+public partial class PlayerData : IPlayerData
 {
-	public string PlayerName { get => Client.Name; }
-	public IList<AchBase> Achievements { get => GetAchievements(); }
+	public string PlayerName { get; }
+	public IList<AchBase> Achievements { get; set; }
 }
 
 public partial class SCGame
 {
-	public void SavePlayer(BasePawn player)
+	public void SavePlayer(Client cl)
 	{
-		FileSystem.Data.WriteJson($"{player.Client.PlayerId}.json", (IPlayerData)player);
+		var pawn = cl.Pawn as BasePawn;
+
+		if ( pawn == null )
+			return;
+
+		FileSystem.Data.WriteJson($"{cl.PlayerId}.json", (IPlayerData)pawn );
 	}
 
-	public bool LoadPlayer( BasePawn player )
+	public bool LoadPlayer( Client cl )
 	{
-		if ( !FileSystem.Data.FileExists( $"{player.Client.PlayerId}.json" ) )
+		if ( !FileSystem.Data.FileExists( $"{cl.PlayerId}.json" ) )
 			return false;
 
-		var data = FileSystem.Data.ReadJson<IPlayerData>( $"{player.Client.PlayerId}.json" );
+		var data = FileSystem.Data.ReadJson<PlayerData>( $"{cl.PlayerId}.json" );
 
-		foreach ( AchBase ach in data.Achievements )
-			player.AchTracker.Tracked.Add( ach );
+		var pawn = cl.Pawn as BasePawn;
 
+		if ( pawn == null )
+			return false;
+
+		foreach ( var ach in data.Achievements )
+		{
+			Log.Info( ach.AchName );
+			//pawn.AchTracker.Tracked.Add( ach );
+		}
 
 		return true;
 	}
 }
+
+
 
