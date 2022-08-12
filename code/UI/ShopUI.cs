@@ -71,8 +71,8 @@ public class ShopUI : Panel
 		if ( lastOpen > 0.1 && Input.Pressed( InputButton.Menu ) )
 		{
 			lastOpen = 0;
-			//isOpen = !isOpen;
-			//SetClass( "open", isOpen );
+			isOpen = !isOpen;
+			SetClass( "open", isOpen );
 
 
 			switch ( isOpen )

@@ -79,7 +79,7 @@ public class CondoRecept : Panel
 	{
 		base.Tick();
 
-		if(lastOpen > 0.1 && Input.Pressed(InputButton.Menu))
+		if(lastOpen > 0.1 && Input.Pressed(InputButton.Use))
 		{
 			lastOpen = 0;
 			isOpen = !isOpen;
