@@ -67,7 +67,7 @@ public class ShopItem : Panel
     public Panel itemIcon;
     public Panel ShopItemPanel;
 
-    public ShopItem(Action onClick = null)
+    public ShopItem(Action onClick = null, Action onBuyClick = null)
     {
         ShopItemPanel = Add.Panel("ShopItemPanel");
         itemIcon = ShopItemPanel.Add.Panel("itemImg");
@@ -75,13 +75,24 @@ public class ShopItem : Panel
         itemName = itemInfo.Add.Label("Missing Name", "itemName");
         itemDescription = itemInfo.Add.Label("Missing Description", "itemDescription");
         itemPrice = itemInfo.Add.Label("Free", "itemPrice");
+        Button buyButton = Add.Button("Buy", "buyButton", () => {
+            Log.Info("Buy Button Pressed");
+            if (onBuyClick != null)
+            {
+                Log.Info("Buy Action!");
+                onBuyClick();
+            }
+        });
 
         ShopItemPanel.AddEventListener("onClick", () => {
+            Log.Info("Shop Item Clicked");
             if (onClick != null)
             {
+                Log.Info("Item Action!");
                 onClick();
             }
         });
+
     }
         
     public string Name { 
