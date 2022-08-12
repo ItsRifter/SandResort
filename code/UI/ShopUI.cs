@@ -37,13 +37,14 @@ public class ShopUI : Panel
         }
 
         Panel ShopItemInfo = ShopRootPanel.Add.Panel("itemShopInfo");
-        ShopItemInfo.AddChild(new HeaderPanel("Item Info"));
-        ShopItemInfo.Add.Label("// TODO Make Render Screne and info", "text itemName");
+		ShopItemInfo.AddChild( new HeaderPanel( "Item Info" ) );
+		ShopItemInfo.AddChild( new ItemInfo() );
+		//ShopItemInfo.Add.Label("// TODO Make Render Screne and info", "text itemName");
 
-        // Panel ItemInfo = ShopRootPanel.Add.Panel("MainShop");
-        // ItemInfo.AddChild(new HeaderPanel("Info"));
+		// Panel ItemInfo = ShopRootPanel.Add.Panel("MainShop");
+		// ItemInfo.AddChild(new HeaderPanel("Info"));
 
-    }
+	}
 
     public override void Tick()
 	{
@@ -75,7 +76,16 @@ public class ShopItem : Panel
         itemName = itemInfo.Add.Label("Missing Name", "itemName");
         itemDescription = itemInfo.Add.Label("Missing Description", "itemDescription");
         itemPrice = itemInfo.Add.Label("Free", "itemPrice");
-        Button buyButton = Add.Button("Buy", "buyButton", () => {
+		Panel Buttons = Add.Panel("buttons");
+		//Button moreinfoButton = Buttons.Add.Button( "More info", "normalButton", () => {
+		//	Log.Info( "Item Pressed" );
+		//	if ( onClick != null )
+		//	{
+		//		Log.Info( "Item Action!" );
+		//		onClick();
+		//	}
+		//} );
+		Button buyButton = Buttons.Add.Button("Buy", "buyButton", () => {
             Log.Info("Buy Button Pressed");
             if (onBuyClick != null)
             {
@@ -84,7 +94,7 @@ public class ShopItem : Panel
             }
         });
 
-        ShopItemPanel.AddEventListener("onClick", () => {
+		ShopItemPanel.AddEventListener("onClick", () => {
             Log.Info("Shop Item Clicked");
             if (onClick != null)
             {
@@ -111,4 +121,29 @@ public class ShopItem : Panel
         set { itemIcon.Style.SetBackgroundImage(value); }
     }
 
+}
+
+public class ItemInfo : Panel
+{
+	public Panel RootPanel;
+	public Label textItemName;
+
+	//readonly ScenePanel itemScenePreview;
+	//Angles CamAngles = new( 25.0f, 0f, 0f );
+	//float CamDistance = 120;
+	//Vector3 CamPos => Vector3.Up * 10 + CamAngles.Direction * -CamDistance;
+	public ItemInfo()
+	{
+		RootPanel = Add.Panel( "rootPanel" );
+		textItemName = RootPanel.Add.Label( "No item name", "itemname" );
+		//RootPanel.Add.Label( "hello world!", "text" );
+		//var world = itemScenePreview.CreateSc
+		//itemScenePreview = Add.ScenePanel( itemScenePreview, camAngle)
+	}
+
+	public string ItemName
+	{
+		get { return textItemName.Text; }
+		set { textItemName.Text = value; }
+	}
 }
