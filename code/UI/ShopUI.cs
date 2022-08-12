@@ -25,37 +25,52 @@ public class ShopUI : Panel
         MainShop.AddChild(new HeaderPanel("Shop"));
         shopItems = MainShop.Add.Panel("shopItems");
 
-        for (int i = 0; i < 12; i++)
-        {
-            ShopItem item = new ShopItem();
-            item.Name = "Item number: " + (i+1);
-            item.Description = "This is a test";
-            item.Price = 250;
-            item.iconImage = "ui/alex.jpg";
-
-            shopItems.AddChild(item);
-        }
-
         Panel ShopItemInfo = ShopRootPanel.Add.Panel("itemShopInfo");
 		ShopItemInfo.AddChild( new HeaderPanel( "Item Info" ) );
 		ShopItemInfo.AddChild( new ItemInfo() );
-		//ShopItemInfo.Add.Label("// TODO Make Render Screne and info", "text itemName");
-
-		// Panel ItemInfo = ShopRootPanel.Add.Panel("MainShop");
-		// ItemInfo.AddChild(new HeaderPanel("Info"));
 
 	}
 
-    public override void Tick()
+	public void OpenShop()
+	{
+		foreach ( var prop in PropBase.GetProps() )
+		{
+			ShopItem item = new ShopItem();
+			item.Name = prop.PropName;
+			item.Description = prop.Desc;
+			item.Price = prop.Cost;
+			item.iconImage = prop.IconImage;
+
+			shopItems.AddChild( item );
+		}
+	}
+
+	public void CloseShop()
+	{
+		shopItems.DeleteChildren();
+	}
+
+	public override void Tick()
 	{
 		base.Tick();
 
-		if(lastOpen > 0.1 && Input.Pressed(InputButton.Menu))
+		if ( lastOpen > 0.1 && Input.Pressed( InputButton.Menu ) )
 		{
 			lastOpen = 0;
 			isOpen = !isOpen;
-			SetClass("open", isOpen);
-			Log.Info( $"shop menu open: {isOpen}" );
+			SetClass( "open", isOpen );
+
+
+			switch ( isOpen )
+			{
+				case true:
+					OpenShop();
+					break;
+				case false:
+					CloseShop();
+					break;
+			}
+
 		}
 	}
 }
@@ -72,19 +87,15 @@ public class ShopItem : Panel
     {
         ShopItemPanel = Add.Panel("ShopItemPanel");
         itemIcon = ShopItemPanel.Add.Panel("itemImg");
+
         Panel itemInfo = ShopItemPanel.Add.Panel("itemInfo");
+
         itemName = itemInfo.Add.Label("Missing Name", "itemName");
         itemDescription = itemInfo.Add.Label("Missing Description", "itemDescription");
         itemPrice = itemInfo.Add.Label("Free", "itemPrice");
+
 		Panel Buttons = Add.Panel("buttons");
-		//Button moreinfoButton = Buttons.Add.Button( "More info", "normalButton", () => {
-		//	Log.Info( "Item Pressed" );
-		//	if ( onClick != null )
-		//	{
-		//		Log.Info( "Item Action!" );
-		//		onClick();
-		//	}
-		//} );
+
 		Button buyButton = Buttons.Add.Button("Buy", "buyButton", () => {
             Log.Info("Buy Button Pressed");
             if (onBuyClick != null)

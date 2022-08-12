@@ -46,7 +46,7 @@ public partial class SCGame
 		ent.Position = tr.EndPosition;
 	}
 
-	[ConCmd.Admin("sc_data_save")]
+	[ConCmd.Server( "sc_data_save")]
 	public static void SaveDataCMD(string targetName = "")
 	{
 		var client = ConsoleSystem.Caller;
@@ -64,7 +64,7 @@ public partial class SCGame
 		}
 	}
 
-	[ConCmd.Admin( "sc_data_load" )]
+	[ConCmd.Server( "sc_data_load" )]
 	public static void LoadDataCMD( string targetName = "" )
 	{
 		var client = ConsoleSystem.Caller;

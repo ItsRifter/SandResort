@@ -9,14 +9,15 @@ public class ClassicRadio : PropBase, IUse
 {
 	public override string ModelPath => "models/radio/oldradio/oldradio.vmdl";
 	public override string IconImage => "ui/icon_classicradio.png";
-
+	public override string PropName => "Classic Radio";
+	public override string Desc => "An old nostalgic radio which only has one channel";
 	public override float TimeWaitNextUse => 1.5f;
+	public override int Cost => 250;
 
 	Sound sound;
 
 	public override void InteractProp( Entity user )
 	{
-
 		if (!sound.Finished)
 		{
 			using ( Prediction.Off() )
@@ -36,8 +37,10 @@ public class Giftbox : PropBase, IUse
 {
 	public override string ModelPath => "models/special/gift/gift.vmdl";
 	public override string IconImage => "ui/icon_gift.png";
-
+	public override string PropName => "Gift box";
+	public override string Desc => "A mysterious present, wonder whats inside";
 	public override float TimeWaitNextUse => 0.5f;
+	public override int Cost => 300;
 
 	public override void InteractProp( Entity user )
 	{
