@@ -75,18 +75,18 @@ public class CondoRecept : Panel
 		SetClass("open", false);
 	}
 
-	// public override void Tick()
-	// {
-	// 	base.Tick();
+	public override void Tick()
+	{
+		base.Tick();
 
-	// 	if(lastOpen > 0.1 && Input.Pressed(InputButton.Menu))
-	// 	{
-	// 		lastOpen = 0;
-	// 		isOpen = !isOpen;
-	// 		SetClass("open", isOpen);
-	// 		Log.Info( $"receiptionist menu open: {isOpen}" );
-	// 	}
-	// }
+		if(lastOpen > 0.1 && Input.Pressed(InputButton.Menu))
+		{
+			lastOpen = 0;
+			isOpen = !isOpen;
+			SetClass("open", isOpen);
+			Log.Info( $"receiptionist menu open: {isOpen}" );
+		}
+	}
 }
 
 namespace SC.UI.Construct

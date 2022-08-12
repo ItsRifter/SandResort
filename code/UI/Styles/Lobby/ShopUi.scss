@@ -6,6 +6,7 @@ ShopUI {
     width: 100%;
     opacity: 0;
     transition: opacity 0.1s ease;
+    pointer-events: none;
 
     &.open {
         opacity: 1;
@@ -38,6 +39,7 @@ ShopUI {
             }
 
             width: 150%;
+            height: 100%:
             flex-direction: column;
 
             .shopItems {
@@ -159,18 +161,33 @@ ShopUI {
             // max-width: 800px;
         }
     }
-}
-ItemInfo {
-    width: 100%;
 
-    .rootPanel {
+    ItemInfo {
         width: 100%;
-    }
 
-    .itemname {
-        align-items: center;
-        justify-content: center;
-        font-size: 24px;
-        font-weight: bold;
+        .rootPanel {
+            width: 100%;
+            flex-direction: column;
+        }
+
+        .itemname {
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .Description {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .TextPrice {
+            width: 100%;
+            padding: 12px 24px;
+            background-color: $background-2;
+            font-size: 24px;
+        }
     }
 }
