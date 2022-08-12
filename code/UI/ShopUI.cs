@@ -14,7 +14,11 @@ public class ShopUI : Panel
     public Panel ShopRootPanel;
     public TimeSince lastOpen = 0;
     public Panel shopItems;
-    public ShopUI() { 
+
+	public ItemInfo itemInfo1;
+
+
+	public ShopUI() { 
         SetClass("open", isOpen);
 		StyleSheet.Load( "UI/Styles/Lobby/ShopUi.scss" );
 		StyleSheet.Load( "UI/Styles/Lobby/CSUIContruct.scss" );
@@ -27,7 +31,8 @@ public class ShopUI : Panel
 
         Panel ShopItemInfo = ShopRootPanel.Add.Panel("itemShopInfo");
 		ShopItemInfo.AddChild( new HeaderPanel( "Item Info" ) );
-		ShopItemInfo.AddChild( new ItemInfo() );
+		itemInfo1 = new ItemInfo();
+		ShopItemInfo.AddChild( itemInfo1 );
 
 	}
 
@@ -35,7 +40,10 @@ public class ShopUI : Panel
 	{
 		foreach ( var prop in PropBase.GetProps() )
 		{
-			ShopItem item = new ShopItem();
+			ShopItem item = new ShopItem(() =>
+			{
+				itemInfo1.ItemName = prop.PropName;
+			} );
 			item.Name = prop.PropName;
 			item.Description = prop.Desc;
 			item.Price = prop.Cost;
