@@ -27,19 +27,15 @@ namespace SC.UI.Construct
 			Panel Buttons = Add.Panel( "buttons" );
 
 			Button buyButton = Buttons.Add.Button( "Buy", "buyButton", () => {
-				Log.Info( "Buy Button Pressed" );
 				if ( onBuyClick != null )
 				{
-					Log.Info( "Buy Action!" );
 					onBuyClick();
 				}
 			} );
 
 			ShopItemPanel.AddEventListener( "onClick", () => {
-				Log.Info( "Shop Item Clicked" );
 				if ( onClick != null )
 				{
-					Log.Info( "Item Action!" );
 					onClick();
 				}
 			} );

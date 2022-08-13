@@ -10,7 +10,6 @@ using SC.UI.Construct;
 
 public class ShopUI : Panel
 {
-    public bool isOpen = false;
     public Panel ShopRootPanel;
     public TimeSince lastOpen = 0;
     public Panel shopItems;
@@ -19,7 +18,6 @@ public class ShopUI : Panel
 
 
 	public ShopUI() { 
-        SetClass("open", isOpen);
 		StyleSheet.Load( "UI/Styles/Lobby/ShopUi.scss" );
 		StyleSheet.Load( "UI/Styles/Lobby/CSUIContruct.scss" );
 
@@ -34,6 +32,8 @@ public class ShopUI : Panel
 		itemInfo1 = new ItemInfo();
 		itemInfo1.DescriptionInfo = "Select an item for more info.";
 		ShopItemInfo.AddChild( itemInfo1 );
+
+		OpenShop();
 
 	}
 
@@ -56,35 +56,8 @@ public class ShopUI : Panel
 		}
 	}
 
-	public void CloseShop()
-	{
-		shopItems.DeleteChildren();
-		itemInfo1.NameInfo = "No item selected!";
-		itemInfo1.DescriptionInfo= "Select an item for more info.";
-		itemInfo1.PriceInfo = 0;
-	}
-
 	public override void Tick()
 	{
 		base.Tick();
-
-		if ( lastOpen > 0.1 && Input.Pressed( InputButton.Menu ) )
-		{
-			lastOpen = 0;
-			isOpen = !isOpen;
-			SetClass( "open", isOpen );
-
-
-			switch ( isOpen )
-			{
-				case true:
-					OpenShop();
-					break;
-				case false:
-					CloseShop();
-					break;
-			}
-
-		}
 	}
 }

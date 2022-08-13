@@ -10,14 +10,13 @@ using SC.UI.Construct;
 
 public class CondoRecept : Panel
 {
-	public bool isOpen = false;
 	public Panel ReceptRootPanel;
     public TimeSince lastOpen = 0;
 	public Panel BlacklistPanel;
 
 	public CondoRecept()
 	{
-		SetClass("open", isOpen);
+		SetClass("open", true);
 		StyleSheet.Load( "UI/Styles/Lobby/CondoRecept.scss" );
 		StyleSheet.Load( "UI/Styles/Lobby/CSUIContruct.scss" );
 		ReceptRootPanel = Add.Panel("ReceptRootPanel");
@@ -48,44 +47,12 @@ public class CondoRecept : Panel
 
 		receiptionistTabs.AddTab( checkOutTab , "Condo Settings");
 
-
-		// ADD CHILD
 		ReceptRootPanel.AddChild(receiptionistTabs);
-	}
-
-	public void OpenReceiptonMenu()
-	{
-		if ( isOpen )
-			return;
-
-		Log.Info( "Open receiptionist menu" );
-
-		isOpen = true;
-		SetClass("open", true);
-	}
-
-	public void CloseReceiptionMenu()
-	{
-		if ( !isOpen )
-			return;
-
-		Log.Info( "Close receiptionist menu" );
-
-		isOpen = false;
-		SetClass("open", false);
 	}
 
 	public override void Tick()
 	{
 		base.Tick();
-
-		if(lastOpen > 0.1 && Input.Pressed(InputButton.Use))
-		{
-			lastOpen = 0;
-			isOpen = !isOpen;
-			SetClass("open", isOpen);
-			Log.Info( $"receiptionist menu open: {isOpen}" );
-		}
 	}
 }
 
