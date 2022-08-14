@@ -2,8 +2,9 @@
 using Sandbox;
 using Sandbox.UI;
 using Sandbox.UI.Construct;
+using SandCasle.UI;
 
-namespace SC.UI.Construct
+namespace SandCasle.UI
 {
 	public class ShopItem : Panel
 	{
@@ -26,14 +27,16 @@ namespace SC.UI.Construct
 
 			Panel Buttons = Add.Panel( "buttons" );
 
-			Button buyButton = Buttons.Add.Button( "Buy", "buyButton", () => {
+			Button buyButton = Buttons.Add.Button( "Buy", "buyButton", () =>
+			{
 				if ( onBuyClick != null )
 				{
 					onBuyClick();
 				}
 			} );
 
-			ShopItemPanel.AddEventListener( "onClick", () => {
+			ShopItemPanel.AddEventListener( "onClick", () =>
+			{
 				if ( onClick != null )
 				{
 					onClick();
@@ -108,5 +111,58 @@ namespace SC.UI.Construct
 		//		get { return int.Parse( textDescription.Text); }
 		//		set { textDescription.Text = value.ToString(); }
 		//	}
+	}
+
+	public class closeButton : Panel
+	{
+		public Button CloseBTN;
+		public closeButton( Action OnCloseClick )
+		{
+			CloseBTN = Add.Button( "Close", "btn" );
+			CloseBTN.AddEventListener( "onClick", () =>
+			{
+				OnCloseClick();
+			} );
+		}
+	}
+
+	public class HeaderPanel : Panel
+	{
+		public Label textLabel;
+		public HeaderPanel( String title, bool haveMarginTop = true )
+		{
+			Panel MainHeaderPanel = Add.Panel( "HeaderPanel" );
+			textLabel = MainHeaderPanel.Add.Label( title, "headerTitle" );
+			MainHeaderPanel.Add.Panel( "headerSeparator" );
+
+			if ( haveMarginTop )
+			{
+				AddClass( "addMarginTop" );
+			}
+		}
+		public string Title
+		{
+			get { return textLabel.Text; }
+			set { textLabel.Text = value; }
+		}
+	}
+	public class ClientSuitePanel : Panel
+	{
+		public Label SuiteTitle;
+		public Panel SuiteBackground;
+		public Label suiteName;
+		public Button CheckoutBtn;
+		public ClientSuitePanel()
+		{
+			Panel RootPanel = Add.Panel( "ClientSuitePanel" );
+			SuiteBackground = RootPanel.Add.Panel( "SuiteBackground" );
+			RootPanel.AddChild( new HeaderPanel( "Your Condo." ) );
+			Panel SuiteInfo = RootPanel.Add.Panel( "SuiteInfo" );
+			Panel SuiteInfoImage = SuiteInfo.Add.Panel( "SuiteInfoImage" );
+
+			Panel SuiteInfoStatus = SuiteInfo.Add.Panel( "SuiteInfoStatus" );
+			suiteName = SuiteInfoStatus.Add.Label( "No Name", "suiteText SuiteTitle" );
+			CheckoutBtn = SuiteInfoStatus.Add.Button( "Check out", "checkoutBtn" );
+		}
 	}
 }

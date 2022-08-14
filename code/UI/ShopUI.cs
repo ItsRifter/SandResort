@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Sandbox;
 using Sandbox.UI;
 using Sandbox.UI.Construct;
-using SC.UI.Construct;
+using SandCasle.UI;
 
 public class ShopUI : Panel
 {
@@ -35,6 +35,10 @@ public class ShopUI : Panel
 
 		OpenShop();
 
+		ShopRootPanel.AddChild( new closeButton( () =>
+		 {
+			 CloseShop();
+		 } ) );
 	}
 
 	public void OpenShop()
@@ -54,6 +58,9 @@ public class ShopUI : Panel
 
 			shopItems.AddChild( item );
 		}
+	}
+	public void CloseShop() {
+		this.Delete();
 	}
 
 	public override void Tick()

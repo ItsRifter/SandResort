@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Sandbox;
 using Sandbox.UI;
 using Sandbox.UI.Construct;
-using SC.UI.Construct;
+using SandCasle.UI;
 
 public class CondoRecept : Panel
 {
@@ -48,145 +48,123 @@ public class CondoRecept : Panel
 		receiptionistTabs.AddTab( checkOutTab , "Condo Settings");
 
 		ReceptRootPanel.AddChild(receiptionistTabs);
+
+		AddChild( new closeButton(() =>
+		{
+			CloseReceptionist();
+		} ));
 	}
 
 	public override void Tick()
 	{
 		base.Tick();
 	}
+
+	public void CloseReceptionist()
+	{
+		this.Delete();
+	}
 }
 
-namespace SC.UI.Construct
+namespace Sandbox.UI
 {
-	public class HeaderPanel : Panel
-	{
-		public Label textLabel;
-		public HeaderPanel(String title, bool haveMarginTop = true)
-		{
-			Panel MainHeaderPanel = Add.Panel("HeaderPanel");
-			textLabel = MainHeaderPanel.Add.Label(title, "headerTitle");
-			MainHeaderPanel.Add.Panel("headerSeparator");
-
-			if (haveMarginTop) {
-				AddClass("addMarginTop");
-			}
-		}
-		public string Title {
-			get { return textLabel.Text; }
-			set { textLabel.Text = value; }
-		}
-	}
-	public class ClientSuitePanel : Panel
-	{
-		public Label SuiteTitle;
-		public Panel SuiteBackground;
-		public Label suiteName;
-		public Button CheckoutBtn;
-		public ClientSuitePanel()
-		{
-			Panel RootPanel = Add.Panel("ClientSuitePanel");
-			SuiteBackground = RootPanel.Add.Panel("SuiteBackground");
-			RootPanel.AddChild(new HeaderPanel("Your Condo."));
-			Panel SuiteInfo = RootPanel.Add.Panel("SuiteInfo");
-			Panel SuiteInfoImage = SuiteInfo.Add.Panel("SuiteInfoImage");
-
-			Panel SuiteInfoStatus = SuiteInfo.Add.Panel("SuiteInfoStatus");
-			suiteName =  SuiteInfoStatus.Add.Label("No Name", "suiteText SuiteTitle");
-			CheckoutBtn = SuiteInfoStatus.Add.Button("Check out", "checkoutBtn");
-		}
-	}
 	public class BlacklistPanel : Panel
 	{
 		public Panel BlacklistList;
 		public BlacklistPanel()
 		{
-			Panel RootPanel = Add.Panel("BlacklistPanel");
-			RootPanel.AddChild(new HeaderPanel("Blacklist", false));
-			BlacklistList = RootPanel.Add.Panel("BlacklistList players");
-			BlacklistList.AddChild(new playersList());
+			Panel RootPanel = Add.Panel( "BlacklistPanel" );
+			RootPanel.AddChild( new HeaderPanel( "Blacklist", false ) );
+			BlacklistList = RootPanel.Add.Panel( "BlacklistList players" );
+			BlacklistList.AddChild( new playersList() );
 		}
 	}
-	public partial class plrInfo : Panel {
+	public class plrInfo : Panel
+	{
 		private Panel PlayerInfoPanel;
-		public Client Client {get; set;}
+		public Client Client { get; set; }
 		public Panel plrPFP;
 		public Label plrName;
 		// public Label plrID;
 		public Panel MoreInfo;
 		public bool dropdownOpen = false;
 		private Panel MoreInfoPanel;
-		public plrInfo(Client cl, Panel MoreInfo = null)
+		public plrInfo( Client cl, Panel MoreInfo = null )
 		{
 			Client = cl;
 			MoreInfoPanel = MoreInfo;
-			if (MoreInfoPanel == null)
+			if ( MoreInfoPanel == null )
 			{
-				MoreInfoPanel = Add.Panel("moreInfo");
-				Label emptyText = MoreInfoPanel.Add.Label("Empty", "text");
-				emptyText.Style.Set("color", "rgba(255,255,255,0.5)");
-				emptyText.Style.Set("font-size", "24px");
-			} else {
-				MoreInfoPanel = Add.Panel("moreInfo");
-				MoreInfoPanel.AddChild(MoreInfo);
+				MoreInfoPanel = Add.Panel( "moreInfo" );
+				Label emptyText = MoreInfoPanel.Add.Label( "Empty", "text" );
+				emptyText.Style.Set( "color", "rgba(255,255,255,0.5)" );
+				emptyText.Style.Set( "font-size", "24px" );
+			}
+			else
+			{
+				MoreInfoPanel = Add.Panel( "moreInfo" );
+				MoreInfoPanel.AddChild( MoreInfo );
 				// baseMoreIfno.AddChild(MoreInfoPanel);
 			}
-			MoreInfoPanel.Style.Set("display", "none");
-			PlayerInfoPanel = Add.Panel("playerInfo");
-			Panel PlayerInfoSet = PlayerInfoPanel.Add.Panel("playerInfoSet");
-			plrPFP = PlayerInfoSet.Add.Panel("PlayerPFP");
-			plrPFP.Add.Panel("bkgFade"); 
-			Panel PlayerInfo = PlayerInfoSet.Add.Panel("PlayerInfo"); 
-			plrName = PlayerInfo.Add.Label(cl.Name, "text name");
-			plrPFP.Style.SetBackgroundImage( $"avatarbig:{cl.PlayerId}");
+			MoreInfoPanel.Style.Set( "display", "none" );
+			PlayerInfoPanel = Add.Panel( "playerInfo" );
+			Panel PlayerInfoSet = PlayerInfoPanel.Add.Panel( "playerInfoSet" );
+			plrPFP = PlayerInfoSet.Add.Panel( "PlayerPFP" );
+			plrPFP.Add.Panel( "bkgFade" );
+			Panel PlayerInfo = PlayerInfoSet.Add.Panel( "PlayerInfo" );
+			plrName = PlayerInfo.Add.Label( cl.Name, "text name" );
+			plrPFP.Style.SetBackgroundImage( $"avatarbig:{cl.PlayerId}" );
 			// plrID = PlayerInfo.Add.Label(cl.PlayerId.ToString(), "text id");
-			PlayerInfoSet.AddEventListener("onClick", () => {
-				if (dropdownOpen)
-				{ dropdownOpen = false; MoreInfoPanel.Style.Set("display", "none"); }
+			PlayerInfoSet.AddEventListener( "onClick", () => {
+				if ( dropdownOpen )
+				{ dropdownOpen = false; MoreInfoPanel.Style.Set( "display", "none" ); }
 				else
-				{ dropdownOpen = true; MoreInfoPanel.Style.Set("display", "flex"); }
-			});
-			PlayerInfoPanel.AddChild(MoreInfoPanel);
+				{ dropdownOpen = true; MoreInfoPanel.Style.Set( "display", "flex" ); }
+			} );
+			PlayerInfoPanel.AddChild( MoreInfoPanel );
 		}
 		// plrID = PlayerInfo.Add.Label(cl.PlayerId.ToString(), "text id");
 		// plrID.Text = cl.PlayerId.ToString();
 	}
-    
-	public partial class playersList : Panel {
-        public Panel players;
-        // public Label plrID;
-        public playersList()
-        {
-            players = Add.Panel("players");
-            // foreach (var plr in Client.All)
-            // {
-            //     players.AddChild(new plrInfo(plr));
-            // }
-        }
 
-        public override void Tick()
-        {
-            var plyerCount = 0;
-            base.Tick();
+	public partial class playersList : Panel
+	{
+		public Panel players;
+		// public Label plrID;
+		public playersList()
+		{
+			players = Add.Panel( "players" );
+			// foreach (var plr in Client.All)
+			// {
+			//     players.AddChild(new plrInfo(plr));
+			// }
+		}
 
-            foreach (var plrPanel in players.Children.OfType<plrInfo>())
-            {
-                if (plrPanel.Client.IsValid())
-                    continue;
-                
-                plrPanel.Delete();
-                plyerCount--;
-            }
+		public override void Tick()
+		{
+			var plyerCount = 0;
+			base.Tick();
 
-            foreach (var plr in Client.All)
-            {
-                if (players.Children.OfType<plrInfo>().Any( panel => panel.Client == plr ))
-                    continue;
+			foreach ( var plrPanel in players.Children.OfType<plrInfo>() )
+			{
+				if ( plrPanel.Client.IsValid() )
+					continue;
 
-                var panel = new plrInfo(plr);
-                panel.Parent = players;
-                plyerCount++;
-            }
-        }
-    }
+				plrPanel.Delete();
+				plyerCount--;
+			}
+
+			foreach ( var plr in Client.All )
+			{
+				if ( players.Children.OfType<plrInfo>().Any( panel => panel.Client == plr ) )
+					continue;
+
+				var panel = new plrInfo( plr );
+				panel.Parent = players;
+				plyerCount++;
+			}
+		}
+	}
 }
+
 

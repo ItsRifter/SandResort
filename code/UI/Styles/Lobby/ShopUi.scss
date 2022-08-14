@@ -1,6 +1,8 @@
 $borderColor: #2289c0;
 $background-1: #326A80;
-$background-2: #156e80;
+$background-2: rgb(27, 140, 163);
+$background-1-hover: #2e7793;
+$background-2-hover: #1e788a;
 
 ShopUI {
     width: 100%;
@@ -9,11 +11,11 @@ ShopUI {
 
     // align-items: center;
     justify-content: center;
-    background-color: #2e5463bd;
+    background-color: #326A80bd;
 
     .ShopRootPanel {
         max-width: 1600px;
-        background-color: #135d6c;
+        background-color: $background-1;
         // box-shadow: 0px -12px 32px 12px rgba(0, 0, 0, 0.508);
         // background-color: #135d6c;
         border-left: 2px solid $borderColor;
@@ -21,14 +23,14 @@ ShopUI {
         color: white;
 
         HeaderPanel {
-            background: linear-gradient( to top, #135d6c 0%, #135d6c 80%, #135d6c00 100% );
+            background: linear-gradient( to top, #326A80 0%, #326A80 80%, #326A8000 100% );
             padding: 32px 64px;
         }
 
         .MainShop {
             HeaderPanel {
                 width: 100%;
-                background: linear-gradient( to top, #135d6c 0%, #135d6c 80%, #135d6c00 100% );
+                background: linear-gradient( to top, #326A80 0%, #326A80 80%, #326A8000 100% );
                 position: absolute;
                 z-index: 2;
             }
@@ -45,13 +47,13 @@ ShopUI {
 
                 ShopItem {
                     width: 100%;
-                    background-color: #156e80;
+                    background-color: #326A80;
                     border: 2px solid $borderColor;
                     margin: 5px 12px;
                     flex-direction: column;
 
                     &:hover {
-                        background-color: #1e788a;
+                        background-color: #2d728d;
                     }
 
                     .itemImg {
@@ -119,6 +121,7 @@ ShopUI {
 
                         &:hover {
                             box-shadow: 0px 4px 8px 2px rgba(0, 0, 0, 0.3);
+                            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
                             background-color: rgb(26,220,26);
                         }
                     }
