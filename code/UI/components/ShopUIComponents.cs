@@ -2,7 +2,6 @@
 using Sandbox;
 using Sandbox.UI;
 using Sandbox.UI.Construct;
-using SandCasle.UI;
 
 namespace SandCasle.UI
 {
@@ -70,42 +69,79 @@ namespace SandCasle.UI
 	public class ItemInfo : Panel
 	{
 		public Panel RootPanel;
-		public Label textItemName;
-		public Label textDescription;
-		public Label textPrice;
-		public Panel itemIcon;
+		//public Label textItemName;
+		//public Label textDescription;
+		//public Label textPrice;
+		//public Panel itemIcon;
+		public float cam_yaw = 0;
+		public ScenePanel ShopItemScenePanel;
+		public SceneWorld shopWorld;
 
-		//readonly ScenePanel itemScenePreview;
-		//Angles CamAngles = new( 25.0f, 0f, 0f );
-		//float CamDistance = 120;
-		//Vector3 CamPos => Vector3.Up * 10 + CamAngles.Direction * -CamDistance;
-		public ItemInfo()
+		Angles CamAngles = new( 25.0f, 0.0f, 0.0f );
+		float CamDistance = 120;
+		Vector3 CamPos => Vector3.Up * 50 + CamAngles.Direction * -CamDistance;
+
+		public SceneModel itemPreview;
+		public ItemInfo(string itemPreviewPath = "models/citizen_props/roadcone01.vmdl" )
 		{
+			shopWorld = new SceneWorld();
+			ShopItemScenePanel = Add.ScenePanel( shopWorld, CamPos, Rotation.From( CamAngles ), 70 );
+			ShopItemScenePanel.Style.Width = Length.Percent( 100 );
+			ShopItemScenePanel.Style.Height = Length.Percent( 100 );
+			new SceneModel( shopWorld, "models/room.vmdl", Transform.Zero );
+			new SceneLight( shopWorld, Vector3.Up * 60 + Vector3.Right * 60 + Vector3.Backward * 80, 400f, Color.White * 5f );
+			new SceneLight( shopWorld, Vector3.Up * 80 + Vector3.Left * 30 + Vector3.Forward * 80, 400f, Color.White * 5f );
+			try
+			{
+				itemPreview = new SceneModel( shopWorld, itemPreviewPath, Transform.Zero );
+			}
+			catch (Exception ex)
+			{
+				itemPreview = new SceneModel( shopWorld, "models/citizen_props/roadcone01.vmdl", Transform.Zero );
+				Log.Error( $"Blank string: {ex}" );
+			}
+
+			AddChild( ShopItemScenePanel );
+
 			RootPanel = Add.Panel( "rootPanel" );
-			textItemName = RootPanel.Add.Label( "No item selected!", "itemname" );
-			textDescription = RootPanel.Add.Label( "", "Description" );
-			textPrice = RootPanel.Add.Label( "0$", "TextPrice" );
+			//textItemName = RootPanel.Add.Label( "No item selected!", "itemname" );
+			//textDescription = RootPanel.Add.Label( "", "Description" );
+			//textPrice = RootPanel.Add.Label( "0$", "TextPrice" );
 
 			//RootPanel.Add.Label( "hello world!", "text" );
 			//var world = itemScenePreview.CreateSc
 			//itemScenePreview = Add.ScenePanel( itemScenePreview, camAngle)
 		}
 
-		public string NameInfo
+		public override void Tick()
 		{
-			get { return textItemName.Text; }
-			set { textItemName.Text = value; }
+			base.Tick();
+
+			cam_yaw++;
+			CamAngles.pitch = 10;
+			CamAngles.yaw = cam_yaw / 4;
+			CamAngles.pitch.Clamp( 0, 90 );
+			CamDistance.Clamp( 90, 200 );
+			ShopItemScenePanel.CameraPosition = CamPos;
+			ShopItemScenePanel.CameraRotation = Rotation.From( CamAngles );
+
 		}
-		public string DescriptionInfo
-		{
-			get { return textDescription.Text; }
-			set { textDescription.Text = value; }
-		}
-		public int PriceInfo
-		{
-			get { return int.Parse( textPrice.Text ); }
-			set { textPrice.Text = value.ToString() + "$"; }
-		}
+
+		//public string NameInfo
+		//{
+		//	get { return textItemName.Text; }
+		//	set { textItemName.Text = value; }
+		//}
+		//public string DescriptionInfo
+		//{
+		//	get { return textDescription.Text; }
+		//	set { textDescription.Text = value; }
+		//}
+		//public int PriceInfo
+		//{
+		//	get { return int.Parse( textPrice.Text ); }
+		//	set { textPrice.Text = value.ToString() + "$"; }
+		//}
 		//	public int ItemIcon
 		//	{
 		//		get { return int.Parse( textDescription.Text); }

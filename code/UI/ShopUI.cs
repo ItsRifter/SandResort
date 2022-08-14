@@ -15,6 +15,7 @@ public class ShopUI : Panel
     public Panel shopItems;
 
 	public ItemInfo itemInfo1;
+	Panel ShopItemInfo;
 
 
 	public ShopUI() { 
@@ -27,11 +28,8 @@ public class ShopUI : Panel
         MainShop.AddChild(new HeaderPanel("Shop"));
         shopItems = MainShop.Add.Panel("shopItems");
 
-        Panel ShopItemInfo = ShopRootPanel.Add.Panel("itemShopInfo");
-		ShopItemInfo.AddChild( new HeaderPanel( "Item Info" ) );
-		itemInfo1 = new ItemInfo();
-		itemInfo1.DescriptionInfo = "Select an item for more info.";
-		ShopItemInfo.AddChild( itemInfo1 );
+        ShopItemInfo = ShopRootPanel.Add.Panel("itemShopInfo");
+		ShopItemInfo.AddChild( new HeaderPanel( "No Preview" ) );
 
 		OpenShop();
 
@@ -47,9 +45,14 @@ public class ShopUI : Panel
 		{
 			ShopItem item = new ShopItem(() =>
 			{
-				itemInfo1.NameInfo = prop.PropName;
-				itemInfo1.DescriptionInfo = prop.Desc;
-				itemInfo1.PriceInfo = prop.Cost;
+				ShopItemInfo.DeleteChildren();
+				ShopItemInfo.AddChild( new HeaderPanel( "Preview" ) );
+				itemInfo1 = new ItemInfo( "models/citizen/citizen.vmdl" );
+
+				ShopItemInfo.AddChild( itemInfo1 );
+			} ,() =>
+			{
+				ConsoleSystem.Run( "sc_buyitem", prop.ClassName );
 			} );
 			item.Name = prop.PropName;
 			item.Description = prop.Desc;
@@ -60,7 +63,7 @@ public class ShopUI : Panel
 		}
 	}
 	public void CloseShop() {
-		this.Delete();
+		Delete();
 	}
 
 	public override void Tick()
