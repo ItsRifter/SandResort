@@ -30,6 +30,7 @@ public class ShopUI : Panel
 
         ShopItemInfo = ShopRootPanel.Add.Panel("itemShopInfo");
 		ShopItemInfo.AddChild( new HeaderPanel( "No Preview" ) );
+		ShopItemInfo.Add.Label( "Click on an item to preview the model.", "text nopreviewAlert" );
 
 		OpenShop();
 
@@ -47,7 +48,8 @@ public class ShopUI : Panel
 			{
 				ShopItemInfo.DeleteChildren();
 				ShopItemInfo.AddChild( new HeaderPanel( "Preview" ) );
-				itemInfo1 = new ItemInfo( "models/citizen/citizen.vmdl" );
+				ShopItemInfo.Add.Label( prop.PropName, "text Itemname" );
+				itemInfo1 = new ItemInfo( prop.ModelPath );
 
 				ShopItemInfo.AddChild( itemInfo1 );
 			} ,() =>

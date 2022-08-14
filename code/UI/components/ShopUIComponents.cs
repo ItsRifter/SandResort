@@ -118,6 +118,10 @@ namespace SandCasle.UI
 			base.Tick();
 
 			cam_yaw++;
+			if ( cam_yaw >= 360*4)
+			{
+				cam_yaw = 0;
+			}
 			CamAngles.pitch = 10;
 			CamAngles.yaw = cam_yaw / 4;
 			CamAngles.pitch.Clamp( 0, 90 );

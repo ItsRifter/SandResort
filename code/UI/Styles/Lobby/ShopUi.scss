@@ -160,9 +160,22 @@ ShopUI {
                 background: none;
             }
 
+            .nopreviewAlert {
+                text-align: center;
+                font-size: 32px;
+                font-weight: 400;
+            }
+
             width: 100%;
             flex-direction: column;
             // max-width: 800px;
+            .Itemname {
+                z-index: 2;
+                color: white;
+                padding-left: 64px;
+                text-shadow: 2px 2px 3px rgba(255,255,255,0.8);
+                font-size: 24px;
+            }
         }
     }
 
@@ -171,7 +184,11 @@ ShopUI {
             z-index: 2;
         }
 
-        background-color: black;
+        background: linear-gradient(
+            to top,
+            rgb(20,20,20),
+            rgb(120,120,120)
+        );
         position: absolute;
         flex-direction: column;
         height: 100%;
