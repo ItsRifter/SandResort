@@ -41,7 +41,6 @@ namespace SandCasle.UI
 					onClick();
 				}
 			} );
-
 		}
 
 		public string Name
@@ -69,17 +68,19 @@ namespace SandCasle.UI
 	public class ItemInfo : Panel
 	{
 		public Panel RootPanel;
-		//public Label textItemName;
-		//public Label textDescription;
-		//public Label textPrice;
-		//public Panel itemIcon;
+		public Panel ControlsCamMode;
+		public Button modeAuto;
+		public Button modeDrag;
+
+		public string Mode = "auto";
+
 		public float cam_yaw = 0;
 		public ScenePanel ShopItemScenePanel;
 		public SceneWorld shopWorld;
 
 		Angles CamAngles = new( 25.0f, 0.0f, 0.0f );
 		float CamDistance = 120;
-		Vector3 CamPos => Vector3.Up * 50 + CamAngles.Direction * -CamDistance;
+		Vector3 CamPos => Vector3.Up * 10 + CamAngles.Direction * -CamDistance;
 
 		public SceneModel itemPreview;
 		public ItemInfo(string itemPreviewPath = "models/citizen_props/roadcone01.vmdl" )
@@ -104,6 +105,26 @@ namespace SandCasle.UI
 			AddChild( ShopItemScenePanel );
 
 			RootPanel = Add.Panel( "rootPanel" );
+			ControlsCamMode = RootPanel.Add.Panel( "controls" );
+			modeAuto = ControlsCamMode.Add.Button( "Auto", "modeBtn active", () =>
+			{
+				foreach (var btn in ControlsCamMode.Children)
+				{
+					 btn.SetClass( "active", false );
+				}
+				modeAuto.SetClass( "active", true );
+				Mode = "auto";
+			} );
+			modeDrag = ControlsCamMode.Add.Button( "Drag", "modeBtn", () =>
+			{
+				foreach ( var btn in ControlsCamMode.Children )
+				{
+					btn.SetClass( "active", false );
+				}
+				modeDrag.SetClass( "active", true );
+				Mode = "drag";
+			} );
+
 			//textItemName = RootPanel.Add.Label( "No item selected!", "itemname" );
 			//textDescription = RootPanel.Add.Label( "", "Description" );
 			//textPrice = RootPanel.Add.Label( "0$", "TextPrice" );
@@ -113,21 +134,58 @@ namespace SandCasle.UI
 			//itemScenePreview = Add.ScenePanel( itemScenePreview, camAngle)
 		}
 
+		public override void OnMouseWheel( float value )
+		{
+			CamDistance += value * 10f;
+			CamDistance = CamDistance.Clamp( 10, 700 );
+
+			base.OnMouseWheel( value );
+		}
+		public override void OnButtonEvent( ButtonEvent e )
+		{
+			if ( e.Button == "mouseleft")
+			{
+				if ( Mode == "drag" )
+				{
+					SetMouseCapture( e.Pressed );
+				}
+			}
+
+			base.OnButtonEvent( e );
+		}
+
 		public override void Tick()
 		{
 			base.Tick();
-
-			cam_yaw++;
-			if ( cam_yaw >= 360*4)
+			switch (Mode)
 			{
-				cam_yaw = 0;
+				case "auto":
+					CamDistance = 120;
+					cam_yaw++;
+					if ( cam_yaw >= 360*4)
+					{
+						cam_yaw = 0;
+					}
+					CamAngles.pitch = 10;
+					CamAngles.yaw = cam_yaw / 4;
+					CamAngles.pitch.Clamp( 0, 90 );
+					CamDistance.Clamp( 90, 200 );
+					ShopItemScenePanel.CameraPosition = CamPos;
+					ShopItemScenePanel.CameraRotation = Rotation.From( CamAngles );
+					break;
+				case "drag":
+					if (HasMouseCapture)
+					{
+						CamAngles.pitch += Mouse.Delta.y;
+						CamAngles.yaw -= Mouse.Delta.x;
+						CamAngles.pitch = CamAngles.pitch.Clamp( 0, 90 );
+					}
+
+					ShopItemScenePanel.CameraPosition = CamPos;
+					ShopItemScenePanel.CameraRotation = Rotation.From( CamAngles );
+					break;
 			}
-			CamAngles.pitch = 10;
-			CamAngles.yaw = cam_yaw / 4;
-			CamAngles.pitch.Clamp( 0, 90 );
-			CamDistance.Clamp( 90, 200 );
-			ShopItemScenePanel.CameraPosition = CamPos;
-			ShopItemScenePanel.CameraRotation = Rotation.From( CamAngles );
+
 
 		}
 

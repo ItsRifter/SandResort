@@ -79,6 +79,10 @@ ShopUI {
                         // width: 100%;
                         height: 100%;
 
+                        .itemname, .itemDescription, .itemPrice {
+                            text-shadow: 2px 2px 3px rgba(0,0,0,0.1);
+                        }
+
                         .itemName {
                             font-size: 32px;
                             font-weight: bold;
@@ -184,19 +188,30 @@ ShopUI {
             z-index: 2;
         }
 
-        background: linear-gradient(
-            to top,
-            rgb(20,20,20),
-            rgb(120,120,120)
-        );
+        background: linear-gradient( to top, rgb(20,20,20), rgb(120,120,120) );
         position: absolute;
         flex-direction: column;
         height: 100%;
         width: 100%;
 
         .rootPanel {
-            width: 100%;
+            padding: 2px;
             flex-direction: column;
+            background-color: #303030;
+            position: absolute;
+            bottom: 8px;
+            left: 8px;
+
+            .modeBtn {
+                background-color: #434343;
+                width: 39px;
+                height: 39px;
+                align-items: center;
+                justify-content: center;
+                &.active {
+                    background-color: #326A80;
+                }
+            }
         }
 
         .itemname {
@@ -222,3 +237,9 @@ ShopUI {
         }
     }
 }
+
+//ScenePanel {
+//    &:hover {
+//        background-color: red;
+//    }
+//}
