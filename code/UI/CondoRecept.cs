@@ -49,7 +49,7 @@ public class CondoRecept : Panel
 
 		ReceptRootPanel.AddChild(receiptionistTabs);
 
-		AddChild( new closeButton(() =>
+		AddChild( new CloseButton(() =>
 		{
 			CloseReceptionist();
 		} ));

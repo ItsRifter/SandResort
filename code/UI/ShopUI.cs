@@ -33,7 +33,7 @@ public class ShopUI : Panel
 
 		OpenShop();
 
-		ShopRootPanel.AddChild( new closeButton( () =>
+		ShopRootPanel.AddChild( new CloseButton( () =>
 		 {
 			 CloseShop();
 		 } ) );

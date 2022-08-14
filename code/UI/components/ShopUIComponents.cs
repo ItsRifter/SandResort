@@ -149,10 +149,10 @@ namespace SandCasle.UI
 		//	}
 	}
 
-	public class closeButton : Panel
+	public class CloseButton : Panel
 	{
 		public Button CloseBTN;
-		public closeButton( Action OnCloseClick )
+		public CloseButton( Action OnCloseClick )
 		{
 			CloseBTN = Add.Button( "Close", "btn" );
 			CloseBTN.AddEventListener( "onClick", () =>

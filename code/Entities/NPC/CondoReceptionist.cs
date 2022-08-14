@@ -8,7 +8,7 @@ using SandboxEditor;
 
 [Library("sc_npc_shopkeeper")]
 [Title("Shopkeeper"), Category("NPC")]
-[EditorModel( "models/citizen/citizen.vmdl" )]
+[EditorModel( "models/citizen/citizen.vmdl", FixedBounds = true )]
 [HammerEntity]
 partial class ShopKeepers : AnimatedEntity, IUse
 {

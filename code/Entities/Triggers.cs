@@ -11,8 +11,7 @@ using SandboxEditor;
 [HammerEntity, Solid]
 public partial class CondoTeleporter : TeleportVolumeEntity
 {
-	[Property( "target" ), Title( "Remote Destination" )]
-	public EntityTarget CondoTarget { get; set; }
+	public Entity CondoTarget { get; set; }
 
 	protected Output OnEnterTrigger { get; set; }
 
@@ -23,7 +22,7 @@ public partial class CondoTeleporter : TeleportVolumeEntity
 		if ( other is not BasePawn player )
 			return;
 
-		var Targetent = CondoTarget.GetTargets( null ).FirstOrDefault();
+		var Targetent = CondoTarget;
 
 		if ( Targetent != null )
 		{

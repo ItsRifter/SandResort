@@ -8,7 +8,7 @@ using SandboxEditor;
 
 [Library("sc_npc_condoreceptionist")]
 [Title("Condo Receptionist"), Category("NPC")]
-[EditorModel( "models/citizen/citizen.vmdl" )]
+[EditorModel( "models/citizen/citizen.vmdl", FixedBounds = true ) ]
 [HammerEntity]
 partial class CondoReceptionist : AnimatedEntity, IUse
 {

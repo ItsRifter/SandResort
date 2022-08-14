@@ -24,6 +24,17 @@ public partial class BasePawn : Player, IPlayerData
 		AchTracker = new AchTracker();
 	}
 
+	public void GoToSpawnpoint()
+	{
+		var spawnpoint = All.OfType<SpawnPoint>().OrderBy( x => Guid.NewGuid() ).FirstOrDefault();
+
+		if ( spawnpoint != null )
+		{
+			SetViewAngles( spawnpoint.Rotation.Angles() );
+			Transform = spawnpoint.Transform;
+		}
+	}
+
 	public void SetUpPlayer()
 	{
 		Host.AssertServer();
@@ -33,6 +44,7 @@ public partial class BasePawn : Player, IPlayerData
 		Velocity = Vector3.Zero;
 		WaterLevel = 0;
 
+		GoToSpawnpoint();
 		ResetInterpolation();
 
 		SetModel( "models/citizen/citizen.vmdl" );
@@ -55,15 +67,10 @@ public partial class BasePawn : Player, IPlayerData
 		base.Spawn();
 
 		SetUpPlayer();
-
-		//Use the base player respawn, NOT the respawn in this class
-		base.Respawn();
 	}
 
 	public override void Respawn()
 	{
-		base.Respawn();
-
 		SetUpPlayer();
 
 		//Deletes the corpse if valid
@@ -101,6 +108,7 @@ public partial class BasePawn : Player, IPlayerData
 		//controller?.Simulate( cl, this, GetActiveAnimator() );
 
 		TickPlayerUse();
+		SimulatePlacing();
 
 		if ( cl.GetClientData( "cl_showfps", false ) )
 		{

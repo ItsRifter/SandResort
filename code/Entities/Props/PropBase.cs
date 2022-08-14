@@ -14,6 +14,8 @@ public partial class PropBase : AnimatedEntity, IUse
 	public virtual int Cost => 0;
 	public virtual float TimeWaitNextUse => 0.3f;
 
+	public bool IsPreview = false;
+
 	TimeSince timeLastUse;
 
 	public static IList<PropBase> GetProps()
@@ -61,6 +63,8 @@ public partial class PropBase : AnimatedEntity, IUse
 		if ( timeLastUse < TimeWaitNextUse )
 			return false;
 
+		if ( IsPreview )
+			return false;
 
 		return true;
 	}
