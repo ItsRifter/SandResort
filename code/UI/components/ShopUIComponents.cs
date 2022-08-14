@@ -106,7 +106,7 @@ namespace SandCasle.UI
 
 			RootPanel = Add.Panel( "rootPanel" );
 			ControlsCamMode = RootPanel.Add.Panel( "controls" );
-			modeAuto = ControlsCamMode.Add.Button( "Auto", "modeBtn active", () =>
+			modeAuto = ControlsCamMode.Add.Button( "", "modeBtn active", () =>
 			{
 				foreach (var btn in ControlsCamMode.Children)
 				{
@@ -115,7 +115,7 @@ namespace SandCasle.UI
 				modeAuto.SetClass( "active", true );
 				Mode = "auto";
 			} );
-			modeDrag = ControlsCamMode.Add.Button( "Drag", "modeBtn", () =>
+			modeDrag = ControlsCamMode.Add.Button( "", "modeBtn", () =>
 			{
 				foreach ( var btn in ControlsCamMode.Children )
 				{
@@ -124,6 +124,9 @@ namespace SandCasle.UI
 				modeDrag.SetClass( "active", true );
 				Mode = "drag";
 			} );
+
+			modeAuto.Add.Image( "ui/icons/icon-orbit.png" );
+			modeDrag.Add.Image( "ui/icons/icon-drag.png" );
 
 			//textItemName = RootPanel.Add.Label( "No item selected!", "itemname" );
 			//textDescription = RootPanel.Add.Label( "", "Description" );
@@ -178,13 +181,14 @@ namespace SandCasle.UI
 					{
 						CamAngles.pitch += Mouse.Delta.y;
 						CamAngles.yaw -= Mouse.Delta.x;
-						CamAngles.pitch = CamAngles.pitch.Clamp( 0, 90 );
+						CamAngles.pitch = CamAngles.pitch.Clamp( -12, 90 );
 					}
 
 					ShopItemScenePanel.CameraPosition = CamPos;
 					ShopItemScenePanel.CameraRotation = Rotation.From( CamAngles );
 					break;
 			}
+
 
 
 		}
