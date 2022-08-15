@@ -69,8 +69,8 @@ namespace SandCasle.UI
 	{
 		public Panel RootPanel;
 		public Panel ControlsCamMode;
-		public Button modeAuto;
-		public Button modeDrag;
+		public Panel modeAuto;
+		public Panel modeDrag;
 
 		public string Mode = "auto";
 
@@ -85,6 +85,7 @@ namespace SandCasle.UI
 		public SceneModel itemPreview;
 		public ItemInfo(string itemPreviewPath = "models/citizen_props/roadcone01.vmdl", string env = "testfloor" )
 		{
+			SetClass( "dragable", false );
 			shopWorld = new SceneWorld();
 			switch ( env )
 			{
@@ -111,16 +112,39 @@ namespace SandCasle.UI
 
 			RootPanel = Add.Panel( "rootPanel" );
 			ControlsCamMode = RootPanel.Add.Panel( "controls" );
-			modeAuto = ControlsCamMode.Add.Button( "", "modeBtn active", () =>
+			//modeAuto = ControlsCamMode.Add.Button( "", "modeBtn active", () =>
+			//{
+			//	foreach (var btn in ControlsCamMode.Children)
+			//	{
+			//		 btn.SetClass( "active", false );
+			//	}
+			//	modeAuto.SetClass( "active", true );
+			//	Mode = "auto";
+			//} );
+			//modeDrag = ControlsCamMode.Add.Button( "", "modeBtn", () =>
+			//{
+			//	foreach ( var btn in ControlsCamMode.Children )
+			//	{
+			//		btn.SetClass( "active", false );
+			//	}
+			//	modeDrag.SetClass( "active", true );
+			//	Mode = "drag";
+			//} );
+
+			modeAuto = ControlsCamMode.Add.Panel( "modeBtn active" );
+			modeAuto.AddEventListener( "onClick", () =>
 			{
-				foreach (var btn in ControlsCamMode.Children)
+				foreach ( var btn in ControlsCamMode.Children )
 				{
-					 btn.SetClass( "active", false );
+					btn.SetClass( "active", false );
 				}
 				modeAuto.SetClass( "active", true );
 				Mode = "auto";
+				SetClass( "dragable", false );
 			} );
-			modeDrag = ControlsCamMode.Add.Button( "", "modeBtn", () =>
+
+			modeDrag = ControlsCamMode.Add.Panel( "modeBtn" );
+			modeDrag.AddEventListener( "onClick", () =>
 			{
 				foreach ( var btn in ControlsCamMode.Children )
 				{
@@ -128,6 +152,7 @@ namespace SandCasle.UI
 				}
 				modeDrag.SetClass( "active", true );
 				Mode = "drag";
+				SetClass( "dragable", true );
 			} );
 
 			modeAuto.Add.Image( "ui/icons/icon-orbit.png" );
@@ -145,7 +170,7 @@ namespace SandCasle.UI
 		public override void OnMouseWheel( float value )
 		{
 			CamDistance += value * 10f;
-			CamDistance = CamDistance.Clamp( 10, 700 );
+			CamDistance = CamDistance.Clamp( 10, 300 );
 
 			base.OnMouseWheel( value );
 		}

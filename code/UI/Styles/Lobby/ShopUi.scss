@@ -184,6 +184,10 @@ ShopUI {
     }
 
     ItemInfo {
+        &.dragable {
+            cursor: move;
+        }
+
         HeaderPanel {
             z-index: 2;
             pointer-events: none;
@@ -205,13 +209,24 @@ ShopUI {
 
             .modeBtn {
                 background-color: #434343;
+                padding: 0px 0px;
+                border: 0px solid rgba(0,0,0,0);
+                border-radius: 0px;
+                box-shadow: 0px 0px 0px 0px rgba(0,0,0,0);
                 width: 39px;
                 height: 39px;
                 align-items: center;
                 justify-content: center;
+                font-size: 0;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: #555555;
+                }
                 &.active {
                     background-color: #326A80;
                 }
+
             }
         }
 
