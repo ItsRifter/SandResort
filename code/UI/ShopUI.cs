@@ -10,25 +10,28 @@ using SandCasle.UI;
 
 public class ShopUI : Panel
 {
-    public Panel ShopRootPanel;
-    public TimeSince lastOpen = 0;
-    public Panel shopItems;
+	public Panel ShopRootPanel;
+	public TimeSince lastOpen = 0;
+	public Panel shopItems;
+
+	public HeaderPanel ShopTitle;
 
 	public ItemInfo itemInfo1;
 	Panel ShopItemInfo;
 
 
-	public ShopUI() { 
+	public ShopUI() {
 		StyleSheet.Load( "UI/Styles/Lobby/ShopUi.scss" );
 		StyleSheet.Load( "UI/Styles/Lobby/CSUIContruct.scss" );
 
-        ShopRootPanel = Add.Panel("ShopRootPanel");
+		ShopRootPanel = Add.Panel( "ShopRootPanel" );
 
-        Panel MainShop = ShopRootPanel.Add.Panel("MainShop");
-        MainShop.AddChild(new HeaderPanel("Shop"));
-        shopItems = MainShop.Add.Panel("shopItems");
+		Panel MainShop = ShopRootPanel.Add.Panel( "MainShop" );
+		ShopTitle = new HeaderPanel( "Shop" );
+		MainShop.AddChild( ShopTitle );
+		shopItems = MainShop.Add.Panel( "shopItems" );
 
-        ShopItemInfo = ShopRootPanel.Add.Panel("itemShopInfo");
+		ShopItemInfo = ShopRootPanel.Add.Panel( "itemShopInfo" );
 		ShopItemInfo.AddChild( new HeaderPanel( "No Preview" ) );
 		ShopItemInfo.Add.Label( "Click on an item to preview the model.", "text nopreviewAlert" );
 
@@ -38,6 +41,11 @@ public class ShopUI : Panel
 		 {
 			 CloseShop();
 		 } ) );
+	}
+
+	public string title {
+		get { return ShopTitle.Title; }
+		set { ShopTitle.Title = value; }
 	}
 
 	public void OpenShop()
@@ -55,6 +63,7 @@ public class ShopUI : Panel
 			} ,() =>
 			{
 				ConsoleSystem.Run( "sc_buyitem", prop.ClassName );
+				CloseShop();
 			} );
 			item.Name = prop.PropName;
 			item.Description = prop.Desc;

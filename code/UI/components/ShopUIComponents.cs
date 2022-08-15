@@ -83,15 +83,20 @@ namespace SandCasle.UI
 		Vector3 CamPos => Vector3.Up * 10 + CamAngles.Direction * -CamDistance;
 
 		public SceneModel itemPreview;
-		public ItemInfo(string itemPreviewPath = "models/citizen_props/roadcone01.vmdl" )
+		public ItemInfo(string itemPreviewPath = "models/citizen_props/roadcone01.vmdl", string env = "testfloor" )
 		{
 			shopWorld = new SceneWorld();
-			ShopItemScenePanel = Add.ScenePanel( shopWorld, CamPos, Rotation.From( CamAngles ), 70 );
-			ShopItemScenePanel.Style.Width = Length.Percent( 100 );
-			ShopItemScenePanel.Style.Height = Length.Percent( 100 );
-			new SceneModel( shopWorld, "models/room.vmdl", Transform.Zero );
-			new SceneLight( shopWorld, Vector3.Up * 60 + Vector3.Right * 60 + Vector3.Backward * 80, 400f, Color.White * 5f );
-			new SceneLight( shopWorld, Vector3.Up * 80 + Vector3.Left * 30 + Vector3.Forward * 80, 400f, Color.White * 5f );
+			switch ( env )
+			{
+				case "testfloor":
+					ShopItemScenePanel = Add.ScenePanel( shopWorld, CamPos, Rotation.From( CamAngles ), 70 );
+					ShopItemScenePanel.Style.Width = Length.Percent( 100 );
+					ShopItemScenePanel.Style.Height = Length.Percent( 100 );
+					new SceneModel( shopWorld, "models/room.vmdl", Transform.Zero );
+					new SceneLight( shopWorld, Vector3.Up * 60 + Vector3.Right * 60 + Vector3.Backward * 80, 400f, Color.White * 5f );
+					new SceneLight( shopWorld, Vector3.Up * 80 + Vector3.Left * 30 + Vector3.Forward * 80, 400f, Color.White * 5f );
+				break;
+			}
 			try
 			{
 				itemPreview = new SceneModel( shopWorld, itemPreviewPath, Transform.Zero );
@@ -172,7 +177,7 @@ namespace SandCasle.UI
 					CamAngles.pitch = 10;
 					CamAngles.yaw = cam_yaw / 4;
 					CamAngles.pitch.Clamp( 0, 90 );
-					CamDistance.Clamp( 90, 200 );
+					CamDistance.Clamp( 90, 100 );
 					ShopItemScenePanel.CameraPosition = CamPos;
 					ShopItemScenePanel.CameraRotation = Rotation.From( CamAngles );
 					break;
@@ -231,7 +236,7 @@ namespace SandCasle.UI
 	public class HeaderPanel : Panel
 	{
 		public Label textLabel;
-		public HeaderPanel( String title, bool haveMarginTop = true )
+		public HeaderPanel( string title, bool haveMarginTop = true )
 		{
 			Panel MainHeaderPanel = Add.Panel( "HeaderPanel" );
 			textLabel = MainHeaderPanel.Add.Label( title, "headerTitle" );
