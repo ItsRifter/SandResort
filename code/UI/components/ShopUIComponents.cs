@@ -64,7 +64,11 @@ namespace SandCasle.UI
 		}
 
 	}
+	
+	public class CondoItem : Panel
+	{
 
+	}
 	public class ItemInfo : Panel
 	{
 		public Panel RootPanel;
@@ -79,7 +83,9 @@ namespace SandCasle.UI
 		public SceneWorld shopWorld;
 
 		Angles CamAngles = new( 25.0f, 0.0f, 0.0f );
+		Angles PreviusCamAngles = new( 25.0f, 0.0f, 0.0f );
 		float CamDistance = 120;
+		float targetDistance = 120;
 		Vector3 CamPos => Vector3.Up * 10 + CamAngles.Direction * -CamDistance;
 
 		public SceneModel itemPreview;
@@ -169,7 +175,12 @@ namespace SandCasle.UI
 
 		public override void OnMouseWheel( float value )
 		{
-			CamDistance += value * 10f;
+			targetDistance += value * 10f;
+
+			if ( targetDistance < 10 ) targetDistance = 10;
+			if ( targetDistance > 300 ) targetDistance = 300;
+
+			//CamDistance += value * 10f;
 			CamDistance = CamDistance.Clamp( 10, 300 );
 
 			base.OnMouseWheel( value );
@@ -193,7 +204,7 @@ namespace SandCasle.UI
 			switch (Mode)
 			{
 				case "auto":
-					CamDistance = 120;
+					//CamDistance = 120;
 					cam_yaw++;
 					if ( cam_yaw >= 360*4)
 					{
@@ -202,9 +213,11 @@ namespace SandCasle.UI
 					CamAngles.pitch = 10;
 					CamAngles.yaw = cam_yaw / 4;
 					CamAngles.pitch.Clamp( 0, 90 );
+					CamDistance = CamDistance.LerpTo(120,Time.Delta * 5f, true);
 					CamDistance.Clamp( 90, 100 );
 					ShopItemScenePanel.CameraPosition = CamPos;
-					ShopItemScenePanel.CameraRotation = Rotation.From( CamAngles );
+					//itemPreview.Bounds.Center
+					ShopItemScenePanel.CameraRotation =  Rotation.From( CamAngles );
 					break;
 				case "drag":
 					if (HasMouseCapture)
@@ -214,8 +227,12 @@ namespace SandCasle.UI
 						CamAngles.pitch = CamAngles.pitch.Clamp( -12, 90 );
 					}
 
+					PreviusCamAngles = CamAngles;
+
 					ShopItemScenePanel.CameraPosition = CamPos;
 					ShopItemScenePanel.CameraRotation = Rotation.From( CamAngles );
+
+					CamDistance = CamDistance.LerpTo(targetDistance,Time.Delta * 5f, true);
 					break;
 			}
 
