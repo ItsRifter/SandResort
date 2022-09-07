@@ -2,10 +2,23 @@
 
 Layer0
 {
-	shader "simple_liquid.vfx"
+	shader "complex.vfx"
 
-	//---- Empty Bottle ----
-	F_NO_LIQUID 1
+	//---- PBR ----
+	F_SPECULAR 1
+
+	//---- Ambient Occlusion ----
+	g_flAmbientOcclusionDirectDiffuse "0.000"
+	g_flAmbientOcclusionDirectSpecular "0.000"
+	TextureAmbientOcclusion "materials/clutter/glassbottle/glass_bottle_ao.png"
+
+	//---- Color ----
+	g_flModelTintAmount "1.000"
+	g_vColorTint "[1.000000 1.000000 1.000000 0.000000]"
+	TextureColor "materials/clutter/glassbottle/glass_color/white/glass_bottle_white_moonshine_color.png"
+
+	//---- Fade ----
+	g_flFadeExponent "1.000"
 
 	//---- Fog ----
 	g_bFogEnabled "1"
@@ -14,24 +27,14 @@ Layer0
 	g_flDirectionalLightmapMinZ "0.050"
 	g_flDirectionalLightmapStrength "1.000"
 
-	//---- Liquid ----
-	g_flFresnelGlassThickness "0.342"
-	g_flMaskMaximum "0.982"
-	g_flMaskMinimum "0.000"
-	g_flTransmissiveStrength "1.000"
-	TextureLiquidMask "materials/clutter/glassbottle/glass_bottle_liquid_mask.png"
+	//---- Metalness ----
+	g_flMetalness "0.000"
 
-	//---- Refraction ----
-	g_flChromaticDispersion "0.050"
-	g_flCubeRefractBrightness "1.000"
-	g_flCubeRefractTransparency "0.500"
-	g_flRefractRoughnessMultiplier "1.000"
+	//---- Normal ----
+	TextureNormal "materials/clutter/glassbottle/glass_bottle_normal.png"
 
-	//---- Simple Material ----
-	TextureColorA "materials/clutter/glassbottle/glass_color/white/glass_bottle_white_moonshine_color.png"
-	TextureMetalnessA "[0.000000 0.000000 0.000000 0.000000]"
-	TextureNormalA "materials/clutter/glassbottle/glass_bottle_normal.png"
-	TextureRoughnessA "materials/clutter/glassbottle/glass_bottle_rough.png"
+	//---- Roughness ----
+	TextureRoughness "materials/clutter/glassbottle/glass_bottle_rough.png"
 
 	//---- Texture Coordinates ----
 	g_nScaleTexCoordUByModelScaleAxis "0"

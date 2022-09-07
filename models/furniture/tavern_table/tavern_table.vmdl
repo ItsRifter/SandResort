@@ -57,10 +57,7 @@
 						name = "plate"
 						parent_bone = ""
 						surface_prop = "wood"
-						collision_group = ""
-						collision_interact_as = ""
-						collision_interact_with = ""
-						collision_interact_exclude = ""
+						collision_tags = "solid"
 						origin = [ 0.0, 0.0, 33.0 ]
 						angles = [ 0.0, 0.0, 0.0 ]
 						dimensions = [ 100.0, 50.0, 2.0 ]
@@ -70,10 +67,7 @@
 						name = "leg"
 						parent_bone = ""
 						surface_prop = "wood"
-						collision_group = ""
-						collision_interact_as = ""
-						collision_interact_with = ""
-						collision_interact_exclude = ""
+						collision_tags = "solid"
 						origin = [ 47.0, 22.0, 16.0 ]
 						angles = [ 0.0, 0.0, 0.0 ]
 						dimensions = [ 4.0, 4.0, 32.0 ]
@@ -83,10 +77,7 @@
 						name = "leg1"
 						parent_bone = ""
 						surface_prop = "wood"
-						collision_group = ""
-						collision_interact_as = ""
-						collision_interact_with = ""
-						collision_interact_exclude = ""
+						collision_tags = "solid"
 						origin = [ 47.0, -22.0, 16.0 ]
 						angles = [ 0.0, 0.0, 0.0 ]
 						dimensions = [ 4.0, 4.0, 32.0 ]
@@ -96,10 +87,7 @@
 						name = "leg2"
 						parent_bone = ""
 						surface_prop = "wood"
-						collision_group = ""
-						collision_interact_as = ""
-						collision_interact_with = ""
-						collision_interact_exclude = ""
+						collision_tags = "solid"
 						origin = [ -47.0, -22.0, 16.0 ]
 						angles = [ 0.0, 0.0, 0.0 ]
 						dimensions = [ 4.0, 4.0, 32.0 ]
@@ -109,10 +97,7 @@
 						name = "leg3"
 						parent_bone = ""
 						surface_prop = "wood"
-						collision_group = ""
-						collision_interact_as = ""
-						collision_interact_with = ""
-						collision_interact_exclude = ""
+						collision_tags = "solid"
 						origin = [ -47.0, 22.0, 16.0 ]
 						angles = [ 0.0, 0.0, 0.0 ]
 						dimensions = [ 4.0, 4.0, 32.0 ]
@@ -122,10 +107,7 @@
 						name = "under_plate"
 						parent_bone = ""
 						surface_prop = "wood"
-						collision_group = ""
-						collision_interact_as = ""
-						collision_interact_with = ""
-						collision_interact_exclude = ""
+						collision_tags = "solid"
 						origin = [ 0.0, 22.0, 30.0 ]
 						angles = [ 0.0, 0.0, 0.0 ]
 						dimensions = [ 90.0, 2.0, 4.0 ]
@@ -135,10 +117,7 @@
 						name = "under_plate1"
 						parent_bone = ""
 						surface_prop = "wood"
-						collision_group = ""
-						collision_interact_as = ""
-						collision_interact_with = ""
-						collision_interact_exclude = ""
+						collision_tags = "solid"
 						origin = [ 0.0, -22.0, 30.0 ]
 						angles = [ 0.0, 0.0, 0.0 ]
 						dimensions = [ 90.0, 2.0, 4.0 ]
@@ -148,10 +127,7 @@
 						name = "under_plate2"
 						parent_bone = ""
 						surface_prop = "wood"
-						collision_group = ""
-						collision_interact_as = ""
-						collision_interact_with = ""
-						collision_interact_exclude = ""
+						collision_tags = "solid"
 						origin = [ -47.0, 0.0, 30.0 ]
 						angles = [ 0.0, 0.0, 0.0 ]
 						dimensions = [ 2.0, 40.0, 4.0 ]
@@ -161,10 +137,7 @@
 						name = "under_plate3"
 						parent_bone = ""
 						surface_prop = "wood"
-						collision_group = ""
-						collision_interact_as = ""
-						collision_interact_with = ""
-						collision_interact_exclude = ""
+						collision_tags = "solid"
 						origin = [ 47.0, 0.0, 30.0 ]
 						angles = [ 0.0, 0.0, 0.0 ]
 						dimensions = [ 2.0, 40.0, 4.0 ]
@@ -204,5 +177,6 @@
 		model_archetype = "physics_prop_model"
 		primary_associated_entity = "prop_physics"
 		anim_graph_name = ""
+		base_model_name = ""
 	}
 }
