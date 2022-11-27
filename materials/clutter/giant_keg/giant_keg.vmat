@@ -11,12 +11,12 @@ Layer0
 	//---- Ambient Occlusion ----
 	g_flAmbientOcclusionDirectDiffuse "0.000"
 	g_flAmbientOcclusionDirectSpecular "0.000"
-	TextureAmbientOcclusion "materials/clutter/big_barrel/big_wood_barrel_ao.png"
+	TextureAmbientOcclusion "materials/clutter/giant_keg/big_wood_barrel_ao.png"
 
 	//---- Color ----
 	g_flModelTintAmount "1.000"
 	g_vColorTint "[1.000000 1.000000 1.000000 0.000000]"
-	TextureColor "materials/clutter/big_barrel/big_wood_barrel_color.png"
+	TextureColor "materials/clutter/giant_keg/big_wood_barrel_color.png"
 
 	//---- Fade ----
 	g_flFadeExponent "1.000"
@@ -29,13 +29,13 @@ Layer0
 	g_flDirectionalLightmapStrength "1.000"
 
 	//---- Metalness ----
-	TextureMetalness "materials/clutter/big_barrel/big_wood_barrel_metal.png"
+	TextureMetalness "materials/clutter/giant_keg/big_wood_barrel_metal.png"
 
 	//---- Normal ----
-	TextureNormal "materials/clutter/big_barrel/big_wood_barrel_normal.png"
+	TextureNormal "materials/clutter/giant_keg/big_wood_barrel_normal.png"
 
 	//---- Roughness ----
-	TextureRoughness "materials/clutter/big_barrel/big_wood_barrel_rough.png"
+	TextureRoughness "materials/clutter/giant_keg/big_wood_barrel_rough.png"
 
 	//---- Texture Coordinates ----
 	g_nScaleTexCoordUByModelScaleAxis "0"

@@ -288,6 +288,17 @@
 							tint_cp = 0
 						}
 					},
+					{
+						_class = "GenericGameData"
+						game_class = "ao_proxy_cylinder"
+						game_keys = 
+						{
+							bonename = ""
+							radius = 1.47414
+							point0 = [ 0.0, 0.0, 0.0 ]
+							point1 = [ 0.0, 0.0, 12.2234 ]
+						}
+					},
 				]
 			},
 			{

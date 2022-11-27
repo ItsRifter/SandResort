@@ -46,6 +46,105 @@
 							parent_bodygroup_value = 0
 						}
 					},
+					{
+						_class = "GenericGameData"
+						game_class = "ao_proxy_box"
+						game_keys = 
+						{
+							bonename = ""
+							dimensions = [ 100.0, 50.0, 2.0 ]
+							offset_origin = [ 0.0, 0.0, 33.0 ]
+							offset_angles = [ 0.0, 0.0, 0.0 ]
+						}
+					},
+					{
+						_class = "GenericGameData"
+						game_class = "ao_proxy_box"
+						game_keys = 
+						{
+							bonename = ""
+							dimensions = [ 4.0, 4.0, 32.0 ]
+							offset_origin = [ 47.0, 22.0, 16.0 ]
+							offset_angles = [ 0.0, 0.0, 0.0 ]
+						}
+					},
+					{
+						_class = "GenericGameData"
+						game_class = "ao_proxy_box"
+						game_keys = 
+						{
+							bonename = ""
+							dimensions = [ 4.0, 4.0, 32.0 ]
+							offset_origin = [ 47.0, -22.0, 16.0 ]
+							offset_angles = [ 0.0, 0.0, 0.0 ]
+						}
+					},
+					{
+						_class = "GenericGameData"
+						game_class = "ao_proxy_box"
+						game_keys = 
+						{
+							bonename = ""
+							dimensions = [ 4.0, 4.0, 32.0 ]
+							offset_origin = [ -47.0, -22.0, 16.0 ]
+							offset_angles = [ 0.0, 0.0, 0.0 ]
+						}
+					},
+					{
+						_class = "GenericGameData"
+						game_class = "ao_proxy_box"
+						game_keys = 
+						{
+							bonename = ""
+							dimensions = [ 4.0, 4.0, 32.0 ]
+							offset_origin = [ -47.0, 22.0, 16.0 ]
+							offset_angles = [ 0.0, 0.0, 0.0 ]
+						}
+					},
+					{
+						_class = "GenericGameData"
+						game_class = "ao_proxy_box"
+						game_keys = 
+						{
+							bonename = ""
+							dimensions = [ 90.0, 2.0, 4.0 ]
+							offset_origin = [ 0.0, 22.0, 30.0 ]
+							offset_angles = [ 0.0, 0.0, 0.0 ]
+						}
+					},
+					{
+						_class = "GenericGameData"
+						game_class = "ao_proxy_box"
+						game_keys = 
+						{
+							bonename = ""
+							dimensions = [ 90.0, 2.0, 4.0 ]
+							offset_origin = [ 0.0, -22.0, 30.0 ]
+							offset_angles = [ 0.0, 0.0, 0.0 ]
+						}
+					},
+					{
+						_class = "GenericGameData"
+						game_class = "ao_proxy_box"
+						game_keys = 
+						{
+							bonename = ""
+							dimensions = [ 2.0, 40.0, 4.0 ]
+							offset_origin = [ -47.0, 0.0, 30.0 ]
+							offset_angles = [ 0.0, 0.0, 0.0 ]
+						}
+					},
+					{
+						_class = "GenericGameData"
+						game_class = "ao_proxy_box"
+						game_keys = 
+						{
+							bonename = ""
+							dimensions = [ 2.0, 40.0, 4.0 ]
+							offset_origin = [ 47.0, 0.0, 30.0 ]
+							offset_angles = [ 0.0, 0.0, 0.0 ]
+						}
+					},
 				]
 			},
 			{

@@ -15,7 +15,7 @@
 						[
 							{
 								from = "big_wood_barrel.vmat"
-								to = "materials/clutter/big_barrel/big_wood_barrel.vmat"
+								to = "materials/clutter/giant_keg/giant_keg.vmat"
 							},
 						]
 						use_global_default = false
@@ -39,7 +39,7 @@
 						align_origin_x_type = "None"
 						align_origin_y_type = "None"
 						align_origin_z_type = "None"
-						filename = "models/clutter/big_barrel/big_barrel_phy.fbx"
+						filename = "models/clutter/giant_keg/big_barrel_phy.fbx"
 						import_scale = 0.3937
 						faceMergeAngle = 10.0
 						maxHullVertices = 0
@@ -68,7 +68,7 @@
 				[
 					{
 						_class = "RenderMeshFile"
-						filename = "models/clutter/big_barrel/big_barrel.fbx"
+						filename = "models/clutter/giant_keg/big_barrel.fbx"
 						import_translation = [ 0.0, 0.0, 0.0 ]
 						import_rotation = [ 0.0, 0.0, 0.0 ]
 						import_scale = 0.3937
@@ -80,6 +80,45 @@
 						{
 							exclude_by_default = false
 							exception_list = [  ]
+						}
+					},
+				]
+			},
+			{
+				_class = "GameDataList"
+				children = 
+				[
+					{
+						_class = "GenericGameData"
+						game_class = "ao_proxy_box"
+						game_keys = 
+						{
+							bonename = ""
+							dimensions = [ 5.59488, 73.1011, 18.1832 ]
+							offset_origin = [ 57.8567, -0.053598, 9.01306 ]
+							offset_angles = [ 0.0, 0.0, 0.0 ]
+						}
+					},
+					{
+						_class = "GenericGameData"
+						game_class = "ao_proxy_box"
+						game_keys = 
+						{
+							bonename = ""
+							dimensions = [ 5.59488, 73.1011, 18.1832 ]
+							offset_origin = [ -57.9004, -0.053598, 9.01306 ]
+							offset_angles = [ 0.0, 0.0, 0.0 ]
+						}
+					},
+					{
+						_class = "GenericGameData"
+						game_class = "ao_proxy_cylinder"
+						game_keys = 
+						{
+							bonename = ""
+							radius = 42.094
+							point0 = [ -62.9592, 0.0, 54.344 ]
+							point1 = [ 63.0572, 0.0, 54.344 ]
 						}
 					},
 				]

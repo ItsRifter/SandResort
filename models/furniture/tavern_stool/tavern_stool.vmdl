@@ -23,6 +23,61 @@
 							parent_bodygroup_value = 0
 						}
 					},
+					{
+						_class = "GenericGameData"
+						game_class = "ao_proxy_cylinder"
+						game_keys = 
+						{
+							bonename = ""
+							radius = 11.0016
+							point0 = [ 0.0, 0.0, 18.2814 ]
+							point1 = [ 0.0, 0.0, 20.0368 ]
+						}
+					},
+					{
+						_class = "GenericGameData"
+						game_class = "ao_proxy_box"
+						game_keys = 
+						{
+							bonename = ""
+							dimensions = [ 2.39616, 2.29402, 17.1873 ]
+							offset_origin = [ 6.17246, 6.15088, 8.58949 ]
+							offset_angles = [ 0.0, 0.0, 0.0 ]
+						}
+					},
+					{
+						_class = "GenericGameData"
+						game_class = "ao_proxy_box"
+						game_keys = 
+						{
+							bonename = ""
+							dimensions = [ 2.39616, 2.29402, 17.1873 ]
+							offset_origin = [ 6.17246, -6.11158, 8.58949 ]
+							offset_angles = [ 0.0, 0.0, 0.0 ]
+						}
+					},
+					{
+						_class = "GenericGameData"
+						game_class = "ao_proxy_box"
+						game_keys = 
+						{
+							bonename = ""
+							dimensions = [ 2.39616, 2.29402, 17.1873 ]
+							offset_origin = [ -6.06527, -6.11158, 8.58949 ]
+							offset_angles = [ 0.0, 0.0, 0.0 ]
+						}
+					},
+					{
+						_class = "GenericGameData"
+						game_class = "ao_proxy_box"
+						game_keys = 
+						{
+							bonename = ""
+							dimensions = [ 2.39616, 2.29402, 17.1873 ]
+							offset_origin = [ -6.06527, 6.17649, 8.58949 ]
+							offset_angles = [ 0.0, 0.0, 0.0 ]
+						}
+					},
 				]
 			},
 			{
@@ -52,10 +107,7 @@
 						name = "tavern_stool_phy"
 						parent_bone = ""
 						surface_prop = "wood"
-						collision_group = ""
-						collision_interact_as = ""
-						collision_interact_with = ""
-						collision_interact_exclude = ""
+						collision_tags = "solid"
 						recenter_on_parent_bone = false
 						offset_origin = [ 0.0, 0.0, 0.0 ]
 						offset_angles = [ 0.0, 0.0, 0.0 ]

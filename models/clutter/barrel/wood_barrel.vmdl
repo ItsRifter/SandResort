@@ -70,10 +70,7 @@
 						name = "wood_barrel_phy"
 						parent_bone = ""
 						surface_prop = "wood"
-						collision_group = ""
-						collision_interact_as = ""
-						collision_interact_with = ""
-						collision_interact_exclude = ""
+						collision_tags = "solid"
 						recenter_on_parent_bone = false
 						offset_origin = [ 0.0, 0.0, 0.0 ]
 						offset_angles = [ 0.0, 0.0, 0.0 ]
@@ -111,6 +108,17 @@
 							impact_damage = -1.0
 							parent_bodygroup_name = ""
 							parent_bodygroup_value = 0
+						}
+					},
+					{
+						_class = "GenericGameData"
+						game_class = "ao_proxy_cylinder"
+						game_keys = 
+						{
+							bonename = ""
+							radius = 12.4252
+							point0 = [ 0.0, 0.0, -0.453461 ]
+							point1 = [ 0.0, 0.0, 37.7873 ]
 						}
 					},
 				]

@@ -32,10 +32,7 @@
 						name = "moonshine_phy"
 						parent_bone = ""
 						surface_prop = "glass.pane"
-						collision_group = ""
-						collision_interact_as = ""
-						collision_interact_with = ""
-						collision_interact_exclude = ""
+						collision_tags = "solid"
 						recenter_on_parent_bone = false
 						offset_origin = [ 0.0, 0.0, 0.0 ]
 						offset_angles = [ 0.0, 0.0, 0.0 ]
@@ -87,7 +84,6 @@
 						game_class = "prop_data"
 						game_keys = 
 						{
-							allowstatic = true
 							bakelighting = true
 							spawn_motion_disabled = false
 							health = -1.0
@@ -95,6 +91,17 @@
 							impact_damage = -1.0
 							parent_bodygroup_name = ""
 							parent_bodygroup_value = 0
+						}
+					},
+					{
+						_class = "GenericGameData"
+						game_class = "ao_proxy_cylinder"
+						game_keys = 
+						{
+							bonename = ""
+							radius = 8.02392
+							point0 = [ 0.0, 0.0, 0.0 ]
+							point1 = [ 0.0, 0.0, 24.004 ]
 						}
 					},
 				]
